@@ -1,32 +1,62 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar
+      flat
+      color="rgb(20,20,20)"
+      dark
+    >
+      <v-app-bar-nav-icon @click="menu = true"></v-app-bar-nav-icon>
+      <!-- <v-toolbar-title>Refashioned</v-toolbar-title> -->
+    </v-app-bar>
+    <v-navigation-drawer
+      v-model="menu"
+      absolute
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item color="orange" v-for="item of listItems" :key="item.link"  :link="true" :to="item.link">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+              <v-list-item-title> {{ item.title }} </v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+    <router-view></router-view>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-#nav {
-  padding: 30px;
+export default {
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  data(){
+    return{
+      menu: false,
+      listItems: [
+        {title: "Home", link: "/", icon: "mdi-home"},
+        {title: "Somewhere", link: "/asd", icon: "mdi-home"},
+      ]
     }
   }
-}
+};
+</script>
+
+<style lang="scss">
+  main{
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .link{
+    text-decoration: none;
+  }
 </style>
