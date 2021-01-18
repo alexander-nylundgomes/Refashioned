@@ -6,7 +6,7 @@
       dark
     >
       <v-app-bar-nav-icon @click="menu = true"></v-app-bar-nav-icon>
-      <!-- <v-toolbar-title>Refashioned</v-toolbar-title> -->
+      <!-- <v-toolbar-title>{{test}}</v-toolbar-title> -->
     </v-app-bar>
     <v-navigation-drawer
       v-model="menu"
@@ -43,9 +43,19 @@ export default {
       menu: false,
       listItems: [
         {title: "Home", link: "/", icon: "mdi-home"},
-        {title: "Somewhere", link: "/asd", icon: "mdi-home"},
-      ]
+        {title: "Products", link: "/products", icon: "mdi-home"},
+      ],
     }
+  },
+
+  methods: {
+    getProducts(){
+      this.$store.dispatch("getProducts")
+    }
+  },
+
+  created(){
+    this.getProducts()
   }
 };
 </script>
