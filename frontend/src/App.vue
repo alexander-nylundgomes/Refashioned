@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-app-bar
-      flat
       color="rgb(20,20,20)"
       dark
     >
