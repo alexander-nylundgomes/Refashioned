@@ -16,7 +16,7 @@
         <v-card-text class="pa-1 pl-2 pr-2" :class="{'changed-text': $vuetify.breakpoint.xs}">{{ refactor(product.desc, 80) }}  </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-            <v-btn depressed small color="primary" block class="pl-3 pr-3" :class="{'changed-buttons-alert': $vuetify.breakpoint.xs}">Gå till vara</v-btn>
+            <v-btn depressed small color="primary" block class="pl-3 pr-3" :class="{'changed-buttons-alert': $vuetify.breakpoint.xs}">Check it out</v-btn>
         </v-card-actions>
 
         <v-snackbar v-model="snackbar">
@@ -101,26 +101,6 @@ export default {
     .product-card{
         overflow: hidden;
         display: inline-block;
-    }
-
-    .changed-title{
-        font-size: 1em !important;
-    }
-
-    .changed-subtitle{
-        font-size: 0.75em !important;
-    }
-
-    .changed-text{
-        font-size: 0.5em !important;
-        line-height: 1.6;
-    }
-    
-    .changed-buttons{
-        font-size: 0.6em !important;
-    }
-
-    .changed-button-alert{
-        font-size: 0.75em !important;
+        height: fit-content;
     }
 </style>

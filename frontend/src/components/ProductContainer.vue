@@ -1,5 +1,10 @@
 <template>
   <section class="products">
+      <!-- <v-row class="ma-3 d-flex" justify="center">
+        <h3 class="ma-0">Showing pants</h3>
+        <v-spacer></v-spacer>
+        <p class="ma-0">10 of 112</p>
+      </v-row> -->
       <Product 
       v-for="item of products" 
       :key="item.id"
@@ -23,10 +28,10 @@ export default {
     section.products{
         width: 95%;
         margin: 1em auto;
-        background-color: rgb(240,240,240);
+        // background-color: rgb(240,240,240);
         overflow-x: scroll;
         white-space: nowrap;
-        padding: 1em;
+        padding: 0.5em;
         height: fit-content;
     }
 </style>
