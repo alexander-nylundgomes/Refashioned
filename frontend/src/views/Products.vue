@@ -3,6 +3,7 @@
       <ProductContainer 
         :products="this.$store.getters.products"
       />
+      <v-btn @click="clear()">clear local storage</v-btn>
   </main>
 </template>
 
@@ -13,6 +14,11 @@ export default {
     name: "Products",
     components: {
         ProductContainer
+    },
+    methods: {
+        clear(){
+            localStorage.removeItem('likes')
+        }
     }
 }
 </script>
