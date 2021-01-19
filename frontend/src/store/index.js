@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     products: [],
     likes: JSON.parse(localStorage.getItem('likes')),
+    categories: JSON.parse(localStorage.getItem('categories')),
   },
   mutations: {
     setProducts(state, payload){
@@ -23,6 +24,18 @@ export default new Vuex.Store({
       let index = state.likes.indexOf(payload);
       state.likes.splice(index, 1)
       localStorage.setItem("likes", JSON.stringify(state.likes));
+    },
+
+    categoryDislike(state, payload){
+      let index = state.categories.indexOf(payload);
+      state.categories.splice(index, 1);
+      localStorage.setItem("categories", JSON.stringify(state.categories));
+    },
+
+    categoryLike(state, payload){
+      state.categories.push(payload);
+      localStorage.setItem("categories", JSON.stringify(state.categories));
+
     }
   },
   actions: {
@@ -60,6 +73,25 @@ export default new Vuex.Store({
       }else{
         state.commit('like', payload)
       }
+    },
+
+    categoryAction(state, payload){
+      let isLiked = false;
+
+      for (let d of state.getters.categories) {
+
+        if (d == payload) {
+            isLiked = true;
+            break;
+        }
+
+      }
+      
+      if(!isLiked){
+        state.commit('categoryLike', payload)
+      }else{
+        state.commit('categoryDislike', payload)
+      }
     }
   },
   modules: {},
@@ -70,6 +102,11 @@ export default new Vuex.Store({
 
     likes(state){
       return state.likes;
+    },
+
+    categories(state){
+      // Returns all liked categories
+      return state.categories;
     }
   }
 });

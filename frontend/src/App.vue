@@ -43,6 +43,7 @@ export default {
       listItems: [
         {title: "Home", link: "/", icon: "mdi-home"},
         {title: "Products", link: "/products", icon: "mdi-home"},
+        {title: "Likes", link: "/likes", icon: "mdi-heart"},
       ],
     }
   },
@@ -54,6 +55,10 @@ export default {
     localStorageInit() {
       if (localStorage.getItem("likes") == null) {
         localStorage.setItem("likes", JSON.stringify([]));
+      }
+
+      if (localStorage.getItem("categories") == null) {
+        localStorage.setItem("categories", JSON.stringify([]));
       }
     }
   },
@@ -73,5 +78,26 @@ export default {
 
   .link{
     text-decoration: none;
+  }
+
+  .changed-title{
+      font-size: 1em !important;
+  }
+
+  .changed-subtitle{
+      font-size: 0.75em !important;
+  }
+
+  .changed-text{
+      font-size: 0.5em !important;
+      line-height: 1.6;
+  }
+  
+  .changed-buttons{
+      font-size: 0.6em !important;
+  }
+
+  .changed-button-alert{
+      font-size: 0.75em !important;
   }
 </style>

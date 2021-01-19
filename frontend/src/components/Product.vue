@@ -101,26 +101,6 @@ export default {
     .product-card{
         overflow: hidden;
         display: inline-block;
-    }
-
-    .changed-title{
-        font-size: 1em !important;
-    }
-
-    .changed-subtitle{
-        font-size: 0.75em !important;
-    }
-
-    .changed-text{
-        font-size: 0.5em !important;
-        line-height: 1.6;
-    }
-    
-    .changed-buttons{
-        font-size: 0.6em !important;
-    }
-
-    .changed-button-alert{
-        font-size: 0.75em !important;
+        height: fit-content;
     }
 </style>
