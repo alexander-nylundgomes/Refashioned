@@ -3,11 +3,7 @@
       <Product 
       v-for="item of products" 
       :key="item.id"
-      :name="item.name"
-      :price="item.price"
-      :size="item.size"
-      :brand="'CK'"
-      :text="item.desc"
+      :product="item"
       />
   </section>
 </template>

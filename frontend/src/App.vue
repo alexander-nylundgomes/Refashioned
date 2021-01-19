@@ -20,7 +20,7 @@
         <v-list-item-group
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item color="orange" v-for="item of listItems" :key="item.link"  :link="true" :to="item.link">
+          <v-list-item color="blue" v-for="item of listItems" :key="item.link"  :link="true" :to="item.link">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -51,11 +51,17 @@ export default {
   methods: {
     getProducts(){
       this.$store.dispatch("getProducts")
+    },
+    localStorageInit() {
+      if (localStorage.getItem("likes") == null) {
+        localStorage.setItem("likes", JSON.stringify([]));
+      }
     }
   },
 
   created(){
-    this.getProducts()
+    this.localStorageInit();
+    this.getProducts();
   }
 };
 </script>
