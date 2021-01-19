@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :discount_codes
   resources :colors
   resources :orders

@@ -5,7 +5,22 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Category.connection.schema_cache.clear!
+Category.reset_column_information
+categories = [
+    {tag: 'pants', display_text: 'Great looking pants'},
+    {tag: 'sweater', display_text: 'Warm and fuzzy sweaters'},
+    {tag: 'shirt', display_text: 'Fitting shirts'},
+    {tag: 'hoodie', display_text: 'Cozy hoodies'},
+]
 
+
+[1,2,3,4].each do |i|
+    Category.create({
+        tag: categories[i - 1][:tag],
+        display_text: categories[i - 1][:display_text]
+    })
+end
 
 100.times do 
     Product.create({
@@ -14,7 +29,8 @@
         desc: Faker::Lorem.paragraph(sentence_count: 4),
         color: [1,2,3,4,5].sample,
         price: Faker::Commerce.price,
-        brand_id: [1,2,3,4,5].sample
+        brand_id: [1,2,3,4,5].sample,
+        category_id: [1,2,3,4].sample
     })
 end
 
@@ -74,6 +90,8 @@ products = Product.all
 30.times do
     Tag.create({
         name: keywords.sample,
-        product_id: products.sample.id
+        product_id: 1
     })
 end
+
+

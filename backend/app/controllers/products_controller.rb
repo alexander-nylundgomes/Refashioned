@@ -3,8 +3,8 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.display_text').joins(:category).order('products.category_id')
+    
     render json: @products
   end
 
