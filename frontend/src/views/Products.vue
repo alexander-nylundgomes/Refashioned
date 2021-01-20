@@ -83,10 +83,4 @@ export default {
         }
     }
 
-    .info-section{
-        width: 100%;
-        margin: 0.5em auto;
-        background-color: rgb(240,240,240);
-    }
-
 </style>
