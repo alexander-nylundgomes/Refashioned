@@ -40,6 +40,13 @@ export default {
         ProductContainer,
         TitleCardProducts
     },
+
+    data(){
+        return{
+            products: this.$store.getters.products
+        }
+    },
+
     methods: {
         clear(){
             localStorage.removeItem('likes')

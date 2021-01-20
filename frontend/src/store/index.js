@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     products: [],
     likes: JSON.parse(localStorage.getItem('likes')),
-    categories: JSON.parse(localStorage.getItem('categories')),
+    categories: [],
+    liked_categories: JSON.parse(localStorage.getItem('liked_categories')),
   },
   mutations: {
     setProducts(state, payload){
@@ -27,25 +28,23 @@ export default new Vuex.Store({
     },
 
     categoryDislike(state, payload){
-      let index = state.categories.indexOf(payload);
-      state.categories.splice(index, 1);
-      localStorage.setItem("categories", JSON.stringify(state.categories));
+      let index = state.liked_categories.indexOf(payload);
+      state.liked_categories.splice(index, 1);
+      localStorage.setItem("liked_categories", JSON.stringify(state.liked_categories));
     },
 
     categoryLike(state, payload){
-      state.categories.push(payload);
-      localStorage.setItem("categories", JSON.stringify(state.categories));
+      state.liked_categories.push(payload);
+      localStorage.setItem("liked_categories", JSON.stringify(state.liked_categories));
 
-    }
+    },
+
+    setCategories(state, payload){
+      state.categories = payload;
+    },
   },
   actions: {
     async getProducts(state){
-      // let resp = await fetch(`${process.env.VUE_APP_BACKEND}/products`);
-      // let products = await resp.json();
-
-      // console.log(products)
-      // state.commit('setProducts', products)
-
       axios.get(`${process.env.VUE_APP_BACKEND}/products`)
         .then(function (resp){
           console.log(resp.data)
@@ -54,6 +53,17 @@ export default new Vuex.Store({
         .catch(function(error){
           alert(error)
         })
+    },
+
+    async getCategories(state){
+      axios.get(`${process.env.VUE_APP_BACKEND}/categories`)
+      .then(function (resp){
+        state.commit('setCategories', resp.data);
+      }).catch(function(error){
+          alert(error)
+      })
+
+      
     },
 
     likeAction(state, payload){
@@ -78,13 +88,12 @@ export default new Vuex.Store({
     categoryAction(state, payload){
       let isLiked = false;
 
-      for (let d of state.getters.categories) {
+      for (let d of state.getters.liked_categories) {
 
         if (d == payload) {
             isLiked = true;
             break;
         }
-
       }
       
       if(!isLiked){
@@ -105,8 +114,12 @@ export default new Vuex.Store({
     },
 
     categories(state){
-      // Returns all liked categories
       return state.categories;
+    },
+
+    liked_categories(state){
+      // Returns all liked liked_categories
+      return state.liked_categories;
     }
   }
 });
