@@ -75,5 +75,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+    .info-section{
+        width: 100%;
+        margin: 0.5em auto;
+        background-color: rgb(240,240,240);
+    }
 </style>

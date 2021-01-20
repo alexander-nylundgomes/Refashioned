@@ -120,6 +120,6 @@ export default new Vuex.Store({
     liked_categories(state){
       // Returns all liked liked_categories
       return state.liked_categories;
-    }
+    },
   }
 });
