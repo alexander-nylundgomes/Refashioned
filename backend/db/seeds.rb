@@ -7,18 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Category.connection.schema_cache.clear!
 Category.reset_column_information
-categories = [
-    {tag: 'pants', display_text: 'Great looking pants'},
-    {tag: 'sweater', display_text: 'Warm and fuzzy sweaters'},
-    {tag: 'shirt', display_text: 'Fitting shirts'},
-    {tag: 'hoodie', display_text: 'Cozy hoodies'},
-]
 
 
-[1,2,3,4].each do |i|
+["Cozy sweaters", "Great looking shirts", "Smashing pants", "Sexy socks"].each do |i|
     Category.create({
-        tag: categories[i - 1][:tag],
-        display_text: categories[i - 1][:display_text]
+        name: i,
+        description: Faker::Lorem.paragraph(sentence_count: 2),
     })
 end
 

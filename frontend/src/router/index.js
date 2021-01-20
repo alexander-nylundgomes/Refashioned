@@ -18,6 +18,17 @@ const routes = [
     path: "/likes",
     name: "Likes",
     component: () => import('@/views/Likes.vue')
+  },
+  {
+    path: "/categories",
+    name: "Categories",
+    component: () => import('@/views/Categories.vue')
+  },
+  {
+    path: "/category/:id",
+    name: "ShowCategory",
+    props: true,
+    component: () => import('@/views/ShowCategory.vue')
   }
 ];
 

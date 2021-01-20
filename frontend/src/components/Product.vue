@@ -1,5 +1,5 @@
 <template>
-    <v-card width="200"  class="product-card ml-2 mr-2">
+    <v-card width="200"  class="product-card ml-2 mr-2" lazy>
         <div class="img-replace">
             <v-btn @click="likeAction()" icon class="mt-1 mr-1">
                 <v-icon v-if="!isLiked" color="primary">mdi-heart-outline</v-icon>

@@ -59,7 +59,7 @@ export default {
         isLiked(){
             let isLiked = false;
 
-            for (let d of this.$store.getters.categories) {
+            for (let d of this.$store.getters.liked_categories) {
 
                 if (d == this.category) {
                     isLiked = true;

@@ -42,30 +42,32 @@ export default {
       menu: false,
       listItems: [
         {title: "Home", link: "/", icon: "mdi-home"},
-        {title: "Products", link: "/products", icon: "mdi-home"},
+        {title: "Products", link: "/products", icon: "mdi-tshirt-crew"},
         {title: "Likes", link: "/likes", icon: "mdi-heart"},
+        {title: "Categories", link: "/categories", icon: "mdi-apps"},
       ],
     }
   },
 
   methods: {
-    getProducts(){
-      this.$store.dispatch("getProducts")
+    setup(){
+      this.$store.dispatch("getProducts");
+      this.$store.dispatch("getCategories");
     },
     localStorageInit() {
       if (localStorage.getItem("likes") == null) {
         localStorage.setItem("likes", JSON.stringify([]));
       }
 
-      if (localStorage.getItem("categories") == null) {
-        localStorage.setItem("categories", JSON.stringify([]));
+      if (localStorage.getItem("liked_categories") == null) {
+        localStorage.setItem("liked_categories", JSON.stringify([]));
       }
     }
   },
 
   created(){
     this.localStorageInit();
-    this.getProducts();
+    this.setup();
   }
 };
 </script>
