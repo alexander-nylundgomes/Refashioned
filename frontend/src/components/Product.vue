@@ -2,8 +2,8 @@
     <v-card width="200"  class="product-card ml-2 mr-2" lazy>
         <div class="img-replace">
             <v-btn @click="likeAction()" icon class="mt-1 mr-1">
-                <v-icon v-if="!isLiked" color="primary">mdi-heart-outline</v-icon>
-                <v-icon v-if="isLiked" color="primary">mdi-heart</v-icon>
+                <v-icon v-if="!isLiked" color="#EF6B6F">mdi-heart-outline</v-icon>
+                <v-icon v-if="isLiked" color="#EF6B6F">mdi-heart</v-icon>
             </v-btn>
         </div>
         <v-card-title class="pa-1 pl-2 pr-2" :class="{'changed-title': $vuetify.breakpoint.xs}">

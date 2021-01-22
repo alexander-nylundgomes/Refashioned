@@ -6,10 +6,10 @@
         <v-card-subtitle>Showing {{ amount }} out of {{ all }}</v-card-subtitle>
         <v-card-actions>
             <router-link :to="`/category/${category}`" class="link mr-3">
-                <v-btn small depressed dark color="primary">Show all</v-btn>
+                <v-btn  depressed dark color="primary">Show all</v-btn>
             </router-link>
-            <v-btn @click="saveAction()" small depressed  dark color="primary" v-if="!isLiked">Save category</v-btn>
-            <v-btn @click="saveAction()" small depressed outlined dark color="primary" v-if="isLiked">Unsave category</v-btn>
+            <v-btn @click="saveAction()"  depressed  dark color="primary" v-if="!isLiked">Save category</v-btn>
+            <v-btn @click="saveAction()"  depressed outlined dark color="primary" v-if="isLiked">Unsave category</v-btn>
         </v-card-actions>
 
         <v-snackbar v-model="snackbar">
