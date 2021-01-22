@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description').joins(:category).order('products.category_id')
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).order('products.category_id')
     
     render json: @products
   end
@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
