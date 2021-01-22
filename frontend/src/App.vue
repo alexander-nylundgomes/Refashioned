@@ -29,13 +29,13 @@
       </v-list>
     </v-navigation-drawer>
     <router-view></router-view>
-    <Footer />
+    <!-- <Footer /> -->
   </v-app>
 </template>
 
 <script>
 
-import Footer from "@/components/Footer.vue";
+// import Footer from "@/components/Footer.vue";
 
 export default {
   name: "App",
@@ -74,7 +74,7 @@ export default {
   },
 
   components: {
-    Footer
+    // Footer
   }
 };
 </script>
