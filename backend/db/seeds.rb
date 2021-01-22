@@ -8,29 +8,17 @@
 Category.connection.schema_cache.clear!
 Category.reset_column_information
 
+Brand.connection.schema_cache.clear!
+Brand.reset_column_information
+
+Product.reset_column_information
+Product.connection.schema_cache.clear!
+
 
 ["Cozy sweaters", "Great looking shirts", "Smashing pants", "Sexy socks"].each do |i|
     Category.create({
-        name: i,
+        cat_name: i,
         description: Faker::Lorem.paragraph(sentence_count: 2),
-    })
-end
-
-100.times do 
-    Product.create({
-        name: Faker::Commerce.product_name,
-        size: ['M', 'S', 'XL', 'L', 'XS'].sample,
-        desc: Faker::Lorem.paragraph(sentence_count: 4),
-        color: [1,2,3,4,5].sample,
-        price: Faker::Commerce.price,
-        brand_id: [1,2,3,4,5].sample,
-        category_id: [1,2,3,4].sample
-    })
-end
-
-['Red', 'Black', 'Pink', 'Blue', 'Green'].each do |c|
-    Color.create({
-        name: c
     })
 end
 
@@ -39,6 +27,28 @@ end
         name: c
     })
 end
+
+
+['Red', 'Black', 'Pink', 'Blue', 'Green'].each do |c|
+    Color.create({
+        name: c
+    })
+end
+
+100.times do 
+    Product.create!({
+        name: Faker::Commerce.product_name,
+        size: ['M', 'S', 'XL', 'L', 'XS'].sample,
+        desc: Faker::Lorem.paragraph(sentence_count: 7),
+        color: [1,2,3,4,5].sample,
+        price: Faker::Commerce.price,
+        brand_id: [1,2,3,4,5].sample,
+        category_id: [1,2,3,4].sample
+    })
+end
+
+
+
 
 20.times do 
     Msg.create({
