@@ -35,7 +35,7 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
-      <router-link class="link" :to="'/product/' + product.id">
+      <router-link class="link product-btn" :to="'/product/' + product.id">
         <v-btn
           depressed
           small
@@ -130,5 +130,9 @@ export default {
   overflow: hidden;
   display: inline-block;
   height: fit-content;
+}
+
+.product-btn{
+  width: 100%;
 }
 </style>
