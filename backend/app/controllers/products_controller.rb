@@ -33,6 +33,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def validateStock
+
+    render json: Product.where(id: params['products'])
+  end
+
   # DELETE /products/1
   def destroy
     @product.destroy
