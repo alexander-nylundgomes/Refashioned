@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <aside>
+    <!-- <aside>
       <div class="text">
         <h3>This is</h3>
         <h1>Refashioned</h1>
@@ -13,6 +13,16 @@
         <div class="background" v-for="i of 4" :key="i">
           <div class="overlay"></div>
         </div>
+      </div>
+    </aside> -->
+
+    <aside>
+      <div class="main-background">
+        <div class="text">
+          <h3>This is</h3>
+          <h1>Refashioned</h1>
+        </div>
+        <div class="cutout-background"></div>
       </div>
     </aside>
 
@@ -177,64 +187,101 @@ main.home {
   }
 }
 
+aside:nth-of-type(1){
+  .main-background{
+    background-image: url(../assets/main.png);
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+    .text{
+      position: absolute;
+      width: 100%;
+      padding-top: 1em;
+      h3{
+        padding-left: 2em;
+      }
+      h1{
+        line-height: 1;
+        font-weight: 800;
+        font-size: 3.5rem;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .cutout-background{
+      background-position: center;
+      background-size: cover;
+      background-image: url(../assets/cutout.png);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+    }
+  }
+}
+
 aside {
   width: calc(100% - 1em);
   height: 27rem;
   margin-top: 0.5em;
 }
 
-aside:nth-of-type(1) {
-  position: relative;
+// aside:nth-of-type(1) {
+//   position: relative;
 
-  .text {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-    color: white;
-    h3 {
-      font-size: 2rem;
-      font-weight: 800;
-    }
+//   .text {
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     padding: 1em;
+//     color: white;
+//     h3 {
+//       font-size: 2rem;
+//       font-weight: 800;
+//     }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-    }
-  }
+//     h1 {
+//       font-size: 3rem;
+//       font-weight: 800;
+//     }
+//   }
 
-  .images {
-    width: calc(100% - 0.5em);
-    height: calc(100% - 0.5em);
-    display: grid;
-    grid-template-rows: 60% 40%;
-    grid-template-columns: 60% 40%;
-    grid-gap: 0.5em;
+//   .images {
+//     width: calc(100% - 0.5em);
+//     height: calc(100% - 0.5em);
+//     display: grid;
+//     grid-template-rows: 60% 40%;
+//     grid-template-columns: 60% 40%;
+//     grid-gap: 0.5em;
 
-    .background {
-      background-position: center;
-      background-size: cover;
-      width: 100%;
-      height: 100%;
-    }
+//     .background {
+//       background-position: center;
+//       background-size: cover;
+//       width: 100%;
+//       height: 100%;
+//     }
 
-    .background:nth-of-type(1) {
-      background-image: url(../assets/front-page1.jpg);
-    }
+//     .background:nth-of-type(1) {
+//       background-image: url(../assets/front-page1.jpg);
+//     }
 
-    .background:nth-of-type(2) {
-      background-image: url(../assets/front-page2.jpg);
-    }
+//     .background:nth-of-type(2) {
+//       background-image: url(../assets/front-page2.jpg);
+//     }
 
-    .background:nth-of-type(3) {
-      background-image: url(../assets/front-page3.jpg);
-    }
+//     .background:nth-of-type(3) {
+//       background-image: url(../assets/front-page3.jpg);
+//     }
 
-    .background:nth-of-type(4) {
-      background-image: url(../assets/front-page4.jpg);
-    }
-  }
-}
+//     .background:nth-of-type(4) {
+//       background-image: url(../assets/front-page4.jpg);
+//     }
+//   }
+// }
 
 .sheet {
   width: 95%;
