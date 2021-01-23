@@ -7,34 +7,39 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("../views/Home.vue"),
+    component: () => import("../views/Home.vue")
   },
   {
     path: "/products",
     name: "Products",
-    component: () => import('@/views/Products.vue')
+    component: () => import("@/views/Products.vue")
   },
   {
     path: "/likes",
     name: "Likes",
-    component: () => import('@/views/Likes.vue')
+    component: () => import("@/views/Likes.vue")
   },
   {
     path: "/categories",
     name: "Categories",
-    component: () => import('@/views/Categories.vue')
+    component: () => import("@/views/Categories.vue")
   },
   {
     path: "/category/:id",
     name: "ShowCategory",
     props: true,
-    component: () => import('@/views/ShowCategory.vue')
+    component: () => import("@/views/ShowCategory.vue")
   },
   {
     path: "/product/:id",
     name: "ProductView",
     props: true,
-    component: () => import('@/views/ProductView.vue')
+    component: () => import("@/views/ProductView.vue")
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("@/views/Cart.vue")
   }
 ];
 
