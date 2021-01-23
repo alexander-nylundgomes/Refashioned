@@ -23,12 +23,12 @@
       </v-list>
     </v-navigation-drawer>
     <router-view></router-view>
-    <!-- <Footer /> -->
+    <Footer />
   </v-app>
 </template>
 
 <script>
-// import Footer from "@/components/Footer.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "App",
@@ -72,7 +72,7 @@ export default {
   },
 
   components: {
-    // Footer
+    Footer
   }
 };
 </script>
@@ -80,7 +80,8 @@ export default {
 <style lang="scss">
 main {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 .link {
