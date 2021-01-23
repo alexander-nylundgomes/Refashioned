@@ -82,11 +82,17 @@ end
 #     })
 # end
 
-3.times do 
-    DiscountCode.create({
-        code: Faker::Commerce.promotion_code,
-        amount: rand(100),
-    })
+discounts = [
+    {value_in_cash: nil, value_in_percent: nil, value_in_shipping: true, required_value: 200, amount: 10, code: Faker::Commerce.promotion_code},
+    {value_in_cash: 100, value_in_percent: nil, value_in_shipping: false, required_value: 1000, amount: 5, code: Faker::Commerce.promotion_code},
+    {value_in_cash: nil, value_in_percent: 10, value_in_shipping: false, required_value: 0, amount: 3, code: Faker::Commerce.promotion_code},
+    {value_in_cash: 25, value_in_percent: nil, value_in_shipping: false, required_value: 100, amount: 22, code: Faker::Commerce.promotion_code},
+    {value_in_cash: nil, value_in_percent: nil, value_in_shipping: true, required_value: 125, amount: 56, code: Faker::Commerce.promotion_code},
+    {value_in_cash: nil, value_in_percent: 25, value_in_shipping: false, required_value: 2000, amount: 15, code: Faker::Commerce.promotion_code}
+]
+
+discounts.each do |d| 
+    DiscountCode.create(d)
 end
 
 keywords = ['long', 'shirt', 'pants' 'something']
