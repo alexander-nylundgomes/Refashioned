@@ -44,6 +44,7 @@ export default {
         { title: "Categories", link: "/categories", icon: "mdi-apps" },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
+        { title: "About us", link: "/about", icon: "mdi-account-multiple" },
       ]
     };
   },
