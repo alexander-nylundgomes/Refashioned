@@ -22,7 +22,7 @@
 
           <v-row>
               <v-col>
-                    <v-btn block large class="pa-3" color="primary" @click="runSearch()" dark>search</v-btn>
+                    <v-btn block large depressed class="pa-3" color="primary" @click="runSearch()" dark>search</v-btn>
               </v-col>
           </v-row>
       </v-container>

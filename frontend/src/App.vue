@@ -43,7 +43,7 @@ export default {
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
         { title: "Categories", link: "/categories", icon: "mdi-apps" },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
-        { title: "Search", link: "/search", icon: "mdi-cart" },
+        { title: "Search", link: "/search", icon: "mdi-magnify" },
       ]
     };
   },
