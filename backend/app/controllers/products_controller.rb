@@ -13,6 +13,33 @@ class ProductsController < ApplicationController
     render json: @product
   end
 
+  def search
+    ## Gets products by name, category name and brand
+    ## maybe multi word search? ex. "blue nike shirts"
+    
+    words = params[:tag].split(' ')
+    products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ?", "%#{words.first}%" , "%#{words.first}%" , "%#{words.first}%")
+
+    # words.each do |search|
+    #   queries = Array(search).map do |search_term|
+    #     Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).where('products.name LIKE :q OR brands_name LIKE :q OR cat_name LIKE :q', q: "%#{search_term}%")
+    #   end
+
+    #   statement = queries.reduce do |statement, query|
+    #     statement.or(query)
+    #   end
+
+    #   puts statement
+
+    #   @products = []
+    #   @products.append(ActiveRecord::Base.connection.execute(statement.to_sql))
+
+    # end
+
+
+    render json: products
+  end
+
   # POST /products
   def create
     @product = Product.new(product_params)

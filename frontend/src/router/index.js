@@ -45,6 +45,17 @@ const routes = [
     path: "/admin/login",
     name: "AdminLogin",
     component: () => import("@/views/AdminLogin.vue"),
+  },
+  {
+    path: "/search",
+    name: "SearchField",
+    component: () => import("@/views/SearchField.vue")
+  },
+  {
+    path: "/search/:tag",
+    name: "SearchResult",
+    props: true,
+    component: () => import("@/views/SearchResult.vue")
   }
 ];
 
