@@ -2,19 +2,13 @@
   <main class="cart-info">
     <v-stepper v-model="e1">
       <v-stepper-header>
-        <v-stepper-step
-          :complete="e1 > 1"
-          step="1"
-        >
+        <v-stepper-step :complete="e1 > 1" step="1">
           Name of step 1
         </v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-stepper-step
-          :complete="e1 > 2"
-          step="2"
-        >
+        <v-stepper-step :complete="e1 > 2" step="2">
           Name of step 2
         </v-stepper-step>
 
@@ -26,22 +20,25 @@
       </v-stepper-header>
 
       <v-stepper-items>
-        <v-stepper-content step="1"  elevation="0">
-          <v-card
-            elevation="0"
-            class="mb-6 stepper"
-          >
-            <v-form lazy-validation ref="form" class="pt-3" v-model="validInputs">
+        <v-stepper-content step="1" elevation="0">
+          <v-card elevation="0" class="mb-6 stepper">
+            <v-form
+              lazy-validation
+              ref="form"
+              class="pt-3"
+              v-model="validInputs"
+            >
               <v-text-field
-              v-for="input of inputs"
-              :key="input.model"
-              :model="input.model"
-              outlined
-              :rules="giveRules(input)"
-              required
-              dense 
-              class="mt-0 ml-3 mr-3 mb-0"
-              :label="input.text">
+                v-for="input of inputs"
+                :key="input.model"
+                :model="input.model"
+                outlined
+                :rules="giveRules(input)"
+                required
+                dense
+                class="mt-0 ml-3 mr-3 mb-0"
+                :label="input.text"
+              >
               </v-text-field>
             </v-form>
           </v-card>
@@ -54,17 +51,19 @@
             Continue
           </v-btn>
 
-          <v-btn @click="returnToCart();" text>
+          <v-btn @click="returnToCart()" text>
             Cancel
           </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card
-            elevation="0"
-            class="mb-6 stepper"
-          >
-            <v-card class="ma-3" v-for="type of payment_options" :disabled="type.active" :key="type.title">
+          <v-card elevation="0" class="mb-6 stepper">
+            <v-card
+              class="ma-3"
+              v-for="type of payment_options"
+              :disabled="type.active"
+              :key="type.title"
+            >
               <v-card-title>{{ type.title }}</v-card-title>
               <v-card-subtitle>{{ type.subtitle }}</v-card-subtitle>
               <v-card-actions>
@@ -90,7 +89,6 @@
                 >
                   Unselect
                 </v-btn>
-
               </v-card-actions>
             </v-card>
           </v-card>
@@ -98,7 +96,7 @@
           <v-btn
             color="primary"
             :disabled="!has_selected_payment"
-            @click="nextStepper()"
+            @click="generatePaymentIntent()"
           >
             Continue
           </v-btn>
@@ -109,15 +107,18 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card
-            elevation="0"
-            class="mb-6 stepper"
-          ></v-card>
+          <v-card elevation="0" class="mb-6 stepper">
+            <form id="payment-form">
+              <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+              <button id="submit">
+                <div class="spinner hidden" id="spinner"></div>
+              </button>
+              <p id="card-error" role="alert"></p>
+              <p class="result-message hidden"></p>
+            </form>
+          </v-card>
 
-          <v-btn
-            color="primary"
-            @click="nextStepper()"
-          >
+          <v-btn color="primary" id="button-text" @click="payWithCard()">
             Pay
           </v-btn>
 
@@ -127,103 +128,268 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+
+    <Dialog
+      :title="dialog_title"
+      :success="dialog_success"
+      :text="dialog_text"
+      :dialog="dialog"
+      :buttonText="dialog_button"
+      @closingDialog="dialog = false"
+    />
   </main>
 </template>
 
+
 <script>
+const axios = require("axios");
+let stripe = window.Stripe(process.env.VUE_APP_STRIPE_PUBL);
+import Dialog from "@/components/Dialog.vue";
+
 export default {
   name: "CartInfo",
 
-  data(){
-    return{
+  data() {
+    return {
+      dialog: false,
+      dialog_title: "",
+      dialog_text: "",
+      dialog_success: false,
+      dialog_button: "",
+
       e1: 1,
 
       validInputs: true,
       has_selected_payment: false,
 
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
 
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => !!v || "Name is required",
+        v => (v && v.length <= 10) || "Name must be less than 10 characters"
       ],
 
-      notEmptyRule: [v => !!v || 'Item is required'],
+      notEmptyRule: [v => !!v || "Item is required"],
 
       inputs: [
-        {text: "Firstname", model: "firstname"},
-        {text: "Lastname", model: "lastname"},
-        {text: "Email", model: "email"},
-        {text: "Address", model: "address"},
-        {text: "Postal", model: "postal"},
-        {text: "Place", model: "place"},
+        { text: "Firstname", model: "firstname" },
+        { text: "Lastname", model: "lastname" },
+        { text: "Email", model: "email" },
+        { text: "Address", model: "address" },
+        { text: "Postal", model: "postal" },
+        { text: "City", model: "city" },
+        { text: "Phone Number", model: "phone" },
       ],
 
+      client_secret: "",
+
       payment_options: [
-        {title: "Debit card", subtitle:"Select debit card for payment", active: false, selected: false},
-        {title: "Swish", subtitle:"Coming soon!", active: true, selected: false},
-        {title: "Klarna", subtitle:"Coming soon!", active: true, selected: false}
+        {
+          title: "Debit card",
+          subtitle: "Select debit card for payment",
+          active: false,
+          selected: false
+        },
+        {
+          title: "Swish",
+          subtitle: "Coming soon!",
+          active: true,
+          selected: false
+        },
+        {
+          title: "Klarna",
+          subtitle: "Coming soon!",
+          active: true,
+          selected: false
+        }
       ],
 
       firstname: "",
       lastname: "",
       address: "",
+      phone: "",
       postal: "",
-      place: "",
+      city: "",
       email: "",
 
-      selected_payment: "",
-    }
+      card: "",
+
+      selected_payment: ""
+    };
   },
 
   methods: {
-    selectPaymentAction(e){
+    selectPaymentAction(e) {
       e.selected = !e.selected;
       this.selected_payment = e.title;
 
-      this.has_selected_payment = this.payment_options.find(o => o.selected == true);
+      this.has_selected_payment = this.payment_options.find(
+        o => o.selected == true
+      );
     },
 
-    returnToCart(){
-      this.$router.push('/cart');
+    returnToCart() {
+      this.$router.push("/cart");
     },
 
-    giveRules(input){
-      switch (input.model){
-        case "firstname": return this.notEmptyRule;
-        case "lastname": return this.notEmptyRule;
-        case "email": return this.emailRules;
-        case "address": return this.notEmptyRule;
-        case "postal": return this.notEmptyRule;
-        case "place": return this.notEmptyRule;
+    giveRules(input) {
+      switch (input.model) {
+        case "firstname":
+          return this.notEmptyRule;
+        case "lastname":
+          return this.notEmptyRule;
+        case "email":
+          return this.emailRules;
+        case "address":
+          return this.notEmptyRule;
+        case "postal":
+          return this.notEmptyRule;
+        case "place":
+          return this.notEmptyRule;
       }
     },
 
-    nextStepper(){
-      if(this.$refs.form.validate()){
+    async generatePaymentIntent() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+
+      let vue = this;
+
+      axios
+        .post(`${process.env.VUE_APP_BACKEND}/create_payment`, {
+          product_ids: [33, 22],
+          discount_code: "Hallo123"
+        })
+        .then(function(resp) {
+          console.log(resp.data);
+          vue.client_secret = resp.data.clientSecret;
+          vue.e1 += 1;
+
+          vue.insertStripeForm();
+        })
+        .catch(function(error) {
+          alert(error);
+        });
+    },
+
+    insertStripeForm() {
+      var elements = stripe.elements();
+      var style = {
+        base: {
+          color: "#32325d",
+          fontFamily: "Arial, sans-serif",
+          fontSmoothing: "antialiased",
+          fontSize: "16px",
+          "::placeholder": {
+            color: "#32325d"
+          }
+        },
+        invalid: {
+          fontFamily: "Arial, sans-serif",
+          color: "#fa755a",
+          iconColor: "#fa755a"
+        }
+      };
+
+      this.card = elements.create("card", { style: style });
+
+      // Stripe injects an iframe into the DOM
+      this.card.mount("#card-element");
+
+      this.card.on("change", function(event) {
+        // Disable the Pay button if there are no card details in the Element
+        document.querySelector("button").disabled = event.empty;
+        document.querySelector("#card-error").textContent = event.error
+          ? event.error.message
+          : "";
+      });
+
+    },
+
+    payWithCard() {
+      let card = this.card;
+      let clientSecret = this.client_secret;
+      let vue = this;
+      stripe
+        .confirmCardPayment(clientSecret, {
+          receipt_email: vue.email,
+          payment_method: {
+            card: card,
+            billing_details: {
+              name: `${vue.firstname} ${vue.lastname}`,
+              email: vue.email,
+              phone: vue.phone,
+              address: {
+                city: vue.city,
+                postal_code: vue.postal,
+                line1: vue.address
+              }
+            }
+          }
+        })
+        .then(function(result) {
+          if (result.error) {
+            // Show error to the customer
+            vue.dialog_text = result.error.message;
+            vue.dialog_title = "Something went wrong...";
+            vue.dialog_success = false;
+            vue.dialog_button = "I understand";
+          } else {
+            // The payment succeeded!
+            vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
+            vue.dialog_title = "Purchase completed!";
+            vue.dialog_success = true;
+            vue.dialog_button = "Great!";
+          }
+
+
+          vue.dialog = true;
+          vue.resetCart();
+          // vue.$router.push("/")
+        });
+    },
+
+    nextStepper() {
+      if (this.$refs.form.validate()) {
         this.e1 += 1;
       }
     },
 
+    resetCart(){
+      this.$store.commit("resetCart")
+    }
   },
 
   computed: {
-    validatedInputs(){
+    validatedInputs() {
       // this.inputs.reduce(p => p.)
 
       return false;
     }
+  },
+
+  components: {
+    Dialog
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.stepper {
+  height: 50vh;
+  overflow-y: scroll;
+}
+#card-element {
+  border-radius: 4px 4px 0 0 ;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  width: 100%;
+  background: white;
+}
 
-  .stepper{
-    height: 50vh;
-    overflow-y: scroll;
-  }
 </style>

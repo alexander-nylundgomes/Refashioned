@@ -132,7 +132,7 @@ export default {
   height: fit-content;
 }
 
-.product-btn{
+.product-btn {
   width: 100%;
 }
 </style>

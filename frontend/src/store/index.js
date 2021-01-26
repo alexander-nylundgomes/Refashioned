@@ -11,14 +11,21 @@ export default new Vuex.Store({
     cart: JSON.parse(localStorage.getItem("cart")),
     categories: [],
     liked_categories: JSON.parse(localStorage.getItem("liked_categories")),
-    finalCart: [],
+    finalCart: []
   },
   mutations: {
     setProducts(state, payload) {
       state.products = payload;
     },
 
-    finalCartInsertion(state, payload){
+    resetCart(state){
+      state.finalCart = [];
+      state.cart = [];
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify([]));
+    },
+
+    finalCartInsertion(state, payload) {
       state.finalCart = payload;
     },
 
@@ -163,7 +170,7 @@ export default new Vuex.Store({
       return state.cart;
     },
 
-    finalCart(state){
+    finalCart(state) {
       return state.finalCart;
     }
   }

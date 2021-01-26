@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :miscs
   resources :categories
   resources :discount_codes
   resources :colors
@@ -12,5 +13,6 @@ Rails.application.routes.draw do
   get 'validate_stock', :to => 'products#validateStock'
   post 'validate_discount', :to=> 'discount_codes#tryCode'
   get 'search/:tag', :to=> 'products#search'
+  post 'create_payment', :to=> 'orders#create_payment'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

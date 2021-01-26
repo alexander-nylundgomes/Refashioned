@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).order('products.category_id')
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).order('products.category_id').where(bought: 0)
     
     render json: @products
   end
@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
 
   def validateStock
 
-    render json: Product.where(id: params['products_id'], name: params['products_name'])
+    render json: Product.where(id: params['products_id'], name: params['products_name'], bought: 0)
   end
 
   # DELETE /products/1
