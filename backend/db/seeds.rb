@@ -18,21 +18,26 @@ Product.connection.schema_cache.clear!
 
 ["Cozy sweaters", "Great looking shirts", "Smashing pants", "Sexy socks"].each do |i|
     Category.create({
-        cat_name: i,
+        name: i,
         description: Faker::Lorem.paragraph(sentence_count: 2),
+        img_path: Faker::LoremFlickr.image(size: "300x300"),
     })
 end
 
 ['Gucci', 'Prada', 'Nike', 'Adidas', 'Fear of God'].each do |c|
     Brand.create({
-        name: c
+        name: c,
+        description: Faker::Lorem.paragraph(sentence_count: 3),
+        img_path: Faker::LoremFlickr.image(size: "300x300"),
     })
 end
 
 
 ['Red', 'Black', 'Pink', 'Blue', 'Green'].each do |c|
     Color.create({
-        name: c
+        name: c,
+        img_path: Faker::LoremFlickr.image(size: "300x300"),
+        description: Faker::Lorem.paragraph(sentence_count: 3),
     })
 end
 
