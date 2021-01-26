@@ -18,6 +18,13 @@ export default new Vuex.Store({
       state.products = payload;
     },
 
+    resetCart(state){
+      state.finalCart = [];
+      state.cart = [];
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify([]));
+    },
+
     finalCartInsertion(state, payload) {
       state.finalCart = payload;
     },

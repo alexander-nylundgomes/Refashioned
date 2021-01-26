@@ -180,7 +180,8 @@ export default {
         { text: "Email", model: "email" },
         { text: "Address", model: "address" },
         { text: "Postal", model: "postal" },
-        { text: "Place", model: "place" }
+        { text: "City", model: "city" },
+        { text: "Phone Number", model: "phone" },
       ],
 
       client_secret: "",
@@ -209,8 +210,9 @@ export default {
       firstname: "",
       lastname: "",
       address: "",
+      phone: "",
       postal: "",
-      place: "",
+      city: "",
       email: "",
 
       card: "",
@@ -314,8 +316,19 @@ export default {
       let vue = this;
       stripe
         .confirmCardPayment(clientSecret, {
+          receipt_email: vue.email,
           payment_method: {
-            card: card
+            card: card,
+            billing_details: {
+              name: `${vue.firstname} ${vue.lastname}`,
+              email: vue.email,
+              phone: vue.phone,
+              address: {
+                city: vue.city,
+                postal_code: vue.postal,
+                line1: vue.address
+              }
+            }
           }
         })
         .then(function(result) {
@@ -333,7 +346,10 @@ export default {
             vue.dialog_button = "Great!";
           }
 
+
           vue.dialog = true;
+          vue.resetCart();
+          // vue.$router.push("/")
         });
     },
 
@@ -341,6 +357,10 @@ export default {
       if (this.$refs.form.validate()) {
         this.e1 += 1;
       }
+    },
+
+    resetCart(){
+      this.$store.commit("resetCart")
     }
   },
 
@@ -363,6 +383,13 @@ export default {
   height: 50vh;
   overflow-y: scroll;
 }
-
+#card-element {
+  border-radius: 4px 4px 0 0 ;
+  padding: 12px;
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  height: 44px;
+  width: 100%;
+  background: white;
+}
 
 </style>
