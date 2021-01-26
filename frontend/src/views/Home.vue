@@ -187,8 +187,8 @@ main.home {
   }
 }
 
-aside:nth-of-type(1){
-  .main-background{
+aside:nth-of-type(1) {
+  .main-background {
     background-image: url(../assets/main.png);
     height: 100%;
     width: 100%;
@@ -196,14 +196,14 @@ aside:nth-of-type(1){
     background-size: cover;
     position: relative;
 
-    .text{
+    .text {
       position: absolute;
       width: 100%;
       padding-top: 1em;
-      h3{
+      h3 {
         padding-left: 2em;
       }
-      h1{
+      h1 {
         line-height: 1;
         font-weight: 800;
         font-size: 3.5rem;
@@ -212,7 +212,7 @@ aside:nth-of-type(1){
       }
     }
 
-    .cutout-background{
+    .cutout-background {
       background-position: center;
       background-size: cover;
       background-image: url(../assets/cutout.png);

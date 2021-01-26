@@ -44,7 +44,7 @@ const routes = [
   {
     path: "/admin/login",
     name: "AdminLogin",
-    component: () => import("@/views/AdminLogin.vue"),
+    component: () => import("@/views/AdminLogin.vue")
   },
   {
     path: "/search",

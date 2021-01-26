@@ -7,7 +7,6 @@
     <v-navigation-drawer v-model="menu" absolute temporary>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
-
           <v-list-item
             color="blue"
             v-for="item of listItems"
@@ -42,10 +41,14 @@ export default {
         { title: "Products", link: "/products", icon: "mdi-tshirt-crew" },
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
         { title: "Categories", link: "/categories", icon: "mdi-apps" },
-        { title: "Saved Categories", link: "/saved_categories", icon: "mdi-apps" },
+        {
+          title: "Saved Categories",
+          link: "/saved_categories",
+          icon: "mdi-apps"
+        },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
-        { title: "About us", link: "/about", icon: "mdi-account-multiple" },
+        { title: "About us", link: "/about", icon: "mdi-account-multiple" }
       ]
     };
   },
