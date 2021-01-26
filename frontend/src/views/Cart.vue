@@ -39,10 +39,11 @@
             large
             color="primary"
             @click="validateStock()"
-            dark
+            class="white--text"
             depressed
             block
-            >Begin payment - {{ collectedPrice - discount_sum }} kr</v-btn
+            :disabled="isDisabled"
+            >{{ buttonText }}</v-btn
           >
         </v-col>
       </v-row>
@@ -136,10 +137,11 @@ export default {
       console.log(inStock);
 
       if (inStock.length == this.products.length) {
-        this.$store.commit("finalCartInsertion", [
-          { discount: this.discount_code },
-          { products: arrayOfIds }
-        ]);
+        this.$store.commit("finalCartInsertion", {
+          discount: this.discount_value,
+          products: arrayOfIds,
+          price_without_discount: this.collectedPrice,
+        }); 
         this.$router.push("cart/info");
       } else {
         let stockIds = inStock.map(p => p.id);
@@ -186,6 +188,7 @@ export default {
 
             if (resp.data[0].value_in_cash) {
               vue.discount_value = {
+                code: vue.discount_code,
                 type: "cash",
                 value: resp.data[0].value_in_cash
               };
@@ -193,6 +196,7 @@ export default {
               vue.discount_sum = resp.data[0].value_in_cash;
             } else if (resp.data[0].value_in_percent) {
               vue.discount_value = {
+                code: vue.discount_code,
                 type: "percent",
                 value: resp.data[0].value_in_percent
               };
@@ -201,14 +205,13 @@ export default {
                 collectedPrice * (resp.data[0].value_in_percent / 100);
             } else if (resp.data[0].value_in_shipping) {
               vue.discount_value = {
+                code: vue.discount_code,
                 type: "shipping",
                 value: resp.data[0].value_in_shipping
               };
             }
 
             vue.discount = true;
-
-            console.log(vue.discount_value);
           }
 
           return snackbarText;
@@ -245,6 +248,18 @@ export default {
       }
 
       return text;
+    },
+
+    buttonText(){
+      if(this.products.length == 0){
+        return "No products in cart"
+      }else{
+        return `Begin payment - ${this.collectedPrice - this.discount_sum} kr`
+      }
+    },
+
+    isDisabled(){
+      return this.products.length == 0;
     }
   },
   components: {

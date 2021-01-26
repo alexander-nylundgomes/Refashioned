@@ -21,7 +21,7 @@
             :color="color"
             block
             class="white--text"
-            @click="$emit('closingDialog')"
+            @click="action()"
           >
             {{ buttonText }}
           </v-btn>
@@ -44,6 +44,16 @@ export default {
                 return 'red'
             }
         }
+    },
+
+    methods: {
+      action(){
+        if(this.success){
+          this.$router.push("/");
+        }else{
+          this.$emit('closingDialog');
+        }
+      }
     }
 }
 </script>
