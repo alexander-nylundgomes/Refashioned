@@ -30,8 +30,9 @@
             >
               <v-text-field
                 v-for="input of inputs"
+                :prefix="input.prefix"
                 :key="input.model"
-                :model="input.model"
+                v-model="$data[input.model]"
                 outlined
                 :rules="giveRules(input)"
                 required
@@ -106,19 +107,30 @@
           </v-btn>
         </v-stepper-content>
 
-        <v-stepper-content step="3">
+        <v-stepper-content class="last-stepper" step="3">
           <v-card elevation="0" class="mb-6 stepper">
+            <h4>Amount: {{ dicounted_value }}</h4>
             <form id="payment-form">
               <div id="card-element"><!--Stripe.js injects the Card Element--></div>
               <button id="submit">
                 <div class="spinner hidden" id="spinner"></div>
               </button>
               <p id="card-error" role="alert"></p>
-              <p class="result-message hidden"></p>
             </form>
+            <v-container class="pa-0" fluid>
+              <v-checkbox class="ma-0" :ripple="false"  v-model="checkbox" >
+                <template v-slot:label>
+                  <p class="ma-0 label">I have read and understood Refashioneds policies and agreements regarding purchasing.</p>
+                </template>
+              </v-checkbox>
+            </v-container>
           </v-card>
 
-          <v-btn color="primary" id="button-text" @click="payWithCard()">
+          <v-btn 
+            :disabled="!checkbox" 
+            color="primary" 
+            id="button-text" 
+            @click="payWithCard()">
             Pay
           </v-btn>
 
@@ -151,11 +163,15 @@ export default {
 
   data() {
     return {
+      finalCart: this.$store.getters.finalCart,
+
       dialog: false,
       dialog_title: "",
       dialog_text: "",
       dialog_success: false,
       dialog_button: "",
+
+      checkbox: false,
 
       e1: 1,
 
@@ -181,7 +197,7 @@ export default {
         { text: "Address", model: "address" },
         { text: "Postal", model: "postal" },
         { text: "City", model: "city" },
-        { text: "Phone Number", model: "phone" },
+        { text: "Phone Number", model: "phone" , prefix: "+46"},
       ],
 
       client_secret: "",
@@ -231,6 +247,10 @@ export default {
       );
     },
 
+    checkInputs(){
+      console.log(this.firstname, this.lastname, this.email, this.city, this.phone, this.address, this.postal)
+    },
+
     returnToCart() {
       this.$router.push("/cart");
     },
@@ -261,8 +281,8 @@ export default {
 
       axios
         .post(`${process.env.VUE_APP_BACKEND}/create_payment`, {
-          product_ids: [33, 22],
-          discount_code: "Hallo123"
+          product_ids: vue.$store.getters.finalCart.products,
+          discount_code: vue.$store.getters.finalCart.discount
         })
         .then(function(resp) {
           console.log(resp.data);
@@ -280,7 +300,7 @@ export default {
       var elements = stripe.elements();
       var style = {
         base: {
-          color: "#32325d",
+          color: "#141414",
           fontFamily: "Arial, sans-serif",
           fontSmoothing: "antialiased",
           fontSize: "16px",
@@ -322,7 +342,7 @@ export default {
             billing_details: {
               name: `${vue.firstname} ${vue.lastname}`,
               email: vue.email,
-              phone: vue.phone,
+              phone: `+46${vue.phone}`,
               address: {
                 city: vue.city,
                 postal_code: vue.postal,
@@ -335,10 +355,31 @@ export default {
           if (result.error) {
             // Show error to the customer
             vue.dialog_text = result.error.message;
-            vue.dialog_title = "Something went wrong...";
+            vue.dialog_title = "Error";
             vue.dialog_success = false;
             vue.dialog_button = "I understand";
           } else {
+
+            axios.post(`${process.env.VUE_APP_BACKEND}/orders`, {
+              products: vue.$store.getters.cart,
+              order: {
+                city: vue.city,
+                address: vue.address,
+                email: vue.email,
+                phone: vue.phone,
+                firstname: vue.firstname,
+                lastname: vue.lastname,
+                postal: vue.postal,
+                tracking: "",
+              },
+              discount_code: "",
+            })
+            .then(function(resp){
+              alert(resp.data)
+            })
+            .catch(function(error){
+              alert(error)
+            })
             // The payment succeeded!
             vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
             vue.dialog_title = "Purchase completed!";
@@ -348,7 +389,7 @@ export default {
 
 
           vue.dialog = true;
-          vue.resetCart();
+          // vue.resetCart();
           // vue.$router.push("/")
         });
     },
@@ -369,6 +410,22 @@ export default {
       // this.inputs.reduce(p => p.)
 
       return false;
+    },
+
+    dicounted_value(){
+      console.log(this.finalCart)
+      console.log((1.0 - (this.finalCart.discount.value / 100.0)))
+      switch(this.finalCart.discount.type){
+        case "percent": return (this.finalCart.price_without_discount * (1.0 - (this.finalCart.discount.value / 100.0)));
+        case "cash": return this.finalCart.price_without_discount - this.finalCart.discount.value;
+        default : return this.finalCart.price_without_discount;
+      }
+    }
+  },
+
+  created(){
+    if(this.$store.getters.finalCart.length == 0){
+      this.$router.go(-1)
     }
   },
 
@@ -383,6 +440,7 @@ export default {
   height: 50vh;
   overflow-y: scroll;
 }
+
 #card-element {
   border-radius: 4px 4px 0 0 ;
   padding: 12px;
@@ -391,5 +449,10 @@ export default {
   width: 100%;
   background: white;
 }
+
+.label{
+  font-size: 0.80em;
+}
+
 
 </style>
