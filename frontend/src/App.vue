@@ -4,20 +4,20 @@
       <v-app-bar-nav-icon @click="menu = true"></v-app-bar-nav-icon>
       <!-- <v-toolbar-title>{{test}}</v-toolbar-title> -->
     </v-app-bar>
-    <v-navigation-drawer v-model="menu" absolute temporary>
+    <v-navigation-drawer color="primary" v-model="menu" absolute temporary>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item
-            color="blue"
+            color="yellow"
             v-for="item of listItems"
             :key="item.link"
             :link="true"
             :to="item.link"
           >
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon color="white">{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title> {{ item.title }} </v-list-item-title>
+            <v-list-item-title class="white--text"> {{ item.title }} </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
