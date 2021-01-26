@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
 
   def validateStock
 
-    render json: Product.where(id: params['products'])
+    render json: Product.where(id: params['products_id'], name: params['products_name'])
   end
 
   # DELETE /products/1

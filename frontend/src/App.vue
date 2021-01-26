@@ -42,6 +42,7 @@ export default {
         { title: "Products", link: "/products", icon: "mdi-tshirt-crew" },
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
         { title: "Categories", link: "/categories", icon: "mdi-apps" },
+        { title: "Saved Categories", link: "/saved_categories", icon: "mdi-apps" },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
         { title: "About us", link: "/about", icon: "mdi-account-multiple" },
