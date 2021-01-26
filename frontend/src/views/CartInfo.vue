@@ -128,18 +128,35 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+
+    <Dialog
+      :title="dialog_title"
+      :success="dialog_success"
+      :text="dialog_text"
+      :dialog="dialog"
+      :buttonText="dialog_button"
+      @closingDialog="dialog = false"
+    />
   </main>
 </template>
+
 
 <script>
 const axios = require("axios");
 let stripe = window.Stripe(process.env.VUE_APP_STRIPE_PUBL);
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "CartInfo",
 
   data() {
     return {
+      dialog: false,
+      dialog_title: "",
+      dialog_text: "",
+      dialog_success: false,
+      dialog_button: "",
+
       e1: 1,
 
       validInputs: true,
@@ -294,6 +311,7 @@ export default {
     payWithCard() {
       let card = this.card;
       let clientSecret = this.client_secret;
+      let vue = this;
       stripe
         .confirmCardPayment(clientSecret, {
           payment_method: {
@@ -303,11 +321,19 @@ export default {
         .then(function(result) {
           if (result.error) {
             // Show error to the customer
-            alert(result.error.message);
+            vue.dialog_text = result.error.message;
+            vue.dialog_title = "Something went wrong...";
+            vue.dialog_success = false;
+            vue.dialog_button = "I understand";
           } else {
             // The payment succeeded!
-            console.log(result.paymentIntent.id);
+            vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
+            vue.dialog_title = "Purchase completed!";
+            vue.dialog_success = true;
+            vue.dialog_button = "Great!";
           }
+
+          vue.dialog = true;
         });
     },
 
@@ -324,6 +350,10 @@ export default {
 
       return false;
     }
+  },
+
+  components: {
+    Dialog
   }
 };
 </script>
