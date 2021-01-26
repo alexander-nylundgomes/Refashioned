@@ -41,19 +41,8 @@
             @click="validateStock()"
             dark
             depressed
-            v-if="!discount"
             block
-            >Begin payment - {{ collectedPrice }} kr</v-btn
-          >
-
-          <v-btn
-            large
-            color="primary"
-            @click="validateStock()"
-            depressed
-            v-if="discount"
-            block
-            >Begin payment - {{ collectedPrice }} kr</v-btn
+            >Begin payment - {{ collectedPrice - discount_sum}} kr</v-btn
           >
         </v-col>
       </v-row>
@@ -122,17 +111,19 @@ export default {
       snackbarText: "",
       snackbar: false,
       discount: false,
-      discount_value: {}
+      discount_value: {},
+      discount_sum: 0,
     };
   },
 
   methods: {
     async validateStock() {
       let arrayOfIds = this.products.map(p => p.id);
+      let arrayOfNames = this.products.map(p => p.name);
 
       let inStock = await axios
         .get(`${process.env.VUE_APP_BACKEND}/validate_stock`, {
-          params: { products: arrayOfIds }
+          params: { products_id: arrayOfIds, products_name: arrayOfNames }
         })
         .then(function(resp) {
           return resp.data;
@@ -145,7 +136,12 @@ export default {
       console.log(inStock);
 
       if (inStock.length == this.products.length) {
-        return true;
+
+        this.$store.commit("finalCartInsertion", [
+          {discount: this.discount_code},
+          {products: arrayOfIds},
+        ])
+        this.$router.push("cart/info")
       } else {
         let stockIds = inStock.map(p => p.id);
 
@@ -194,11 +190,17 @@ export default {
                 type: "cash",
                 value: resp.data[0].value_in_cash
               };
+
+              vue.discount_sum = resp.data[0].value_in_cash
+
             } else if (resp.data[0].value_in_percent) {
               vue.discount_value = {
                 type: "percent",
                 value: resp.data[0].value_in_percent
               };
+
+              vue.discount_sum = collectedPrice * (resp.data[0].value_in_percent/100);
+
             } else if (resp.data[0].value_in_shipping) {
               vue.discount_value = {
                 type: "shipping",
@@ -254,4 +256,6 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+
+</style>

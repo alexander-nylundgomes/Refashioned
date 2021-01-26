@@ -10,11 +10,16 @@ export default new Vuex.Store({
     likes: JSON.parse(localStorage.getItem("likes")),
     cart: JSON.parse(localStorage.getItem("cart")),
     categories: [],
-    liked_categories: JSON.parse(localStorage.getItem("liked_categories"))
+    liked_categories: JSON.parse(localStorage.getItem("liked_categories")),
+    finalCart: [],
   },
   mutations: {
     setProducts(state, payload) {
       state.products = payload;
+    },
+
+    finalCartInsertion(state, payload){
+      state.finalCart = payload;
     },
 
     like(state, payload) {
@@ -156,6 +161,10 @@ export default new Vuex.Store({
 
     cart(state) {
       return state.cart;
+    },
+
+    finalCart(state){
+      return state.finalCart;
     }
   }
 });
