@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# rails db:reset
 Category.connection.schema_cache.clear!
 Category.reset_column_information
 
@@ -43,12 +44,14 @@ end
         color: [1,2,3,4,5].sample,
         price: Faker::Commerce.price,
         brand_id: [1,2,3,4,5].sample,
-        category_id: [1,2,3,4].sample
+        category_id: [1,2,3,4].sample,
+        bought: false
     })
 end
 
-
-
+[{name: "shippingCost", value: 70}, {name: "shippingBar", value: 700}].each do |x|
+    Misc.create(x)
+end
 
 20.times do 
     Msg.create({
@@ -63,7 +66,7 @@ end
 10.times do 
     Order.create({
         value: Faker::Commerce.price * 3,
-        adress: Faker::Address.street_name,
+        address: Faker::Address.street_name,
         city: Faker::Address.city,
         email: Faker::Internet.email,
         phone: Faker::PhoneNumber.phone_number_with_country_code,

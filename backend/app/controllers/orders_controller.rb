@@ -18,9 +18,30 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    ids = []
 
+    params['products'].each do |p|
+      ids << p['id']
+    end
+
+    Product.where(id: ids).update(bought: 1)
+
+    params['order']['value'] = calculate_order_amount(ids, params['discount_code']) 
+    @order = Order.new(order_params)
     if @order.save
+      
+      orderd_products = []
+
+      ids.each do |i|
+        orderd_products << OrderdProduct.new({product_id: i, order_id: @order.id})
+      end
+
+      OrderdProduct.transaction do
+        orderd_products.each do |o|
+          o.save!
+        end
+      end
+
       render json: @order, status: :created, location: @order
     else
       render json: @order.errors, status: :unprocessable_entity
@@ -28,7 +49,6 @@ class OrdersController < ApplicationController
   end
 
   def create_payment
-    puts ENV['stripe_secret'], "###"
     Stripe.api_key = ENV['stripe_secret']
     #Calculating price
     price = calculate_order_amount(params['product_ids'],params['discount_code']) 
@@ -41,8 +61,12 @@ class OrdersController < ApplicationController
       # Finds all products
       puts "Has price"
 
+      puts "########################"
+      puts price * 100
+      puts "########################"
+
       payment_intent = Stripe::PaymentIntent.create(
-        amount: price * 100,
+        amount: (price * 100).round,
         currency: 'sek'
       )
 
@@ -55,10 +79,14 @@ class OrdersController < ApplicationController
 
   def calculate_order_amount(product_ids, discount_code)
     # Items => [33,32,14]
-    # Discount_code => 'DiscountCode123'
+    # Discount_code => {"code"=>'DiscountCode123', "type"=>"percent", "value"=>10}
 
     prices = Product.where(id: product_ids)
     val = 0
+
+    puts "###############"
+    puts discount_code
+    puts "###############"
 
     if prices.length != product_ids.length
       puts "Missing items"
@@ -68,10 +96,26 @@ class OrdersController < ApplicationController
         val = val += product.price
       end
 
-      discount = DiscountCode.select('discount_codes.*').where(code: discount_code).first
+      discount = DiscountCode.select('discount_codes.*').where(code: discount_code['code']).first
 
       if discount != nil && val >= discount.required_value && discount.amount > 0
         puts "Has discount"
+
+        puts discount.value_in_percent
+        puts "VAAAAL", val
+        if discount.value_in_cash != nil
+          puts "running cash"
+          val = val - discount.value_in_cash
+        elsif discount.value_in_percent != nil
+          puts "running percent"
+          puts ( 1 - (discount.value_in_percent / 100.0) )
+          val = (val * 1.0) * ( 1 - (discount.value_in_percent / 100.0) )
+        elsif discount.value_in_shipping != nil
+          puts "running shipping"
+          val = val - Misc.where(name: "shippinCost").first.value
+        end
+        
+        puts "VAAAAL", val
       else
         puts "Does not have discount"
       end
