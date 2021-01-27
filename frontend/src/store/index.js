@@ -18,6 +18,13 @@ export default new Vuex.Store({
       state.products = payload;
     },
 
+    disableProduct(state, payload){
+      let product = state.products.find(p => p.id == payload);
+      let index = state.products.indexOf(product);
+
+      state.products.splice(index, 1);
+    },
+
     resetCart(state){
       state.finalCart = [];
       state.cart = [];
