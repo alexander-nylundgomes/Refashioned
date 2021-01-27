@@ -76,12 +76,6 @@
             </v-btn>
           </v-col>
         </v-row>
-        <!-- <v-chip-group class="mt-10">
-                <v-chip
-                    v-for="chip of chips"
-                    :key="chip.id"
-                >{{ chip.text }}</v-chip>
-            </v-chip-group> -->
       </v-container>
     </section>
     <ProductContainer :products="relatedProducts" />
@@ -194,6 +188,7 @@ export default {
 
   created() {
     this.setup();
+    console.log(this.product)
   }
 };
 </script>
