@@ -109,7 +109,7 @@
 
         <v-stepper-content class="last-stepper" step="3">
           <v-card elevation="0" class="mb-6 stepper">
-            <h4>Amount: {{ dicounted_value }}</h4>
+            <h4>Amount: {{ dicounted_value }} kr</h4>
             <form id="payment-form">
               <div id="card-element"><!--Stripe.js injects the Card Element--></div>
               <button id="submit">
@@ -372,7 +372,7 @@ export default {
                 postal: vue.postal,
                 tracking: "",
               },
-              discount_code: "",
+              discount_code: vue.finalCart.discount['code'],
             })
             .then(function(resp){
               alert(resp.data)
