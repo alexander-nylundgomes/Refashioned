@@ -33,10 +33,10 @@ class OrdersController < ApplicationController
       discount_id = nil
     else
       discount_id = discount['id']
+      DiscountCode.where(id: discount_id).update(amount: discount['amount'] - 1)
     end
 
     params['order']['discount_id'] = discount_id
-    
     @order = Order.new(order_params)
     if @order.save
       
