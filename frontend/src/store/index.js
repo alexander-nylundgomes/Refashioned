@@ -11,7 +11,8 @@ export default new Vuex.Store({
     cart: JSON.parse(localStorage.getItem("cart")),
     categories: [],
     liked_categories: JSON.parse(localStorage.getItem("liked_categories")),
-    finalCart: []
+    finalCart: [],
+    shippingData: []
   },
   mutations: {
     setProducts(state, payload) {
@@ -68,6 +69,10 @@ export default new Vuex.Store({
       state.categories = payload;
     },
 
+    setShippingData(state, payload){
+      state.shippingData = payload;
+    },
+
     addToCart(state, payload) {
       state.cart.push(payload);
       localStorage.setItem("cart", JSON.stringify(state.cart));
@@ -101,6 +106,17 @@ export default new Vuex.Store({
         .catch(function(error) {
           alert(error);
         });
+    },
+
+    async getShippingData(state){
+      axios.get(`${process.env.VUE_APP_BACKEND}/shipping_data`)
+      .then(function(resp){
+        console.log(resp.data)
+        state.commit("setShippingData", resp.data)
+      })
+      .catch(function(error){
+        alert(error)
+      })
     },
 
     likeAction(state, payload) {
@@ -179,6 +195,10 @@ export default new Vuex.Store({
 
     finalCart(state) {
       return state.finalCart;
+    },
+
+    shippingData(state){
+      return state.shippingData;
     }
   }
 });

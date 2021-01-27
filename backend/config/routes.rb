@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   post 'validate_discount', :to=> 'discount_codes#tryCode'
   get 'search/:tag', :to=> 'products#search'
   post 'create_payment', :to=> 'orders#create_payment'
+  get 'shipping_data', :to=> 'miscs#shipping_data'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

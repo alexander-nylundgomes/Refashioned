@@ -27,6 +27,14 @@
 
       <v-row>
         <v-col>
+          <v-alert @click="showShippingInfo = true" v-if="collectedPrice < shipping_bar.value" type="info" color="primary" dense class="white--text">
+            Shipping: {{ shipping_cost.value }} kr
+          </v-alert>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
           <v-alert v-if="discount" type="success" dense>
             Discount: {{ refactorDiscountValue }}
           </v-alert>
@@ -93,6 +101,15 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <Dialog 
+      :title="'Shipping info'"
+      :success="'primary'"
+      :dialog="showShippingInfo"
+      :buttonText="'Ok, I understand'"
+      @closingDialog="showShippingInfo = false"
+      :text="`Shipping costs ${shipping_cost.value} kr when your order is below ${shipping_bar.value} kr unless you have a discount for free shipping.`"
+    />
   </main>
 </template>
 
@@ -100,12 +117,14 @@
 import ProductContainer from "@/components/ProductContainer.vue";
 import TitleCardProducts from "@/components/TitleCardProducts";
 const axios = require("axios");
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "Cart",
 
   data() {
     return {
+      showShippingInfo: false,
       dialog: false,
       missingItems: [],
       discount_code: "",
@@ -113,7 +132,7 @@ export default {
       snackbar: false,
       discount: false,
       discount_value: {},
-      discount_sum: 0
+      discount_sum: 0,
     };
   },
 
@@ -223,9 +242,23 @@ export default {
       this.snackbar = true;
     }
   },
+
+
   computed: {
     products() {
       return this.$store.getters.cart;
+    },
+
+    shipping_cost(){
+      let cost = this.$store.getters.shippingData.find(x => x.name == 'shippingCost');
+      console.log(cost)
+      return cost;
+    },
+
+    shipping_bar(){
+      let bar = this.$store.getters.shippingData.find(x => x.name == 'shippingBar');
+      console.log(bar)
+      return bar;
     },
 
     collectedPrice() {
@@ -264,7 +297,8 @@ export default {
   },
   components: {
     ProductContainer,
-    TitleCardProducts
+    TitleCardProducts,
+    Dialog
   }
 };
 </script>

@@ -5,7 +5,7 @@
       width="500"
     >
       <v-card>
-        <v-card-title :class="{'green' : success, 'red' : !success}" class="headline white--text">
+        <v-card-title :class="{'green' : success, 'red' : !success, 'primary' : success == 'primary'}" class="headline white--text">
           {{ title }}
         </v-card-title>
 
@@ -38,17 +38,19 @@ export default {
 
     computed: {
         color(){
-            if(this.success){
+            if(this.success == true){
                 return 'green'
-            }else{
+            }else if(this.success == false){
                 return 'red'
+            }else{
+              return 'primary'
             }
         }
     },
 
     methods: {
       action(){
-        if(this.success){
+        if(this.success == true){
           this.$router.push("/");
         }else{
           this.$emit('closingDialog');
