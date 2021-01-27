@@ -384,18 +384,27 @@ export default {
               vue.dialog_title = "Purchase completed!";
               vue.dialog_success = true;
               vue.dialog_button = "Great!";
+              vue.removeItemsFromStore();
             })
             .catch(function(error){
-              alert(error)
+              console.log(error)
             })
 
           }
 
           vue.loading = false;
           vue.dialog = true;
-          // vue.resetCart();
+          vue.resetCart();
           // vue.$router.push("/")
         });
+    },
+
+    removeItemsFromStore(){
+      let product_ids = this.finalCart.products;
+      console.log("asdasd", this.finalCart.products)
+      for(let p of product_ids){
+        this.$store.commit('disableProduct', p)
+      }
     },
 
     nextStepper() {
@@ -417,8 +426,7 @@ export default {
     },
 
     dicounted_value(){
-      console.log(this.finalCart)
-      console.log((1.0 - (this.finalCart.discount.value / 100.0)))
+      // TODO: Enable free shipping
       switch(this.finalCart.discount.type){
         case "percent": return (this.finalCart.price_without_discount * (1.0 - (this.finalCart.discount.value / 100.0)));
         case "cash": return this.finalCart.price_without_discount - this.finalCart.discount.value;
