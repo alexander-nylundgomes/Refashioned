@@ -27,15 +27,23 @@
 
       <v-row>
         <v-col>
-          <v-alert @click="showShippingInfo = true" v-if="collectedPrice < shipping_bar.value" type="info" color="primary" dense class="white--text">
+          <v-btn 
+          :disabled="disabledShipping"
+          @click="showShippingInfo = true" 
+          color="primary" 
+          dense 
+          class="white--text"
+          block
+          elevation="0"
+          >
             Shipping: {{ shipping_cost.value }} kr
-          </v-alert>
+          </v-btn>
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="discount">
         <v-col>
-          <v-alert v-if="discount" type="success" dense>
+          <v-alert  type="success" dense>
             Discount: {{ refactorDiscountValue }}
           </v-alert>
         </v-col>
@@ -226,12 +234,16 @@ export default {
               vue.discount_value = {
                 code: vue.discount_code,
                 type: "shipping",
-                value: resp.data[0].value_in_shipping
+                value: vue.shipping_cost.value,
               };
+
+              vue.discount_sum = vue.shipping_cost.value
             }
 
             vue.discount = true;
           }
+
+          console.log(vue.discount_value)
 
           return snackbarText;
         })
@@ -247,6 +259,10 @@ export default {
   computed: {
     products() {
       return this.$store.getters.cart;
+    },
+
+    disabledShipping(){
+      return this.discount_value.type == 'shipping' || this.collectedPrice > this.shipping_bar.value
     },
 
     shipping_cost(){
@@ -287,7 +303,7 @@ export default {
       if(this.products.length == 0){
         return "No products in cart"
       }else{
-        return `Begin payment - ${this.collectedPrice - this.discount_sum} kr`
+        return `Begin payment - ${this.collectedPrice - this.discount_sum + this.shipping_cost.value} kr`
       }
     },
 

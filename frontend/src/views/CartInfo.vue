@@ -109,7 +109,7 @@
 
         <v-stepper-content class="last-stepper" step="3">
           <v-card elevation="0" class="mb-6 stepper">
-            <h4>Amount: {{ dicounted_value }} kr</h4>
+            <h4>Amount: {{ valueFromBackend }} kr</h4>
             <form id="payment-form">
               <div id="card-element"><!--Stripe.js injects the Card Element--></div>
               <button id="submit">
@@ -167,12 +167,17 @@ export default {
   data() {
     return {
       finalCart: this.$store.getters.finalCart,
+
       loading: false,
       dialog: false,
       dialog_title: "",
       dialog_text: "",
       dialog_success: false,
       dialog_button: "",
+      valueFromBackend: "",
+
+      shipping_cost: this.$store.getters.shippingData.find(x => x.name == "shippingCost"),
+      shipping_bar: this.$store.getters.shippingData.find(x => x.name == "shippingBar"),
 
       checkbox: false,
 
@@ -290,6 +295,7 @@ export default {
         .then(function(resp) {
           console.log(resp.data);
           vue.client_secret = resp.data.clientSecret;
+          vue.valueFromBackend = resp.data.value;
           vue.e1 += 1;
 
           vue.insertStripeForm();
@@ -427,11 +433,18 @@ export default {
 
     dicounted_value(){
       // TODO: Enable free shipping
+      let value;
+
+      console.log(this.finalCart.discount.type)
+
       switch(this.finalCart.discount.type){
-        case "percent": return (this.finalCart.price_without_discount * (1.0 - (this.finalCart.discount.value / 100.0)));
-        case "cash": return this.finalCart.price_without_discount - this.finalCart.discount.value;
-        default : return this.finalCart.price_without_discount;
+        case "percent": value = (this.finalCart.price_without_discount * (1.0 - (this.finalCart.discount.value / 100.0)));break;
+        case "cash": value = this.finalCart.price_without_discount - this.finalCart.discount.value;break;
+        case "shipping": value = this.finalCart.price_without_discount - this.shipping_cost.value;break;
+        default : value = this.finalCart.price_without_discount;break;
       }
+
+      return value + this.shipping_cost.value
     }
   },
 
