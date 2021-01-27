@@ -141,6 +141,13 @@
       </v-stepper-items>
     </v-stepper>
 
+    <v-container class="loading" v-if="loading">
+      <v-progress-circular
+        indeterminate
+        color="grey lighten-5"
+      ></v-progress-circular>
+    </v-container>
+
     <Dialog
       :title="dialog_title"
       :success="dialog_success"
@@ -164,7 +171,7 @@ export default {
   data() {
     return {
       finalCart: this.$store.getters.finalCart,
-
+      loading: false,
       dialog: false,
       dialog_title: "",
       dialog_text: "",
@@ -331,6 +338,7 @@ export default {
     },
 
     payWithCard() {
+      this.loading = true;
       let card = this.card;
       let clientSecret = this.client_secret;
       let vue = this;
@@ -387,7 +395,7 @@ export default {
             vue.dialog_button = "Great!";
           }
 
-
+          vue.loading = false;
           vue.dialog = true;
           // vue.resetCart();
           // vue.$router.push("/")
@@ -452,6 +460,19 @@ export default {
 
 .label{
   font-size: 0.80em;
+}
+
+.loading{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
 }
 
 
