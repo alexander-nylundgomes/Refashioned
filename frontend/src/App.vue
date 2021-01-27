@@ -8,7 +8,7 @@
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item
-            color="yellow"
+            :color="randomColor()"
             v-for="item of listItems"
             :key="item.link"
             :link="true"
@@ -49,7 +49,8 @@ export default {
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
         { title: "About us", link: "/about", icon: "mdi-account-multiple" }
-      ]
+      ],
+      colors: ["blue", "yellow", "green", "orange"]
     };
   },
 
@@ -58,6 +59,11 @@ export default {
       this.$store.dispatch("getProducts");
       this.$store.dispatch("getCategories");
     },
+
+    randomColor(){
+      return this.colors[Math.floor(Math.random() * this.colors.length)]
+    },
+
     localStorageInit() {
       if (localStorage.getItem("likes") == null) {
         localStorage.setItem("likes", JSON.stringify([]));
