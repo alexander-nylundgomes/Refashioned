@@ -14,11 +14,12 @@ class ProductsController < ApplicationController
   end
 
   def search
-    ## Gets products by name, category name and brand
-    ## maybe multi word search? ex. "blue nike shirts"
+    # Gets products by name, category name and brand
+    # maybe multi word search? ex. "blue nike shirts"
+    # TODO: Add search for tags
     
     words = params[:tag].split(' ')
-    products = Product.select('products.*', 'products.id AS product_id', 'categories.cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ?", "%#{words.first}%" , "%#{words.first}%" , "%#{words.first}%")
+    products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ?", "%#{words.first}%" , "%#{words.first}%" , "%#{words.first}%")
 
     # words.each do |search|
     #   queries = Array(search).map do |search_term|
