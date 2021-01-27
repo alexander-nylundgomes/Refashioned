@@ -78,7 +78,8 @@ class OrdersController < ApplicationController
       )
 
       render json: {
-        clientSecret: payment_intent['client_secret']
+        clientSecret: payment_intent['client_secret'],
+        value: price,
       }
     end
   end
@@ -106,21 +107,26 @@ class OrdersController < ApplicationController
         val = val += product.price
       end
 
+      if val >= Misc.where(name: "shippingBar").first.value
+        shipping = 0
+      else
+        shipping = Misc.where(name: "shippingCost").first.value
+      end
+
       if discount != nil && val >= discount.required_value && discount.amount > 0
 
-        puts discount.value_in_percent
         if discount.value_in_cash != nil
           val = val - discount.value_in_cash
         elsif discount.value_in_percent != nil
           val = (val * 1.0) * ( 1 - (discount.value_in_percent / 100.0) )
         elsif discount.value_in_shipping != nil
-          val = val - Misc.where(name: "shippinCost").first.value
+          # Give free shipping
+          shipping = 0;
         end
-        
       end
     end
 
-    return val
+    return val + shipping
   end
 
   # PATCH/PUT /orders/1

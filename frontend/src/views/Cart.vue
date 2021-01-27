@@ -27,7 +27,23 @@
 
       <v-row>
         <v-col>
-          <v-alert v-if="discount" type="success" dense>
+          <v-btn 
+          :disabled="disabledShipping"
+          @click="showShippingInfo = true" 
+          color="primary" 
+          dense 
+          class="white--text"
+          block
+          elevation="0"
+          >
+            Shipping: {{ shipping_cost.value }} kr
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="discount">
+        <v-col>
+          <v-alert  type="success" dense>
             Discount: {{ refactorDiscountValue }}
           </v-alert>
         </v-col>
@@ -93,6 +109,15 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <Dialog 
+      :title="'Shipping info'"
+      :success="'primary'"
+      :dialog="showShippingInfo"
+      :buttonText="'Ok, I understand'"
+      @closingDialog="showShippingInfo = false"
+      :text="`Shipping costs ${shipping_cost.value} kr when your order is below ${shipping_bar.value} kr unless you have a discount for free shipping.`"
+    />
   </main>
 </template>
 
@@ -100,12 +125,14 @@
 import ProductContainer from "@/components/ProductContainer.vue";
 import TitleCardProducts from "@/components/TitleCardProducts";
 const axios = require("axios");
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "Cart",
 
   data() {
     return {
+      showShippingInfo: false,
       dialog: false,
       missingItems: [],
       discount_code: "",
@@ -113,7 +140,7 @@ export default {
       snackbar: false,
       discount: false,
       discount_value: {},
-      discount_sum: 0
+      discount_sum: 0,
     };
   },
 
@@ -207,12 +234,16 @@ export default {
               vue.discount_value = {
                 code: vue.discount_code,
                 type: "shipping",
-                value: resp.data[0].value_in_shipping
+                value: vue.shipping_cost.value,
               };
+
+              vue.discount_sum = vue.shipping_cost.value
             }
 
             vue.discount = true;
           }
+
+          console.log(vue.discount_value)
 
           return snackbarText;
         })
@@ -223,9 +254,27 @@ export default {
       this.snackbar = true;
     }
   },
+
+
   computed: {
     products() {
       return this.$store.getters.cart;
+    },
+
+    disabledShipping(){
+      return this.discount_value.type == 'shipping' || this.collectedPrice > this.shipping_bar.value
+    },
+
+    shipping_cost(){
+      let cost = this.$store.getters.shippingData.find(x => x.name == 'shippingCost');
+      console.log(cost)
+      return cost;
+    },
+
+    shipping_bar(){
+      let bar = this.$store.getters.shippingData.find(x => x.name == 'shippingBar');
+      console.log(bar)
+      return bar;
     },
 
     collectedPrice() {
@@ -254,7 +303,7 @@ export default {
       if(this.products.length == 0){
         return "No products in cart"
       }else{
-        return `Begin payment - ${this.collectedPrice - this.discount_sum} kr`
+        return `Begin payment - ${this.collectedPrice - this.discount_sum + this.shipping_cost.value} kr`
       }
     },
 
@@ -264,7 +313,8 @@ export default {
   },
   components: {
     ProductContainer,
-    TitleCardProducts
+    TitleCardProducts,
+    Dialog
   }
 };
 </script>

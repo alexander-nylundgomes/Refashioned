@@ -58,6 +58,7 @@ export default {
     setup() {
       this.$store.dispatch("getProducts");
       this.$store.dispatch("getCategories");
+      this.$store.dispatch("getShippingData");
     },
 
     randomColor(){

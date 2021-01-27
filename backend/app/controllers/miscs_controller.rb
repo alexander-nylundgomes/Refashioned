@@ -24,6 +24,11 @@ class MiscsController < ApplicationController
     end
   end
 
+  def shipping_data
+    
+    render json: Misc.select('miscs.*').where("name = ? OR name = ?", 'shippingBar', 'shippingCost')
+  end
+
   # PATCH/PUT /miscs/1
   def update
     if @misc.update(misc_params)
