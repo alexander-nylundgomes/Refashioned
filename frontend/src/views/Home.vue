@@ -1,21 +1,5 @@
 <template>
   <main class="home">
-    <!-- <aside>
-      <div class="text">
-        <h3>This is</h3>
-        <h1>Refashioned</h1>
-        <p>
-          A clothing company unlike any other. Branded, high-quality fashion at
-          a fraction of the cost. All while saving planet earth.
-        </p>
-      </div>
-      <div class="images">
-        <div class="background" v-for="i of 4" :key="i">
-          <div class="overlay"></div>
-        </div>
-      </div>
-    </aside> -->
-
     <aside>
       <div class="main-background">
         <div class="text">
@@ -71,7 +55,7 @@
     <BulkComponent
       :section="{
         text: 'Shop by filter',
-        link: '/somewhere',
+        link: '/products/filter',
         img_path: require('@/assets/front-page9.jpg')
       }"
     />
@@ -115,7 +99,7 @@ export default {
       first_sections: [
         {
           text: "New arrivals",
-          link: "/",
+          link: "/products/new_arrivals/all",
           img_path: require("@/assets/front-page5.jpg")
         }
       ],
@@ -123,17 +107,17 @@ export default {
       second_sections: [
         {
           text: "Shop by category",
-          link: "/categories",
+          link: "/products/categories",
           img_path: require("@/assets/front-page7.jpg")
         },
         {
           text: "Shop by brands",
-          link: "/products",
+          link: "/products/brands",
           img_path: require("@/assets/front-page6.jpg")
         },
         {
           text: "Shop by colors",
-          link: "/colors",
+          link: "/products/colors",
           img_path: require("@/assets/front-page8.jpg")
         }
       ],
