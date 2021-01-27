@@ -5,21 +5,33 @@
       <!-- <v-toolbar-title>{{test}}</v-toolbar-title> -->
     </v-app-bar>
     <v-navigation-drawer color="primary" v-model="menu" absolute temporary>
-      <v-list nav dense>
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item
-            :color="randomColor()"
-            v-for="item of listItems"
-            :key="item.link"
-            :link="true"
-            :to="item.link"
-          >
-            <v-list-item-icon>
-              <v-icon color="white">{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title class="white--text"> {{ item.title }} </v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
+      <v-list nav dense dark>
+        <v-list-group
+          :color="randomColor()"
+          dark
+          v-for="item in items"
+          :key="item.title"
+          v-model="item.active"
+          :prepend-icon="item.icon"
+          append-icon=""
+          class="no-mb"
+          no-action
+        >
+          <template v-slot:activator>
+            <v-list-item-content color="white">
+              <v-list-item-title class="white--text" @click="reRoute(item)" >{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </template>
+            <v-list-item
+              v-for="child in item.items"
+              :key="child.title"
+            >
+              <v-list-item-content>
+                <v-list-item-title class="white--text" @click="$router.push(child.link).catch(()=>{})" v-text="child.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+
       </v-list>
     </v-navigation-drawer>
     <router-view :key="$route.fullPath"></router-view>
@@ -36,11 +48,14 @@ export default {
   data() {
     return {
       menu: false,
-      listItems: [
+      items: [
         { title: "Home", link: "/", icon: "mdi-home" },
-        { title: "Products", link: "/products", icon: "mdi-tshirt-crew" },
+        { title: "Products", link: "/products", icon: "mdi-tshirt-crew", items: [
+          {title: "Brands", link: "/products/brands"},
+          {title: "Colors", link: "/products/colors"},
+          {title: "Categories", link: "/"},
+        ]},
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
-        { title: "Categories", link: "/categories", icon: "mdi-apps" },
         {
           title: "Saved Categories",
           link: "/saved_categories",
@@ -50,7 +65,7 @@ export default {
         { title: "Search", link: "/search", icon: "mdi-magnify" },
         { title: "About us", link: "/about", icon: "mdi-account-multiple" }
       ],
-      colors: ["blue", "yellow", "green", "orange"]
+      colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]
     };
   },
 
@@ -63,6 +78,10 @@ export default {
 
     randomColor(){
       return this.colors[Math.floor(Math.random() * this.colors.length)]
+    },
+
+    reRoute(item){
+      if(item.items == undefined){this.$router.push(item.link).catch(()=>{})}
     },
 
     localStorageInit() {
@@ -121,5 +140,13 @@ main {
 
 .changed-button-alert {
   font-size: 0.75em !important;
+}
+
+.no-mb{
+  margin-bottom: 0 !important;
+
+  *{
+    margin-bottom: 0 !important;
+  }
 }
 </style>
