@@ -141,6 +141,8 @@
       </v-stepper-items>
     </v-stepper>
 
+    <Loading :loading="loading"/>
+
     <Dialog
       :title="dialog_title"
       :success="dialog_success"
@@ -157,6 +159,7 @@
 const axios = require("axios");
 let stripe = window.Stripe(process.env.VUE_APP_STRIPE_PUBL);
 import Dialog from "@/components/Dialog.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "CartInfo",
@@ -164,7 +167,7 @@ export default {
   data() {
     return {
       finalCart: this.$store.getters.finalCart,
-
+      loading: false,
       dialog: false,
       dialog_title: "",
       dialog_text: "",
@@ -331,6 +334,7 @@ export default {
     },
 
     payWithCard() {
+      this.loading = true;
       let card = this.card;
       let clientSecret = this.client_secret;
       let vue = this;
@@ -374,20 +378,20 @@ export default {
               },
               discount_code: vue.finalCart.discount['code'],
             })
-            .then(function(resp){
-              alert(resp.data)
+            .then(function(){
+              // The payment succeeded!
+              vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
+              vue.dialog_title = "Purchase completed!";
+              vue.dialog_success = true;
+              vue.dialog_button = "Great!";
             })
             .catch(function(error){
               alert(error)
             })
-            // The payment succeeded!
-            vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
-            vue.dialog_title = "Purchase completed!";
-            vue.dialog_success = true;
-            vue.dialog_button = "Great!";
+
           }
 
-
+          vue.loading = false;
           vue.dialog = true;
           // vue.resetCart();
           // vue.$router.push("/")
@@ -430,7 +434,8 @@ export default {
   },
 
   components: {
-    Dialog
+    Dialog,
+    Loading
   }
 };
 </script>

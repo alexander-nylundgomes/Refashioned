@@ -44,7 +44,7 @@ export default {
         {
           title: "Saved Categories",
           link: "/saved_categories",
-          icon: "mdi-apps"
+          icon: "mdi-archive"
         },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
