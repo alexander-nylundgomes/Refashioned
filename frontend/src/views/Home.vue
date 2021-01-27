@@ -36,18 +36,18 @@
       :key="section.link"
     />
 
-    <v-card elevation="0" class="text-card">
+    <v-card elevation="0" class="text-card" tile color="primary">
       <v-card-title>
-        <p class="ma-0 large-title">Who are we?</p>
+        <p class="ma-0 large-title white--text">Who are we?</p>
       </v-card-title>
-      <v-card-subtitle>From here on out</v-card-subtitle>
-      <v-card-text
+      <v-card-subtitle class="white--text">From here on out</v-card-subtitle>
+      <v-card-text class="white--text"
         >Who are we and where did we come from? Read about our story, vision and
         what we hope to accomplish through Refashioned.</v-card-text
       >
       <v-card-actions>
-        <router-link :to="'/'" class="link">
-          <v-btn small color="primary" depressed dark>click here to read</v-btn>
+        <router-link :to="'/about'" class="link">
+          <v-btn small depressed text dark>click here to read</v-btn>
         </router-link>
       </v-card-actions>
     </v-card>
@@ -161,7 +161,6 @@ main.home {
 }
 
 .text-card {
-  background-color: whitesmoke;
   width: 95%;
   margin: 1em 0;
 
