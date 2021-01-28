@@ -51,9 +51,10 @@ export default {
       items: [
         { title: "Home", link: "/", icon: "mdi-home" },
         { title: "Products", link: "/products", icon: "mdi-tshirt-crew", items: [
-          {title: "Brands", link: "/products/brands"},
-          {title: "Colors", link: "/products/colors"},
+          {title: "Brands", link: "/brands"},
+          {title: "Colors", link: "/colors"},
           {title: "Categories", link: "/"},
+          {title: "Custom filter", link: "/"},
         ]},
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
         {
@@ -74,6 +75,8 @@ export default {
       this.$store.dispatch("getProducts");
       this.$store.dispatch("getCategories");
       this.$store.dispatch("getShippingData");
+      this.$store.dispatch("getColors");
+      this.$store.dispatch("getBrands");
     },
 
     randomColor(){

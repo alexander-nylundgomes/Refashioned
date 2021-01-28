@@ -7,6 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products: [],
+    colors: [],
+    brands: [],
     likes: JSON.parse(localStorage.getItem("likes")),
     cart: JSON.parse(localStorage.getItem("cart")),
     categories: [],
@@ -14,9 +16,18 @@ export default new Vuex.Store({
     finalCart: [],
     shippingData: []
   },
+
   mutations: {
     setProducts(state, payload) {
       state.products = payload;
+    },
+
+    setBrands(state, payload){
+      state.brands = payload;
+    },
+
+    setColors(state, payload){
+      state.colors = payload;
     },
 
     disableProduct(state, payload){
@@ -95,6 +106,27 @@ export default new Vuex.Store({
         .catch(function(error) {
           alert(error);
         });
+    },
+
+    async getBrands(state){
+      axios
+        .get(`${process.env.VUE_APP_BACKEND}/brands`)
+        .then(function(resp) {
+          state.commit("setBrands", resp.data);
+        })
+        .catch(function(error) {
+          alert(error);
+        });
+    },
+
+    async getColors(state){
+      axios.get(`${process.env.VUE_APP_BACKEND}/colors`)
+      .then(function(resp){
+        state.commit("setColors", resp.data)
+      })
+      .catch(function(error){
+        alert(error)
+      })
     },
 
     async getCategories(state) {
@@ -199,6 +231,14 @@ export default new Vuex.Store({
 
     shippingData(state){
       return state.shippingData;
+    },
+
+    brands(state){
+      return state.brands;
+    },
+    
+    colors(state){
+      return state.colors
     }
   }
 });
