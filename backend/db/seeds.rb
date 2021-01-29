@@ -24,7 +24,8 @@ Product.connection.schema_cache.clear!
     })
 end
 
-['Gucci', 'Prada', 'Nike', 'Adidas', 'Fear of God'].each do |c|
+brands = ['Gucci', 'Prada', 'Nike', 'Adidas', 'Fear of God']
+brands.each do |c|
     Brand.create({
         name: c,
         description: Faker::Lorem.paragraph(sentence_count: 3),
@@ -113,4 +114,32 @@ products = Product.all
     })
 end
 
+conditions = [
+    'Absolute garbage',
+    'Pretty bad',
+    'Bad',
+    'Not to bad',
+    'Decent',
+    'OK',
+    'Pretty good',
+    'Great',
+    'Really good',
+    'Amazing',
+    'Never been worn',
+]
+
+10.times do
+
+    SellRequest.create({
+        firstname: Faker::Name.first_name,
+        lastname: Faker::Name.last_name,
+        email: Faker::Internet.email,
+        phone: Faker::PhoneNumber.phone_number_with_country_code,
+        brand: brands.sample,
+        condition: conditions.sample,
+        file_path: "some_random_file_path",
+        asking_price: Faker::Commerce.price,
+    })
+
+end
 
