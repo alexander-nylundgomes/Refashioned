@@ -79,10 +79,32 @@ const routes = [
     component: () => import("@/views/ProductsGroup.vue")
   },
   {
-    path: "/products/:group/:tag",
-    name: "ProductsGroupTag",
+    path: "/colors",
+    name: "Colors",
+    props: {
+      itemType: 'colors'
+    },
+    component: () => import("@/views/Colors.vue")
+  },
+  {
+    path: "/brands",
+    name: "Brands",
+    props: {
+      itemType: 'brands',
+    },
+    component: () => import("@/views/Colors.vue")
+  },
+  // {
+  //   path: "/products/:group/:tag",
+  //   name: "ProductsGroupTag",
+  //   props: true,
+  //   component: () => import("@/views/ProductsGroupTag.vue")
+  // },
+  {
+    path: "/brands/:id",
+    name: "BrandProducts",
     props: true,
-    component: () => import("@/views/ProductsGroupTag.vue")
+    component: () => import("@/views/BrandProducts.vue")
   }
 ];
 
