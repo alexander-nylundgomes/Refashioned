@@ -1,6 +1,6 @@
 <template>
   <main class="brand-products">
-      <h2 class="pa-4">Brandname</h2>
+      <h2 class="pa-4">{{ brand.name }}</h2>
       <div class="products">
         <Product
             v-for="product of products"
@@ -21,6 +21,7 @@ export default {
     data(){
         return{
             products: [],
+            brand: this.$store.getters.brands.find(x => x.id == this.id),
         }
     },
 
@@ -37,7 +38,7 @@ export default {
 
     components: {
         Product
-    }
+    },
 }
 </script>
 

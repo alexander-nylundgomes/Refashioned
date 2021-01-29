@@ -104,7 +104,7 @@ class OrdersController < ApplicationController
       # Finds all items
       # TODO: Functionality for free shipping
       prices.each do |product|
-        val = val += product.price
+        val += product.price
       end
 
       if val >= Misc.where(name: "shippingBar").first.value
