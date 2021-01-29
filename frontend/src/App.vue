@@ -63,6 +63,7 @@ export default {
           icon: "mdi-archive"
         },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
+        { title: "Sell to us", link: "/sell_to_us", icon: "mdi-cash-multiple" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
         { title: "About us", link: "/about", icon: "mdi-account-multiple" }
       ],

@@ -105,6 +105,11 @@ const routes = [
     name: "BrandProducts",
     props: true,
     component: () => import("@/views/BrandProducts.vue")
+  },
+  {
+    path: "/sell_to_us",
+    name: "SellToUs",
+    component: () => import("@/views/SellToUs.vue")
   }
 ];
 
