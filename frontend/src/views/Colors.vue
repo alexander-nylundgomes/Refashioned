@@ -14,14 +14,9 @@
         <div 
             v-if="itemType == 'colors'"
             class="circle"
-            :style="{backgroundColor: item.name}"    
-        ></div>
-
-        <!-- <div
-            v-if="itemType == 'brands'"
-            :style="{ backgroundImage: `url(${item.img_path})` }"
-            class="circle"
-        ></div> -->
+            :style="{backgroundColor: item.color}"    
+        >
+        </div>
 
         <h3
             v-if="itemType == 'brands'"

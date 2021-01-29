@@ -33,9 +33,10 @@ end
 end
 
 
-['Red', 'Black', 'Pink', 'Blue', 'Green'].each do |c|
+[{name: 'Red', color: "#fc4c3c"}, {name: 'Black', color: "#302d2d"}, {name: 'Pink', color: '#e892a5'}, {name: 'Blue', color: '#6daceb'}, {name: 'Green', color: '#2cbd33'}].each do |c|
     Color.create({
-        name: c,
+        name: c[:name],
+        color: c[:color],
         img_path: Faker::LoremFlickr.image(size: "300x300"),
         description: Faker::Lorem.paragraph(sentence_count: 3),
     })
