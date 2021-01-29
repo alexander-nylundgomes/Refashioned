@@ -22,7 +22,11 @@
             :rules="fileRules.concat(notEmptyRule)"
           ></v-file-input>
           <v-text-field :rules="notEmptyRule.concat(onlyNumbers)" suffix="kr" v-model="asking_price" label="Asking price" outlined dense></v-text-field>
-          <v-checkbox required v-model="agree" label="I have read and agreed with Refashioneds policies regarding selling items."></v-checkbox>
+          <v-checkbox required v-model="agree">
+              <template v-slot:label>
+                  <p class="ma-0 label checkbox-label">I have read and agreed with <a class="link-inside" @click="$router.push('/about')"> Refashioneds policies</a> regarding selling items.</p>
+              </template>
+          </v-checkbox>
           <v-btn @click="sendRequest()" block :disabled="accepted" color="primary" large class="mb-4">Send sell request</v-btn>
       </v-form>
 
@@ -186,5 +190,9 @@ export default {
         text-align: center;
         padding: 0 1.25rem;
         margin: 0 0 2em 0;
+    }
+
+    .checkbox-label{
+        text-align: left;
     }
 </style>

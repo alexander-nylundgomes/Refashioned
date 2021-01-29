@@ -120,7 +120,7 @@
             <v-container class="pa-0" fluid>
               <v-checkbox class="ma-0" :ripple="false"  v-model="checkbox" >
                 <template v-slot:label>
-                  <p class="ma-0 label">I have read and understood Refashioneds policies and agreements regarding purchasing.</p>
+                  <p class="ma-0 label">I have read and understood <a class="link-inside" @click="$router.push('/about')">Refashioneds policies</a>  and agreements regarding purchasing.</p>
                 </template>
               </v-checkbox>
             </v-container>
@@ -476,9 +476,7 @@ export default {
   background: white;
 }
 
-.label{
-  font-size: 0.80em;
-}
+
 
 
 </style>

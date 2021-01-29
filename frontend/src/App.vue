@@ -146,6 +146,15 @@ main {
   font-size: 0.75em !important;
 }
 
+.label{
+  font-size: 0.80em;
+}
+
+.link-inside{
+  text-decoration: underline;
+
+}
+
 .no-mb{
   margin-bottom: 0 !important;
 

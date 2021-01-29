@@ -77,25 +77,15 @@
       responsible for the shipping costs during returns.
     </p>
 
-    <!-- <h3 class="subtitle">Expertly checked for authenticity.</h3>
-                    According to EPA office of Solid Waste US, it's estimated that we throw aray
-                    30 kg of clothes a year, per person. The most common waste disposals of clothes are 
-                    landfills in poor countries, abandoned or burnt. We want to change this. All of our clothes have
-                    previously been worn but don't worry! Each of every item we sell are washed sustainably and without
-                    harmful or toxic chemicals. 
-        <p>
-            All of our clothes are checked for authenticity and quality by one of our 
-            experts before being published on our website. With this procedure, we can 
-            always guarantee 100% authenticity.
-        </p> -->
-    <!-- <h3>A progressive mindset.</h3>
-        <p>
-            We refer to the fit of our clothing in measurements together with the 
-            given size. Not categorizing our clothing into gender is an active 
-            choice. We believe that everyone should be able to wear whatever they 
-            want no matter who they are. By doing this we hope to progress in the 
-            fashion industry towards a more inclusive position. 
-        </p> -->
+    <h4>Buying from us</h4>
+    <p class="policy">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, iusto error? Exercitationem corrupti doloremque, in non animi, alias recusandae maxime veritatis, itaque quos vitae nihil. Perferendis nesciunt unde animi pariatur!
+    </p>
+
+    <h4>Selling to us</h4>
+    <p class="policy">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque necessitatibus unde omnis! Laudantium quo, quia sequi consequuntur atque accusantium ut. A corrupti ad id quibusdam debitis mollitia autem esse labore!
+    </p>
   </main>
 </template>
 
