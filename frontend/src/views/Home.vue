@@ -55,7 +55,7 @@
     <BulkComponent
       :section="{
         text: 'Shop by filter',
-        link: '/products/filter',
+        link: '/filter',
         img_path: require('@/assets/front-page9.jpg')
       }"
     />

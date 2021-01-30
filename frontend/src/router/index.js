@@ -110,6 +110,11 @@ const routes = [
     path: "/sell_to_us",
     name: "SellToUs",
     component: () => import("@/views/SellToUs.vue")
+  },
+  {
+    path: "/filter",
+    name: "Filter",
+    component: () => import("@/views/Filter.vue")
   }
 ];
 

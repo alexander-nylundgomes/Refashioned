@@ -54,7 +54,7 @@ export default {
           {title: "Brands", link: "/brands"},
           {title: "Colors", link: "/colors"},
           {title: "Categories", link: "/"},
-          {title: "Custom filter", link: "/"},
+          {title: "Custom filter", link: "/filter"},
         ]},
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
         {
