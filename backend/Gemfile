@@ -12,6 +12,10 @@ gem 'puma', '~> 4.1'
 gem 'faker'
 gem 'stripe'
 gem 'figaro'
+gem 'prawn'
+gem 'combine_pdf'
+gem 'securerandom'
+gem 'wkhtmltopdf-binary'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
