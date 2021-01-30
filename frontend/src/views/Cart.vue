@@ -118,6 +118,15 @@
       @closingDialog="showShippingInfo = false"
       :text="`Shipping costs ${shipping_cost.value} kr when your order is below ${shipping_bar.value} kr unless you have a discount for free shipping.`"
     />
+
+    <Dialog 
+      :title="'New prices'"
+      :success="'primary'"
+      :dialog="newPrices"
+      :buttonText="'Ok, I understand'"
+      @closingDialog="newPrices = false"
+      :text="newPricesText"
+    />
   </main>
 </template>
 
@@ -141,6 +150,9 @@ export default {
       discount: false,
       discount_value: {},
       discount_sum: 0,
+
+      newPrices: false,
+      newPricesText: "",
     };
   },
 
@@ -148,10 +160,11 @@ export default {
     async validateStock() {
       let arrayOfIds = this.products.map(p => p.id);
       let arrayOfNames = this.products.map(p => p.name);
+      // let arrayOfPrices = this.products.map(p => p.prices);
 
       let inStock = await axios
         .get(`${process.env.VUE_APP_BACKEND}/validate_stock`, {
-          params: { products_id: arrayOfIds, products_name: arrayOfNames }
+          params: { products_id: arrayOfIds, products_name: arrayOfNames}
         })
         .then(function(resp) {
           return resp.data;
@@ -161,9 +174,13 @@ export default {
           console.log(error.text);
         });
 
-      console.log(inStock);
+
 
       if (inStock.length == this.products.length) {
+        if(this.validatePrices(inStock)){
+          return;
+        }
+
         this.$store.commit("finalCartInsertion", {
           discount: this.discount_value,
           products: arrayOfIds,
@@ -172,7 +189,7 @@ export default {
         this.$router.push("cart/info");
       } else {
         let stockIds = inStock.map(p => p.id);
-
+        console.log(inStock)
         var difference = arrayOfIds.filter(x => stockIds.indexOf(x) === -1);
         let soldItems = [];
 
@@ -189,6 +206,30 @@ export default {
           this.$store.commit("removeFromCart", item);
         }
       }
+    },
+
+
+    validatePrices(stock){
+      let text = "";
+      let wrongs = false;
+      
+      for(let stockP of stock){
+        let cartP = this.products.find(p => p.id == stockP.id)
+
+        if(cartP.price != stockP.price){
+          this.$store.commit("updateProductPrice", {product: cartP, newPrice: stockP.price})
+          wrongs = true
+          text += `${cartP.name}: ${stockP.price} kr \n`
+        }
+      }
+      
+      if(wrongs){
+
+        this.newPricesText = "The following items have not the correct price. While you were browsing, their prices were updated. Their new prices are as follows: \r\n" + text
+        this.newPrices = true;
+      }
+
+      return wrongs;
     },
 
     async getDiscount() {

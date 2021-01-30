@@ -22,6 +22,26 @@ export default new Vuex.Store({
       state.products = payload;
     },
 
+    updateProductPrice(state, payload){
+      let index = state.products.indexOf(payload.product);
+      
+      if(index != -1){
+        state.products[index].price = payload.newPrice
+      }
+
+      index = state.cart.indexOf(payload.product)
+      if(index != -1){
+        state.cart[index].price = payload.newPrice
+      }
+
+      let lCart = JSON.parse(localStorage.getItem("cart"));
+      index = lCart.findIndex(p => p.id == payload.product.id)
+
+      lCart[index].price = payload.newPrice;
+
+      localStorage.setItem("cart", JSON.stringify(lCart))
+    },
+
     setBrands(state, payload){
       state.brands = payload;
     },
