@@ -34,17 +34,25 @@ class OrdersController < ApplicationController
 
     if discount == nil
       discount_id = nil
+
+      if params['order']['value'] >= Misc.where(name: "shippingBar").first.value
+        shipping = 0
+      else
+        shipping = Misc.where(name: "shippingCost").first.value
+      end
     else
       discount_id = discount['id']
-      discount = DiscountCode.select('discounts.*').where(id: discount_id).update(amount: discount['amount'] - 1).first
-      
-      if discount.value_in_shipping
-        params['order']['shipping_cost'] = Misc.where(name: 'shippingCost').first.value
+      discount = DiscountCode.select('discount_codes.*').where(id: discount_id).update(amount: discount['amount'] - 1).first
+
+      if discount.value_in_shipping != nil
+        shipping = 0
       end
     end
 
 
     params['order']['discount_id'] = discount_id
+    params['order']['shipping_cost'] = shipping
+
     @order = Order.new(order_params)
     if @order.save
       
@@ -60,7 +68,7 @@ class OrdersController < ApplicationController
         end
       end
 
-      puts 
+      p @order.shipping_cost, "##############"
 
       create_invoice(
         firstname: @order.firstname,
@@ -75,7 +83,8 @@ class OrdersController < ApplicationController
         discount: discount,
         timestamp: Time.now,
         order_id: @order.id,
-        shipping_cost: @order.shipping_cost
+        shipping_cost: @order.shipping_cost,
+        shipping_value: Misc.where(name: "shippingCost").first.value
       )
 
       render json: @order, status: :created, location: @order
@@ -110,7 +119,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def create_invoice(adress: , shipping_cost: nil,city: , postal: , email: , phone: , randomString: ,products: , discount: , firstname: , lastname: , timestamp: , order_id:)
+  def create_invoice(adress: , shipping_value: , shipping_cost: nil,city: , postal: , email: , phone: , randomString: ,products: , discount: , firstname: , lastname: , timestamp: , order_id:)
 
     Prawn::Document.generate("./#{firstname}_#{randomString}.pdf") do
         full_amount_without_tax = 0
@@ -245,6 +254,7 @@ class OrdersController < ApplicationController
         if discount != nil
           if discount.value_in_shipping != nil
             discount_text = 'Gratis frakt'
+            discount_amount = 0
           elsif discount.value_in_cash != nil
             discount_text = "#{discount.value_in_cash} kr"
             discount_amount = discount.value_in_cash
