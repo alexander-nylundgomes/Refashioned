@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
     # TODO: Add search for tags
     
     words = params[:tag].split(' ')
-    products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ?", "%#{words.first}%" , "%#{words.first}%" , "%#{words.first}%")
+    products = Product.select('products.*', 'products.id AS product_id', 'tags.id AS tag_id','tags.name AS tag_name', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand, :tag).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ? OR tag_name LIKE ?", "%#{words.first}%", "%#{words.first}%", "%#{words.first}%" , "%#{words.first}%").uniq
 
     # words.each do |search|
     #   queries = Array(search).map do |search_term|

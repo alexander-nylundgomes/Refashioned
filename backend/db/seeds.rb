@@ -107,10 +107,10 @@ end
 
 keywords = ['long', 'shirt', 'pants' 'something']
 products = Product.all
-30.times do
+150.times do
     Tag.create({
         name: keywords.sample,
-        product_id: 1
+        product_id: products.sample.id
     })
 end
 
