@@ -49,7 +49,7 @@ class OrdersController < ApplicationController
       end
     end
 
-
+    params['order']['status'] = 'recieved'
     params['order']['discount_id'] = discount_id
     params['order']['shipping_cost'] = shipping
 
@@ -67,8 +67,6 @@ class OrdersController < ApplicationController
           o.save!
         end
       end
-
-      p @order.shipping_cost, "##############"
 
       create_invoice(
         firstname: @order.firstname,
@@ -361,6 +359,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:shipping_cost, :value, :address, :city, :email, :phone, :firstname, :lastname, :postal, :tracking, :discount_id)
+      params.require(:order).permit(:shipping_cost, :status, :value, :address, :city, :email, :phone, :firstname, :lastname, :postal, :tracking, :discount_id)
     end
 end
