@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   get 'search/:tag', :to=> 'products#search'
   post 'create_payment', :to=> 'orders#create_payment'
   get 'shipping_data', :to=> 'miscs#shipping_data'
+  get 'cr', :to=> 'orders#create_reciept'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
