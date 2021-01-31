@@ -71,8 +71,17 @@ end
 end
 
 10.times do 
+    num = rand(3)
+    if num == 0
+        status = 'recieved'
+    elsif num == 1
+        status = 'sent'
+    else
+        status = 'problem'
+    end
+
     Order.create({
-        value: Faker::Commerce.price * 3,
+        value: Faker::Commerce.price * 5,
         address: Faker::Address.street_name,
         city: Faker::Address.city,
         email: Faker::Internet.email,
@@ -81,6 +90,7 @@ end
         lastname: Faker::Name.last_name,
         postal: Faker::Address.zip_code,
         tracking: "98022204099SE",
+        status: status,
     })
 end
 

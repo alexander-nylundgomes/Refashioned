@@ -26,6 +26,7 @@ class DiscountCodesController < ApplicationController
 
   def tryCode
     discount = DiscountCode.select('discount_codes.required_value', 'discount_codes.value_in_cash', 'discount_codes.value_in_percent', 'discount_codes.value_in_shipping').where("amount > 0 AND code = ?", params['code'])
+    
     render json: discount
   end
 

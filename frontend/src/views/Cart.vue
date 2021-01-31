@@ -144,12 +144,14 @@ export default {
       showShippingInfo: false,
       dialog: false,
       missingItems: [],
+      
       discount_code: "",
-      snackbarText: "",
-      snackbar: false,
       discount: false,
       discount_value: {},
       discount_sum: 0,
+
+      snackbarText: "",
+      snackbar: false,
 
       newPrices: false,
       newPricesText: "",
@@ -205,6 +207,8 @@ export default {
         for (let item of this.missingItems) {
           this.$store.commit("removeFromCart", item);
         }
+
+        this.getDiscount();
       }
     },
 
@@ -232,6 +236,12 @@ export default {
       return wrongs;
     },
 
+    resetDiscountData(){
+      this.discount = false
+      this.discount_value = {}
+      this.discount_sum = 0
+    },
+
     async getDiscount() {
       const collectedPrice = this.collectedPrice;
       let snackbarText = "";
@@ -245,8 +255,10 @@ export default {
           console.log(resp.data);
           if (resp.data.length == 0) {
             snackbarText = "No discount found. Have you spelled it correctly?";
+            vue.resetDiscountData()
           } else if (resp.data[0].required_value > collectedPrice) {
             snackbarText = `We're very sorry but the discount is only for purchases larger or equal to ${resp.data[0].required_value} kr.`;
+            vue.resetDiscountData()
           } else if (
             resp.data != [] &&
             resp.data[0].required_value <= collectedPrice
@@ -284,8 +296,6 @@ export default {
             vue.discount = true;
           }
 
-          console.log(vue.discount_value)
-
           return snackbarText;
         })
         .catch(function(error) {
@@ -295,7 +305,6 @@ export default {
       this.snackbar = true;
     }
   },
-
 
   computed: {
     products() {
@@ -352,6 +361,7 @@ export default {
       return this.products.length == 0;
     }
   },
+
   components: {
     ProductContainer,
     TitleCardProducts,
