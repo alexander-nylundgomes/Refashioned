@@ -63,11 +63,11 @@
     <TitleCardProducts
       :name="'Popular brands'"
       :category="3"
-      :amount="products.length"
+      :amount="products.slice(0,10).length"
       :all="products.length"
     />
 
-    <ProductContainer :products="products" />
+    <ProductContainer :products="products.slice(0,10)" />
 
     <BulkComponent
       v-for="section of second_sections"

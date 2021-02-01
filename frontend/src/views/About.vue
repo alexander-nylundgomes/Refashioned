@@ -57,7 +57,7 @@
 
     <h2 class="section-text">FAQ</h2>
 
-    <v-expansion-panels focusable class="pa-3">
+    <v-expansion-panels focusable class="pa-3 pt-0">
       <v-expansion-panel v-for="qa in faq" :key="qa.q">
         <v-expansion-panel-header class="expansion-header-text">
           {{ qa.q }}

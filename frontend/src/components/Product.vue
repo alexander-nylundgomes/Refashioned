@@ -25,11 +25,11 @@
         <v-row>
           <v-col class="pa-0">
             <div class="price-wrapper">
+              <p class="ma-0 mr-2 price" v-if="product.old_price " :class="{ 'changed-title': $vuetify.breakpoint.xs,'discounted': product.old_price  }">
+                {{ product.old_price }} kr
+              </p>
               <p class="ma-0 price" :class="{ 'changed-title': $vuetify.breakpoint.xs}">
                 {{ product.price }} kr
-              </p>
-              <p class="ma-0 ml-2 price" v-if="product.old_price " :class="{ 'changed-title': $vuetify.breakpoint.xs,'discounted': product.old_price  }">
-                {{ product.old_price }} kr
               </p>
             </div>
           </v-col>
@@ -49,11 +49,11 @@
       >{{ refactor(product.desc, 80) }}
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions>
+    <v-card-actions class="pb-0">
       <router-link class="link product-btn" :to="'/product/' + product.id">
         <v-btn
           depressed
-          small
+          
           color="primary"
           block
           class="pl-3 pr-3"
@@ -152,7 +152,7 @@ export default {
 .product-card {
   overflow: hidden;
   display: inline-block;
-  height: fit-content;
+  height: 100%;
 }
 
 .price{
