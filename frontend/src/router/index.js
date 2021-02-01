@@ -19,11 +19,11 @@ const routes = [
     name: "Likes",
     component: () => import("@/views/Likes.vue")
   },
-  {
-    path: "/categories",
-    name: "Categories",
-    component: () => import("@/views/Categories.vue")
-  },
+  // {
+  //   path: "/categories",
+  //   name: "Categories",
+  //   component: () => import("@/views/Categories.vue")
+  // },
   {
     path: "/category/:id",
     name: "ShowCategory",
@@ -94,12 +94,14 @@ const routes = [
     },
     component: () => import("@/views/Colors.vue")
   },
-  // {
-  //   path: "/products/:group/:tag",
-  //   name: "ProductsGroupTag",
-  //   props: true,
-  //   component: () => import("@/views/ProductsGroupTag.vue")
-  // },
+  {
+    path: "/categories",
+    name: "Categories",
+    props: {
+      itemType: 'categories'
+    },
+    component: () => import("@/views/Colors.vue")
+  },
   {
     path: "/brands/:id",
     name: "BrandProducts",

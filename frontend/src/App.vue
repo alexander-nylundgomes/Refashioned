@@ -53,7 +53,7 @@ export default {
         { title: "Products", link: "/products", icon: "mdi-tshirt-crew", items: [
           {title: "Brands", link: "/brands"},
           {title: "Colors", link: "/colors"},
-          {title: "Categories", link: "/"},
+          {title: "Categories", link: "/categories"},
           {title: "Custom filter", link: "/filter"},
         ]},
         { title: "Likes", link: "/likes", icon: "mdi-heart" },

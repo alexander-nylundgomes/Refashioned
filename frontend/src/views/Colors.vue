@@ -19,7 +19,8 @@
         </div>
 
         <h3
-            v-if="itemType == 'brands'"
+            v-if="itemType == 'brands' || itemType == 'categories'"
+            class="type-sheet pl-2 pr-2"
         >
         {{ item.name }}
         </h3>
@@ -51,6 +52,10 @@ export default {
 
         >*{
             margin-bottom: 1rem;
+        }
+
+        .type-sheet{
+            text-align: center;
         }
 
         .sheet{
