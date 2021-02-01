@@ -115,6 +115,11 @@ const routes = [
     path: "/filter",
     name: "Filter",
     component: () => import("@/views/Filter.vue")
+  },
+  {
+    path: "/contact",
+    name: "Contact",
+    component: () => import("@/views/Contact.vue")
   }
 ];
 
