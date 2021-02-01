@@ -72,12 +72,12 @@ const routes = [
     name: "CartInfo",
     component: () => import("@/views/CartInfo.vue")
   },
-  {
-    path: "/products/:group",
-    name: "ProductsGroup",
-    props: true,
-    component: () => import("@/views/ProductsGroup.vue")
-  },
+  // {
+  //   path: "/products/:group",
+  //   name: "ProductsGroup",
+  //   props: true,
+  //   component: () => import("@/views/ProductsGroup.vue")
+  // },
   {
     path: "/colors",
     name: "Colors",

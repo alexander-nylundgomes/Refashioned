@@ -90,6 +90,7 @@
 import ProductContainer from "@/components/ProductContainer.vue";
 import TitleCardProducts from "@/components/TitleCardProducts.vue";
 import BulkComponent from "@/components/BulkComponent.vue";
+const clone = require('rfdc')() // Returns the deep copy function
 
 export default {
   name: "Home",
@@ -107,17 +108,17 @@ export default {
       second_sections: [
         {
           text: "Shop by category",
-          link: "/products/categories",
+          link: "/categories",
           img_path: require("@/assets/front-page7.jpg")
         },
         {
           text: "Shop by brands",
-          link: "/products/brands",
+          link: "/brands",
           img_path: require("@/assets/front-page6.jpg")
         },
         {
           text: "Shop by colors",
-          link: "/products/colors",
+          link: "/colors",
           img_path: require("@/assets/front-page8.jpg")
         }
       ],
@@ -129,7 +130,7 @@ export default {
   methods: {
     setRecommended() {
       let products = this.$store.getters.products;
-      products = JSON.parse(JSON.stringify(products));
+      products = clone(products);
       this.recommended = products.splice(0, 10);
     }
   },

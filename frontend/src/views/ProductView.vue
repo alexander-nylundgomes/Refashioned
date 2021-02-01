@@ -146,7 +146,6 @@ export default {
         });
 
       let products = this.$store.getters.products;
-      // products = JSON.parse(JSON.stringify(products));
       const category_id = this.product.category_id;
       this.relatedProducts = products.filter(p => p.category_id == category_id);
     },
