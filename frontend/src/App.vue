@@ -65,6 +65,7 @@ export default {
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Sell to us", link: "/sell_to_us", icon: "mdi-cash-multiple" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
+        { title: "Contact us", link: "/contact", icon: "mdi-email-outline" },
         { title: "About us", link: "/about", icon: "mdi-account-multiple" }
       ],
       colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]
