@@ -44,15 +44,23 @@ end
 end
 
 100.times do 
+    price = Faker::Commerce.price
+    if rand(4) == 0
+        old = price * 1.25
+    else
+        old = nil
+    end
+
     Product.create!({
         name: Faker::Commerce.product_name,
         size: ['M', 'S', 'XL', 'L', 'XS'].sample,
         desc: Faker::Lorem.paragraph(sentence_count: 7),
         color: [1,2,3,4,5].sample,
-        price: Faker::Commerce.price,
+        price: price,
         brand_id: [1,2,3,4,5].sample,
         category_id: [1,2,3,4].sample,
-        bought: false
+        bought: false,
+        old_price: old
     })
 end
 

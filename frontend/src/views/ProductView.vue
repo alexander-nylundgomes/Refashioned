@@ -27,16 +27,21 @@
 
       <v-container>
         <v-row align="center">
-          <v-col cols="8">
+          <v-col cols="12">
             <h2>{{ product.name }}</h2>
           </v-col>
-          <v-col cols="4" align="end">
+          <!-- <v-col cols="4" align="end">
             <h2>{{ product.price }} kr</h2>
-          </v-col>
+          </v-col> -->
+        </v-row>
+
+        <v-row class="pl-3">
+            <h3 class="pr-2">{{ product.price }} kr</h3>
+            <h3 v-if="product.old_price" class="old-price">{{ product.old_price }} kr</h3>
         </v-row>
 
         <v-row>
-          <v-col class="pt-0">
+          <v-col class="">
             <p>{{ product.cat_name }} - {{ product.brands_name }}</p>
           </v-col>
         </v-row>
@@ -196,6 +201,11 @@ export default {
 <style lang="scss" scoped>
 section.padded {
   padding: 5%;
+}
+
+.old-price{
+  text-decoration: line-through;
+  color: red;
 }
 
 .progress {

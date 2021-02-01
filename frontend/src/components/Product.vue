@@ -10,17 +10,32 @@
       class="pa-1 pl-2 pr-2"
       :class="{ 'changed-title': $vuetify.breakpoint.xs }"
     >
-      <p
-        class="ma-0 limited-p"
-        :class="{ 'changed-title': $vuetify.breakpoint.xs }"
-      >
-        {{ refactor(product.name, 14) }}
-      </p>
+      <v-container>
+        <v-row>
+          <v-col class="pa-0 pb-2">
+            <p
+              class="ma-0 limited-p"
+              :class="{ 'changed-title': $vuetify.breakpoint.xs }"
+            >
+              {{ refactor(product.name, 19) }}
+            </p>
+          </v-col>
+        </v-row>
 
-      <v-spacer></v-spacer>
-      <p class="ma-0" :class="{ 'changed-title': $vuetify.breakpoint.xs }">
-        {{ product.price }} kr
-      </p>
+        <v-row>
+          <v-col class="pa-0">
+            <div class="price-wrapper">
+              <p class="ma-0 price" :class="{ 'changed-title': $vuetify.breakpoint.xs}">
+                {{ product.price }} kr
+              </p>
+              <p class="ma-0 ml-2 price" v-if="product.old_price " :class="{ 'changed-title': $vuetify.breakpoint.xs,'discounted': product.old_price  }">
+                {{ product.old_price }} kr
+              </p>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
     </v-card-title>
     <v-card-subtitle
       class="pa-1 pl-2 pr-2"
@@ -43,7 +58,7 @@
           block
           class="pl-3 pr-3"
           :class="{ 'changed-buttons-alert': $vuetify.breakpoint.xs }"
-          >Check it out</v-btn
+          >See more</v-btn
         >
       </router-link>
     </v-card-actions>
@@ -122,14 +137,26 @@ export default {
 }
 
 .limited-p {
-  max-width: 75%;
   white-space: nowrap;
+}
+
+.price-wrapper{
+  display: flex;
+}
+
+.discounted{
+  color: red;
+  text-decoration: line-through;
 }
 
 .product-card {
   overflow: hidden;
   display: inline-block;
   height: fit-content;
+}
+
+.price{
+  line-height: 1.4;
 }
 
 .product-btn {
