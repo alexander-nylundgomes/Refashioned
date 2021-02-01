@@ -353,7 +353,11 @@ export default {
       if(this.products.length == 0){
         return "No products in cart"
       }else{
-        return `Begin payment - ${this.collectedPrice - this.discount_sum + this.shipping_cost.value} kr`
+        if(this.collectedPrice >= this.shipping_bar.value){
+          return `Begin payment - ${this.collectedPrice - this.discount_sum } kr`
+        }else{
+          return `Begin payment - ${this.collectedPrice - this.discount_sum + this.shipping_cost.value} kr`
+        }
       }
     },
 
