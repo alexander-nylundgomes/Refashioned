@@ -1,10 +1,5 @@
 <template>
   <section class="products">
-    <!-- <v-row class="ma-3 d-flex" justify="center">
-        <h3 class="ma-0">Showing pants</h3>
-        <v-spacer></v-spacer>
-        <p class="ma-0">10 of 112</p>
-      </v-row> -->
     <Product v-for="item of products" :key="item.id" :product="item" />
     <v-card width="200" color="primary" class="last-card  ml-2 mr-2">
       <router-link class="to_all" :to="'/filter'">
@@ -25,11 +20,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 section.products {
   width: 95%;
-  margin: 1em auto;
-  // background-color: rgb(240,240,240);
+  // Removed line below could break
+  // margin: 1em auto;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;

@@ -53,7 +53,6 @@
       <router-link class="link product-btn" :to="'/product/' + product.id">
         <v-btn
           depressed
-          
           color="primary"
           block
           class="pl-3 pr-3"

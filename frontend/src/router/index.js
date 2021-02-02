@@ -19,16 +19,32 @@ const routes = [
     name: "Likes",
     component: () => import("@/views/Likes.vue")
   },
-  // {
-  //   path: "/categories",
-  //   name: "Categories",
-  //   component: () => import("@/views/Categories.vue")
-  // },
   {
-    path: "/category/:id",
+    path: "/categories/:id",
     name: "ShowCategory",
-    props: true,
-    component: () => import("@/views/ShowCategory.vue")
+    props: {
+      itemTypeSing: 'category',
+      itemTypePlur: 'categories',
+    },
+    component: () => import("@/views/TypesProducts.vue")
+  },
+  {
+    path: "/colors/:id",
+    name: "ShowColors",
+    props: {
+      itemTypeSing: 'color',
+      itemTypePlur: 'colors',
+    },
+    component: () => import("@/views/TypesProducts.vue")
+  },
+  {
+    path: "/brands/:id",
+    name: "ShowBrand",
+    props: {
+      itemTypeSing: 'brand',
+      itemTypePlur: 'brands',
+    },
+    component: () => import("@/views/TypesProducts.vue")
   },
   {
     path: "/product/:id",
@@ -63,28 +79,17 @@ const routes = [
     component: () => import("@/views/About.vue")
   },
   {
-    path: "/saved_categories",
-    name: "SavedCategories",
-    component: () => import("@/views/SavedCategories.vue")
-  },
-  {
     path: "/cart/info",
     name: "CartInfo",
     component: () => import("@/views/CartInfo.vue")
   },
-  // {
-  //   path: "/products/:group",
-  //   name: "ProductsGroup",
-  //   props: true,
-  //   component: () => import("@/views/ProductsGroup.vue")
-  // },
   {
     path: "/colors",
     name: "Colors",
     props: {
       itemType: 'colors'
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/brands",
@@ -92,7 +97,7 @@ const routes = [
     props: {
       itemType: 'brands',
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/categories",
@@ -100,13 +105,13 @@ const routes = [
     props: {
       itemType: 'categories'
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/brands/:id",
     name: "BrandProducts",
     props: true,
-    component: () => import("@/views/BrandProducts.vue")
+    component: () => import("@/views/TypesProducts.vue")
   },
   {
     path: "/sell_to_us",

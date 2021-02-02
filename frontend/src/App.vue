@@ -51,6 +51,7 @@ export default {
       items: [
         { title: "Home", link: "/", icon: "mdi-home" },
         { title: "Products", link: "/products", icon: "mdi-tshirt-crew", items: [
+          {title: "Product page", link: "/products"},
           {title: "Brands", link: "/brands"},
           {title: "Colors", link: "/colors"},
           {title: "Categories", link: "/categories"},

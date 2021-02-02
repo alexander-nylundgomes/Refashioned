@@ -79,8 +79,8 @@ export default {
                 justify-content: center;
                 align-items: center;
                 .circle{
-                    width: 75%;
-                    height: 75%;
+                    width: 60%;
+                    height: 60%;
                     border-radius: 50%;
                 }
             }

@@ -55,7 +55,7 @@ end
         name: Faker::Commerce.product_name,
         size: ['M', 'S', 'XL', 'L', 'XS'].sample,
         desc: Faker::Lorem.paragraph(sentence_count: 7),
-        color: [1,2,3,4,5].sample,
+        color_id: [1,2,3,4,5].sample,
         price: price,
         brand_id: [1,2,3,4,5].sample,
         category_id: [1,2,3,4].sample,
