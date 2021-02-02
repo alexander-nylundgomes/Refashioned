@@ -1,7 +1,7 @@
 <template>
   <section class="products">
     <Product v-for="item of products" :key="item.id" :product="item" />
-    <v-card width="200" color="primary" class="last-card  ml-2 mr-2">
+    <v-card v-if="moreProducts == true || moreProducts == undefined" width="200" color="primary" class="last-card  ml-2 mr-2">
       <router-link class="to_all" :to="'/filter'">
         See more!
       </router-link>
@@ -13,7 +13,7 @@
 import Product from "@/components/Product.vue";
 export default {
   name: "ProductContainer",
-  props: ["products"],
+  props: ["products", "moreProducts"],
   components: {
     Product
   }

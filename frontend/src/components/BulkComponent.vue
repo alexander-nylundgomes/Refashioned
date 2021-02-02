@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .section {
   width: calc(100% - 1em);
   height: 27rem;

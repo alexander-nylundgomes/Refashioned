@@ -12,7 +12,7 @@
       <section class="products">
         <Product
             lazy
-            v-for="product of current_products.slice(n*4, n*4 + 4)"
+            v-for="product of current_products.slice((n - 1)*4, (n - 1)*4 + 4)"
             :key="product.id"
             :product="product"
         />
@@ -32,7 +32,7 @@ export default {
     name: "FilterProducts",
     data(){
         return{
-            n: 0,
+            n: 1,
             products: this.$store.getters.products, 
             brands: this.$store.getters.brands,
             sizes: ['XSS', 'XS', 'S', 'M', 'L', 'XL', 'XLL'],
@@ -83,7 +83,7 @@ export default {
 
             }
            // Calculates amount of tabs
-
+            this.n = 1;
             this.calcSelectedAmount =  Math.ceil(ps.length / 4);
             this.current_products = ps;
         },

@@ -5,7 +5,7 @@
       :amount="products.length"
       :all="products.length"
     />
-    <ProductContainer :products="products" />
+    <ProductContainer :products="products" :moreProducts="false"/>
 
     <v-container>
       <v-row justify="center" align="center">

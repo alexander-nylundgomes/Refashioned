@@ -163,7 +163,7 @@ main.home {
 
 .text-card {
   width: 95%;
-  margin: 1em 0;
+  margin-top: 0.5em;
 
   p.large-title {
     font-size: 1.25em;

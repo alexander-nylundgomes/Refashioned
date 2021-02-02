@@ -53,8 +53,8 @@ export default {
         .products{
             width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
             padding: 1em 0;
             >*{
                 margin: 1em 0;

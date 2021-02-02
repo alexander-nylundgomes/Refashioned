@@ -58,11 +58,6 @@ export default {
           {title: "Custom filter", link: "/filter"},
         ]},
         { title: "Likes", link: "/likes", icon: "mdi-heart" },
-        {
-          title: "Saved Categories",
-          link: "/saved_categories",
-          icon: "mdi-archive"
-        },
         { title: "Cart", link: "/cart", icon: "mdi-cart" },
         { title: "Sell to us", link: "/sell_to_us", icon: "mdi-cash-multiple" },
         { title: "Search", link: "/search", icon: "mdi-magnify" },
