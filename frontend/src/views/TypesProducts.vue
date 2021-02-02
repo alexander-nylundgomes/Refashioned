@@ -1,6 +1,6 @@
 <template>
-  <main class="brand-products">
-      <h2 class="pa-4">{{ brand.name }}</h2>
+  <main class="type-products">
+      <h2 class="pa-4">{{ type.name }}</h2>
       <div class="products">
         <Product
             v-for="product of products"
@@ -16,19 +16,21 @@
 import Product from "@/components/Product.vue"
 export default {
     name: "BrandProducts",
-    props: ['id'],
+    props: ['itemTypeSing', 'itemTypePlur'],
 
     data(){
         return{
+            id: this.$route.params.id,
             products: [],
-            brand: this.$store.getters.brands.find(x => x.id == this.id),
+            type: []
         }
     },
 
     methods: {
         getProducts(){
-            console.log(this.$store.getters.products.filter(p => p.brand_id == this.id))
-            this.products = this.$store.getters.products.filter(p => p.brand_id == this.id);
+            let id = this.$route.params.id;
+            this.products = this.$store.getters.products.filter(p => p[`${this.itemTypeSing}_id`] == id);
+            this.type = this.$store.getters[this.itemTypePlur].find(x => x.id == id)
         }
     },
 
@@ -43,9 +45,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    main.brand-products{
-
-
+    main.type-products{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
         .products{
             width: 100%;
             display: flex;

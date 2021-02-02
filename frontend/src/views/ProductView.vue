@@ -30,9 +30,6 @@
           <v-col cols="12">
             <h2>{{ product.name }}</h2>
           </v-col>
-          <!-- <v-col cols="4" align="end">
-            <h2>{{ product.price }} kr</h2>
-          </v-col> -->
         </v-row>
 
         <v-row class="pl-3">
