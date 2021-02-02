@@ -214,59 +214,6 @@ aside {
   margin-top: 0.5em;
 }
 
-// aside:nth-of-type(1) {
-//   position: relative;
-
-//   .text {
-//     position: absolute;
-//     width: 100%;
-//     height: 100%;
-//     padding: 1em;
-//     color: white;
-//     h3 {
-//       font-size: 2rem;
-//       font-weight: 800;
-//     }
-
-//     h1 {
-//       font-size: 3rem;
-//       font-weight: 800;
-//     }
-//   }
-
-//   .images {
-//     width: calc(100% - 0.5em);
-//     height: calc(100% - 0.5em);
-//     display: grid;
-//     grid-template-rows: 60% 40%;
-//     grid-template-columns: 60% 40%;
-//     grid-gap: 0.5em;
-
-//     .background {
-//       background-position: center;
-//       background-size: cover;
-//       width: 100%;
-//       height: 100%;
-//     }
-
-//     .background:nth-of-type(1) {
-//       background-image: url(../assets/front-page1.jpg);
-//     }
-
-//     .background:nth-of-type(2) {
-//       background-image: url(../assets/front-page2.jpg);
-//     }
-
-//     .background:nth-of-type(3) {
-//       background-image: url(../assets/front-page3.jpg);
-//     }
-
-//     .background:nth-of-type(4) {
-//       background-image: url(../assets/front-page4.jpg);
-//     }
-//   }
-// }
-
 .sheet {
   width: 95%;
   height: fit-content;

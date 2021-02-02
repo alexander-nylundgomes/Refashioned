@@ -42,7 +42,6 @@ main.likes {
   .zero-saves {
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     margin-top: 25%;
     align-items: center;
 

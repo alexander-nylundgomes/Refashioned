@@ -19,11 +19,6 @@ const routes = [
     name: "Likes",
     component: () => import("@/views/Likes.vue")
   },
-  // {
-  //   path: "/categories",
-  //   name: "Categories",
-  //   component: () => import("@/views/Categories.vue")
-  // },
   {
     path: "/category/:id",
     name: "ShowCategory",
@@ -84,7 +79,7 @@ const routes = [
     props: {
       itemType: 'colors'
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/brands",
@@ -92,7 +87,7 @@ const routes = [
     props: {
       itemType: 'brands',
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/categories",
@@ -100,13 +95,13 @@ const routes = [
     props: {
       itemType: 'categories'
     },
-    component: () => import("@/views/Colors.vue")
+    component: () => import("@/views/Types.vue")
   },
   {
     path: "/brands/:id",
     name: "BrandProducts",
     props: true,
-    component: () => import("@/views/BrandProducts.vue")
+    component: () => import("@/views/TypesProducts.vue")
   },
   {
     path: "/sell_to_us",

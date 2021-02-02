@@ -425,14 +425,7 @@ export default {
   },
 
   computed: {
-    validatedInputs() {
-      // this.inputs.reduce(p => p.)
-
-      return false;
-    },
-
     dicounted_value(){
-      // TODO: Enable free shipping
       let value;
 
       console.log(this.finalCart.discount.type)
@@ -475,8 +468,4 @@ export default {
   width: 100%;
   background: white;
 }
-
-
-
-
 </style>

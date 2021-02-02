@@ -1,6 +1,6 @@
 <template>
   <main class="products">
-    <v-img src="@/assets/product_frontpage.jpg">
+    <v-img class="front-image" src="@/assets/product_frontpage.jpg">
       <div class="overlay">
         <h2>Who said fashion cannot be <i>sustainable?</i></h2>
         <p>
@@ -9,23 +9,15 @@
         </p>
       </div>
     </v-img>
-    <TitleCardProducts
-      :name="'Groovy Shirts'"
-      :amount="'12'"
-      :all="'56'"
-      :category="'shirts'"
-      :buttons="true"
-    />
-    <ProductContainer :products="this.$store.getters.products" />
-    <TitleCardProducts
-      :name="'Groovy Pants'"
-      :amount="'11'"
-      :all="'26'"
-      :category="'pants'"
-      :buttons="true"
-    />
-    <ProductContainer :products="this.$store.getters.products" />
-    <!-- <v-btn @click="clear()">clear local storage</v-btn> -->
+   
+      <TitleCardProducts
+    :name="'Popular brands'"
+    :category="3"
+    :amount="products.slice(0,10).length"
+    :all="products.length"
+  />
+  <ProductContainer :products="products.slice(0,10)" />
+
   </main>
 </template>
 
@@ -55,7 +47,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.overlay {
+
+.front-image{
+  width: calc(100% - 1em);
+  margin: 0.5em;
+  margin-bottom: 0;
+
+  .overlay {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.45);
@@ -75,10 +73,13 @@ export default {
     width: 75%;
   }
 }
+}
+
 
 main.products {
-  section.products:nth-of-type(1) {
-    margin-top: 0;
-  }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: fit-content;
 }
 </style>
