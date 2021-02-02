@@ -1,7 +1,9 @@
 <template>
   <main class="searchresult">
-    <h1 class="title">Showing results for {{ tag }}</h1>
-    <p>{{ this.results.length }} results</p>
+    <div class="text pa-3">
+      <h1 class="title">Showing results for {{ tag }}</h1>
+      <p >{{ this.results.length }} results</p>
+    </div>
 
     <section class="products">
       <Product
@@ -55,12 +57,14 @@ export default {
 
 <style lang="scss">
 main.searchresult {
-  padding: 0.75em;
+  // padding: 0.75em;
 
   section.products {
+    width: 100%;
+    height: fit-content;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
 
     > * {
       margin: 1em 0;
