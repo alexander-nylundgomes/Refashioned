@@ -7,7 +7,7 @@
       </v-row> -->
     <Product v-for="item of products" :key="item.id" :product="item" />
     <v-card width="200" color="primary" class="last-card  ml-2 mr-2">
-      <router-link class="to_all" :to="'/'">
+      <router-link class="to_all" :to="'/filter'">
         See more!
       </router-link>
     </v-card>

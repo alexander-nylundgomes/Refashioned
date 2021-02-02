@@ -1,6 +1,15 @@
 <template>
   <main class="items">
     <v-sheet
+        height="100"
+        class="all-sheet sheet"
+        color="rgb(240,240,240)"
+        flat
+        @click="$router.push('/filter')"
+    >
+        <h3 class="type-sheet pl-2 pr-2"> All {{ itemType }}</h3>
+    </v-sheet>
+    <v-sheet
         v-for="item of items"
         :key="item.id"
         color="rgb(240,240,240)"
@@ -32,7 +41,7 @@
 <script>
 export default {
     name: "Colors",
-    props: ['itemType'],
+    props: ['itemType', 'link'],
 
     data(){
         return{
@@ -56,6 +65,10 @@ export default {
 
         .type-sheet{
             text-align: center;
+        }
+
+        .all-sheet{
+            width: 100%;
         }
 
         .sheet{
