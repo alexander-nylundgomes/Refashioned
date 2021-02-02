@@ -152,6 +152,17 @@ main {
 
 }
 
+.products-wrapper{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1em 0;
+    >*{
+        margin: 1em 0;
+    }
+}
+
 .no-mb{
   margin-bottom: 0 !important;
 

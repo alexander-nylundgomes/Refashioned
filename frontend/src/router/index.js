@@ -29,6 +29,11 @@ const routes = [
     component: () => import("@/views/TypesProducts.vue")
   },
   {
+    path: "/new_arrivals",
+    name: "NewlyAdded",
+    component: () => import("@/views/NewlyAdded.vue")
+  },
+  {
     path: "/colors/:id",
     name: "ShowColors",
     props: {
