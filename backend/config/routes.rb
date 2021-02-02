@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :qualities
   resources :sell_requests
   resources :miscs
   resources :categories

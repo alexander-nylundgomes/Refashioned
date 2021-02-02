@@ -3,13 +3,15 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand).order('products.category_id').where(bought: 0)
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).order('products.category_id').where(bought: 0)
     
     render json: @products
   end
 
   # GET /products/1
   def show
+    @product = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).where(bought: 0, id: params['id'])
+
     render json: @product
   end
 
@@ -19,7 +21,7 @@ class ProductsController < ApplicationController
     # TODO: Add search for tags
     
     words = params[:tag].split(' ')
-    products = Product.select('products.*', 'products.id AS product_id', 'tags.id AS tag_id','tags.name AS tag_name', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name').joins(:category, :brand, :tag).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ? OR tag_name LIKE ?", "%#{words.first}%", "%#{words.first}%", "%#{words.first}%" , "%#{words.first}%").uniq
+    products = Product.select('products.*', 'products.id AS product_id', 'tags.id AS tag_id','tags.name AS tag_name', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :tag, :quality).where("products.name LIKE ? OR brands_name LIKE ? OR cat_name LIKE ? OR tag_name LIKE ?", "%#{words.first}%", "%#{words.first}%", "%#{words.first}%" , "%#{words.first}%").uniq
 
     # words.each do |search|
     #   queries = Array(search).map do |search_term|

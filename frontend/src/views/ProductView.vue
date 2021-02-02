@@ -1,5 +1,5 @@
 <template>
-  <main class="product">
+  <main class="product" v-if="product != []">
     <section class="padded">
       <v-carousel
         class="carousel-images"
@@ -39,7 +39,7 @@
 
         <v-row>
           <v-col class="">
-            <p>{{ product.cat_name }} - {{ product.brands_name }}</p>
+            <p>{{ product.cat_name }} - {{ product.brands_name }} - {{ product.quality_name }}</p>
           </v-col>
         </v-row>
 
@@ -136,7 +136,7 @@ export default {
         .get(`${process.env.VUE_APP_BACKEND}/products/${this.id}`)
         .then(function(resp) {
           console.log(resp.data);
-          return resp.data;
+          return resp.data[0];
         })
         .catch(function(error) {
           console.log(error);

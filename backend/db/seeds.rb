@@ -15,14 +15,35 @@ Brand.reset_column_information
 Product.reset_column_information
 Product.connection.schema_cache.clear!
 
+Quality.reset_column_information
+Quality.connection.schema_cache.clear!
+
+qualities = [
+    {name: 'Never been worn', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '1'},
+    {name: 'Amazing', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '2'},
+    {name: 'Really good', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '3'},
+    {name: 'Great', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '4'},
+    {name: 'Pretty good', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '5'},
+    {name: 'OK', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '6'},
+    {name: 'Decent', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '7'},
+    {name: 'Not to bad', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '8'},
+    {name: 'Bad', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '9'},
+    {name: 'Pretty bad', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '10'},
+    {name: 'Absolute garbage', description: Faker::Lorem.paragraph(sentence_count: 3), grade: '11'},
+]
+
+qualities.each do |c|
+    Quality.create(c)
+end
 
 ["Cozy sweaters", "Great looking shirts", "Smashing pants", "Sexy socks"].each do |i|
-    Category.create({
+    Category.create!({
         name: i,
         description: Faker::Lorem.paragraph(sentence_count: 2),
         img_path: Faker::LoremFlickr.image(size: "300x300"),
     })
 end
+
 
 brands = ['Gucci', 'Prada', 'Nike', 'Adidas', 'Fear of God']
 brands.each do |c|
@@ -60,7 +81,8 @@ end
         brand_id: [1,2,3,4,5].sample,
         category_id: [1,2,3,4].sample,
         bought: false,
-        old_price: old
+        old_price: old,
+        quality_id: rand(1..10),
     })
 end
 
