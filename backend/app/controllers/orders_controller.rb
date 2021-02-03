@@ -16,7 +16,13 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
+    @order = Order.select('orders.*', 'products.*').joins(:products)
     render json: @order
+  end
+
+  # GET /admin/orders/get_products/:id
+  def get_products
+    render json: Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).order('products.category_id').where(order_id: params['id'])
   end
 
   # POST /orders
@@ -55,18 +61,8 @@ class OrdersController < ApplicationController
 
     @order = Order.new(order_params)
     if @order.save
-      
-      orderd_products = []
 
-      ids.each do |i|
-        orderd_products << OrderdProduct.new({product_id: i, order_id: @order.id})
-      end
-
-      OrderdProduct.transaction do
-        orderd_products.each do |o|
-          o.save!
-        end
-      end
+      Product.where(id: ids).update(order_id: @order.id)
 
       create_invoice(
         firstname: @order.firstname,

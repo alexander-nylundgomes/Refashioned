@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   post 'create_payment', :to=> 'orders#create_payment'
   get 'shipping_data', :to=> 'miscs#shipping_data'
   get 'cr', :to=> 'orders#create_reciept'
+  get 'admin/orders/get_products/:id', :to=> 'orders#get_products'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

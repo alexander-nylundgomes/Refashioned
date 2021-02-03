@@ -36,12 +36,10 @@ export default {
             let vue = this;
             axios.get(`${process.env.VUE_APP_BACKEND}/msgs`)
             .then(function(resp){
-                console.log(resp.data)
-                vue.msgs = resp.data;
-            
+                vue.msgs = resp.data;            
             })
             .catch(function(error){
-                console.log(error)
+                alert(error)
             })
         },
 

@@ -143,6 +143,11 @@ const routes = [
     name: "AdminMessages",
     component: () => import("@/views/AdminMessages.vue")
   },
+  {
+    path: "/admin/orders",
+    name: "AdminOrders",
+    component: () => import("@/views/AdminOrders.vue")
+  }
 ];
 
 const router = new VueRouter({
