@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = Order.joins(:orderd_product)
 
     render json: @orders
   end

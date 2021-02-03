@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="admin-header">
         <v-app-bar color="white">
             <v-app-bar-nav-icon color="black" @click="menu = true"></v-app-bar-nav-icon>
         </v-app-bar>
@@ -43,7 +43,7 @@ export default {
             menu: false,
             items: [
                 {title: "View messages", link: "/admin/msgs", icon: "mdi-message"},
-                {title: "View orders", link: "/", icon: "mdi-cart"},
+                {title: "View orders", link: "/admin/orders", icon: "mdi-cart"},
                 {title: "View sell requests", link: "/", icon: "mdi-cash-multiple"},
             ],
             colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]
@@ -62,7 +62,10 @@ export default {
 </script>
 
 <style lang="scss">
-i.v-icon, .specify_color{
-    color: rgb(40,40,40) !important;
-}  
+
+.admin-header{
+    i.v-icon, .specify_color{
+        color: rgb(40,40,40) !important;
+    }  
+}
 </style>

@@ -86,6 +86,8 @@ end
     })
 end
 
+
+
 [{name: "shippingCost", value: 70}, {name: "shippingBar", value: 700}].each do |x|
     Misc.create(x)
 end
@@ -126,13 +128,7 @@ end
     })
 end
 
-# 30.times do 
-#     products = Product.all
-#     orders = Order.all
-#     OrderdProduct.create({
-#         product_id: 
-#     })
-# end
+
 
 discounts = [
     {value_in_cash: nil, value_in_percent: nil, value_in_shipping: true, required_value: 200, amount: 10, code: Faker::Commerce.promotion_code},
@@ -182,6 +178,35 @@ conditions = [
         file_path: "some_random_file_path",
         asking_price: Faker::Commerce.price,
     })
+end
 
+collectedPrice = 0
+
+3.times do 
+    price = Faker::Commerce.price
+    collectedPrice += price
+    Product.create!({
+        name: Faker::Commerce.product_name,
+        size: ['M', 'S', 'XL', 'L', 'XS'].sample,
+        desc: Faker::Lorem.paragraph(sentence_count: 7),
+        color_id: [1,2,3,4,5].sample,
+        price: price,
+        brand_id: [1,2,3,4,5].sample,
+        category_id: [1,2,3,4].sample,
+        bought: true,
+        old_price: nil,
+        quality_id: rand(1..10),
+    })
+end
+
+products = Product.where(bought: true)
+order = Order.first
+
+products.each do |x| 
+
+    OrderdProduct.create({
+        product_id: x.id,
+        order_id: order.id
+    })
 end
 
