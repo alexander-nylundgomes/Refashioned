@@ -176,6 +176,16 @@ conditions = [
 
 10.times do
 
+    random = rand(3)
+
+    if random == 0
+        status = 'Accepted'
+    elsif random == 1
+        status = 'Rejected'
+    elsif random == 2
+        status = 'Bought'
+    end
+
     SellRequest.create({
         firstname: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
@@ -185,6 +195,7 @@ conditions = [
         condition: conditions.sample,
         file_path: "some_random_file_path",
         asking_price: Faker::Commerce.price,
+        status: status
     })
 end
 
