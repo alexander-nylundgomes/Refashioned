@@ -40,7 +40,7 @@ export default {
 
   computed: {
     isInAdmin(){ 
-      return window.location.hash.startsWith("#/admin") 
+      return window.location.hash.startsWith("#/admin")
     }
   },
 

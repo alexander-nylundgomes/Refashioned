@@ -78,6 +78,6 @@ class SellRequestsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sell_request_params(items = params)
-      items.require(:sell_request).permit(:firstname, :lastname, :email, :phone, :brand, :condition, :file_path, :asking_price)
+      items.require(:sell_request).permit(:firstname, :lastname, :email, :phone, :brand, :condition, :file_path, :asking_price, :status)
     end
 end
