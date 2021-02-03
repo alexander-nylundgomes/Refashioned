@@ -83,6 +83,7 @@ end
         bought: false,
         old_price: old,
         quality_id: rand(1..10),
+        order_id: nil,
     })
 end
 
@@ -114,8 +115,14 @@ end
         status = 'problem'
     end
 
+    value = Faker::Commerce.price * 5
+    
+    if value < Misc.where(name: 'shippingBar').first.value
+        shipping_cost = Misc.where(name: 'shippingCost').first.value
+    end
+
     Order.create({
-        value: Faker::Commerce.price * 5,
+        value: value,
         address: Faker::Address.street_name,
         city: Faker::Address.city,
         email: Faker::Internet.email,
@@ -125,6 +132,7 @@ end
         postal: Faker::Address.zip_code,
         tracking: "98022204099SE",
         status: status,
+        shipping_cost: shipping_cost
     })
 end
 
@@ -180,33 +188,21 @@ conditions = [
     })
 end
 
-collectedPrice = 0
-
+order = Order.first
 3.times do 
-    price = Faker::Commerce.price
-    collectedPrice += price
     Product.create!({
         name: Faker::Commerce.product_name,
         size: ['M', 'S', 'XL', 'L', 'XS'].sample,
         desc: Faker::Lorem.paragraph(sentence_count: 7),
         color_id: [1,2,3,4,5].sample,
-        price: price,
+        price: Faker::Commerce.price,
         brand_id: [1,2,3,4,5].sample,
         category_id: [1,2,3,4].sample,
         bought: true,
         old_price: nil,
         quality_id: rand(1..10),
-    })
-end
-
-products = Product.where(bought: true)
-order = Order.first
-
-products.each do |x| 
-
-    OrderdProduct.create({
-        product_id: x.id,
         order_id: order.id
     })
 end
+
 
