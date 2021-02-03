@@ -14,6 +14,12 @@ import AdminHeader from "@/components/AdminHeader.vue";
 export default {
   name: "App",
 
+  data(){
+    return{
+      isInAdmin: window.location.hash.startsWith("#/admin"),
+    }
+  },
+
   methods: {
     setup() {
       this.$store.dispatch("getProducts");
@@ -38,9 +44,9 @@ export default {
     }
   },
 
-  computed: {
-    isInAdmin(){ 
-      return window.location.hash.startsWith("#/admin")
+  watch: {
+    '$route': function(to){
+      this.isInAdmin = to.path.startsWith('/admin')
     }
   },
 
