@@ -1,6 +1,9 @@
 <template>
   <main class="type-products">
-      <h2 class="pa-4">{{ type.name }}</h2>
+      <div class="main-text">
+            <h2>{{ type.name }}</h2>
+            <p>{{ type.description }}</p>
+      </div>
       <div class="products-wrapper">
         <Product
             v-for="product of products"
@@ -31,6 +34,7 @@ export default {
             let id = this.$route.params.id;
             this.products = this.$store.getters.products.filter(p => p[`${this.itemTypeSing}_id`] == id);
             this.type = this.$store.getters[this.itemTypePlur].find(x => x.id == id)
+            console.log(this.type)
         }
     },
 

@@ -1,7 +1,9 @@
 <template>
   <main class="sell-to-us">
-      <h2 class="title-main">Sell your clothes <br> to us</h2>
-      <p>Fill out the form with a picture of the clothing and we'll come back to you with a fair appraisal from one of our experts!</p>
+      <div class="main-text">
+        <h2>Sell your clothes <br> to us</h2>
+        <p>Fill out the form with a picture of the clothing and we'll come back to you with a fair appraisal from one of our experts!</p>
+      </div>
 
       <v-form lazy-validation ref="form" v-model="valid" class="pl-4 pr-4">
           <v-text-field required :rules="notEmptyRule"   v-model="firstname" label="Firstname" outlined dense></v-text-field>
@@ -178,19 +180,8 @@ export default {
         overflow-x: hidden;
     }
 
-    .title-main{
-        text-align: center;
-        margin: 1em 0 0.25em 0;
-        padding: 0 1.25em;
-        font-size: 2em;
-        line-height: 1.3;
-    }
 
-    p{
-        text-align: center;
-        padding: 0 1.25rem;
-        margin: 0 0 2em 0;
-    }
+
 
     .checkbox-label{
         text-align: left;
