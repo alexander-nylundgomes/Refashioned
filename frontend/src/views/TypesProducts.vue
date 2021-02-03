@@ -1,7 +1,10 @@
 <template>
   <main class="type-products">
-      <h2 class="pa-4">{{ type.name }}</h2>
-      <div class="products">
+      <div class="main-text">
+            <h2>{{ type.name }}</h2>
+            <p>{{ type.description }}</p>
+      </div>
+      <div class="products-wrapper">
         <Product
             v-for="product of products"
             :key="product.id"
@@ -31,6 +34,7 @@ export default {
             let id = this.$route.params.id;
             this.products = this.$store.getters.products.filter(p => p[`${this.itemTypeSing}_id`] == id);
             this.type = this.$store.getters[this.itemTypePlur].find(x => x.id == id)
+            console.log(this.type)
         }
     },
 
@@ -50,15 +54,6 @@ export default {
     align-items: center;
     flex-direction: column;
     height: fit-content;
-        .products{
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 1em 0;
-            >*{
-                margin: 1em 0;
-            }
-        }
+
     }
 </style>

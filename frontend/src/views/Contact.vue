@@ -1,7 +1,9 @@
 <template>
   <main class="contact">
-      <h1 class="pa-3 pb-0">Get in touch with us!</h1>
-      <p class="pa-4 pt-1 pb-1">No matter if there's an issue with your order, you have a question or something to discuss, we're always glad to hear from you! Get in touch with us through the form below.</p>
+      <div class="main-text">
+        <h2>Get in touch with us!</h2>
+        <p> No matter if there's an issue with your order, you have a question or something to discuss, we're always glad to hear from you! Get in touch with us through the form below.</p>
+      </div>
       <v-divider class="ml-5 mr-5 mb-3"></v-divider>
       <v-form class="pa-4" ref="form" lazy-validation v-model="valid">
           <v-text-field :rules="notEmptyRule" v-model="firstname" outlined label="Firstname" dense></v-text-field>

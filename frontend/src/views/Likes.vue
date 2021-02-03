@@ -2,14 +2,14 @@
   <main class="likes">
     <Product v-for="product of products" :key="product.id" :product="product" />
 
-    <div class="zero-saves" v-if="products.length == 0">
-      <h2>You have no likes!</h2>
-      <p :class="{ 'changed-subtitle': $vuetify.breakpoint.xs }">
-        You have not liked any products. You don't need an account and no data
-        is being stored in our databases. Instead, all of your liked products
-        will be saved to your device! Great huh?
-      </p>
-    </div>
+      <div class="main-text" v-if="products.length == 0">
+        <h2>You have no likes!</h2>
+        <p>
+          You have not liked any products. You don't need an account and no data
+          is being stored in our databases. Instead, all of your liked products
+          will be saved to your device! Great huh?
+        </p>
+      </div>
   </main>
 </template>
 
@@ -37,17 +37,6 @@ main.likes {
 
   > * {
     margin: 1rem;
-  }
-
-  .zero-saves {
-    display: flex;
-    flex-direction: column;
-    margin-top: 25%;
-    align-items: center;
-
-    > * {
-      text-align: center;
-    }
   }
 }
 </style>

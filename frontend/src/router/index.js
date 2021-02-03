@@ -29,6 +29,11 @@ const routes = [
     component: () => import("@/views/TypesProducts.vue")
   },
   {
+    path: "/new_arrivals",
+    name: "NewlyAdded",
+    component: () => import("@/views/NewlyAdded.vue")
+  },
+  {
     path: "/colors/:id",
     name: "ShowColors",
     props: {
@@ -127,7 +132,17 @@ const routes = [
     path: "/contact",
     name: "Contact",
     component: () => import("@/views/Contact.vue")
-  }
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("@/views/Admin.vue")
+  },
+  {
+    path: "/admin/msgs",
+    name: "AdminMessages",
+    component: () => import("@/views/AdminMessages.vue")
+  },
 ];
 
 const router = new VueRouter({

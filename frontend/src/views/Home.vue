@@ -100,7 +100,7 @@ export default {
       first_sections: [
         {
           text: "New arrivals",
-          link: "/products/new_arrivals/all",
+          link: "/new_arrivals",
           img_path: require("@/assets/front-page5.jpg")
         }
       ],

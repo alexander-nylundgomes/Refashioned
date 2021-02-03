@@ -110,7 +110,8 @@ export default new Vuex.Store({
     },
 
     removeFromCart(state, payload) {
-      let index = state.cart.indexOf(payload);
+      let product = state.cart.find(p => p.id == payload.id)
+      let index = state.cart.indexOf(product);
       state.cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(state.cart));
     }

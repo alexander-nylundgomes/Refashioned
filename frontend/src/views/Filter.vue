@@ -1,7 +1,10 @@
 <template>
   <main class="filter">
       <header>
-          <h1 class="pa-3 pb-0">Search by filters</h1>
+          <div class="main-text">
+              <h2>Search by filter</h2>
+              <p>Select what qualities your looking for in your next purchase by yourself and tailor the shopping experience to your liking!</p>
+          </div>
           <v-select outlined @change="filter()" v-model="selectedBrand" dense class="pa-3" hide-details label="Brand" :items="brands" item-text="name"></v-select>
           <v-select outlined @change="filter()" dense v-model="selectedSize" class="pa-3 pt-0" hide-details label="Size" :items="sizes"></v-select>
           <v-select outlined @change="filter()" v-model="selectedColor" dense class="pa-3 pt-0" hide-details label="Colors" :items="colors" item-text="name" item-value="id"></v-select>
