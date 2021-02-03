@@ -1,7 +1,7 @@
 <template>
   <main class="orders" v-if="loaded">
       <v-select class="pl-3 pr-3 pb-0 pt-5" @change="filter()" v-model="isShowing" dense outlined label="Show..." :items="shows"></v-select>
-    <Order  v-for="order of showingOrders" :key="order.id" :order="order"/>
+    <Order v-for="order of showingOrders" :key="order.id" :order="order"/>
   </main>
 </template>
 
@@ -20,7 +20,7 @@ export default {
                 'sent',
                 'recieved',
                 'problem',
-                'all'
+                'All orders'
             ]
         }
     },
@@ -42,7 +42,7 @@ export default {
         },
 
         filter(){
-            if(this.isShowing == "all"){
+            if(this.isShowing == "All orders"){
                 this.showingOrders = this.allOrders
             }else{
                 this.showingOrders = this.allOrders.filter(o => o.status == this.isShowing)

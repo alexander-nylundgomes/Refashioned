@@ -1,6 +1,6 @@
 <template>
     <v-lazy>
-        <v-card class="ma-2">
+        <v-card class="ml-2 mr-2 mb-6">
             <v-card-title>Order: {{order.id}}</v-card-title>
             <v-card-subtitle>{{ order.city }} - {{ order.address }}</v-card-subtitle>
             <v-card-text v-if="seeMore">
