@@ -19,12 +19,14 @@
           </v-checkbox>
           <v-btn :disabled="!agreed" @click="sendMessage()" block large depressed color="primary" class="white--text">Send message</v-btn>
       </v-form>
+
+      <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
   </main>
 </template>
 
 <script>
 const axios = require("axios");
-
+import Snackbar from "@/components/Snackbar.vue"
 export default {
   name: "Contact",
   data(){
@@ -32,6 +34,8 @@ export default {
       valid: true,
       firstname: "",
       lastname: "",
+      snackbarText: "",
+      snackbar: false,
       email: "",
       phone: "",
       msg: "",
@@ -65,13 +69,20 @@ export default {
           email: vue.email,
         }
       })
-      .then(function(resp){
-        console.log(resp)
+      .then(function(){
+        vue.snackbarText = "Your message was successfully sent! We will reply in 1-2 busieness days."
+        vue.$refs.form.reset() 
       })
-      .catch(function(error){
-        console.log(error)
+      .catch(function(){
+        vue.snackbarText = "Uh oh! Something went wrong. Please try again shortly or contact us via the mail below."
       })
+
+      vue.snackbar = true;
     }
+  },
+
+  components: {
+    Snackbar
   }
 }
 </script>

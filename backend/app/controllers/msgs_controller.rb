@@ -46,6 +46,6 @@ class MsgsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def msg_params
-      params.require(:msg).permit(:msg, :subject, :phone, :email, :lastname, :firstnamem, :read)
+      params.require(:msg).permit(:msg, :subject, :phone, :email, :lastname, :firstname, :read)
     end
 end
