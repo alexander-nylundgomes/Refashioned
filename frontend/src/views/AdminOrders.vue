@@ -1,6 +1,6 @@
 <template>
   <main class="orders" v-if="loaded">
-      <v-select class="pl-3 pr-3 pb-0 pt-5" @change="filter()" v-model="isShowing" dense outlined label="Show..." :items="shows"></v-select>
+    <v-select class="pl-3 pr-3 pb-0 pt-5" @change="filter()" v-model="isShowing" dense outlined label="Show..." :items="shows"></v-select>
     <Order v-for="order of showingOrders" :key="order.id" :order="order"/>
   </main>
 </template>

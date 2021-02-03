@@ -1,7 +1,8 @@
 <template>
   <main class="sell-requests" >
+    <v-select class="pl-3 pr-3 pb-0 pt-5" @change="filter()" v-model="isShowing" dense outlined label="Show..." :items="shows"></v-select>
       <div class="sell-requests" v-if="loaded">
-        <SellRequest v-for="sr of sellRequests" :key="sr.id" :sr="sr"/>  
+        <SellRequest @updated="filter()" v-for="sr of showingRequests" :key="sr.id" :sr="sr"/>  
       </div>
   </main>
 </template>
@@ -15,6 +16,14 @@ export default {
         return{
             loaded: false,
             sellRequests: [],
+            showingRequests: [],
+            isShowing: 'All requests',
+            shows: [
+                'All requests',
+                'Accepted',
+                'Bought',
+                'Rejected'
+            ]
         }
     },
     methods: {
@@ -25,6 +34,7 @@ export default {
             .then(function(resp){
                 console.log(resp)
                 vue.sellRequests = resp.data;
+                vue.showingRequests = resp.data;
             })
             .catch(function(error){
                 alert(error)
@@ -32,6 +42,14 @@ export default {
             
             this.loaded = true
         },
+
+        filter(){
+            if(this.isShowing == 'All requests'){
+                this.showingRequests = this.sellRequests
+            }else{
+                this.showingRequests = this.sellRequests.filter(s => s.status == this.isShowing)
+            }
+        }
     },
 
     created(){
