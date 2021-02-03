@@ -90,13 +90,15 @@ end
     Misc.create(x)
 end
 
-20.times do 
+20.times do
     Msg.create({
         firstname: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
         msg: Faker::Lorem.paragraph(sentence_count: [1,2,3,4].sample),
         subject: Faker::Lorem.word,
-        email: Faker::Internet.email
+        email: Faker::Internet.email,
+        phone: Faker::PhoneNumber.phone_number_with_country_code,
+        read: rand(3) == 0
     })
 end
 
