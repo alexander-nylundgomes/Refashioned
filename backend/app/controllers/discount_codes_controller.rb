@@ -15,6 +15,7 @@ class DiscountCodesController < ApplicationController
 
   # POST /discount_codes
   def create
+    
     @discount_code = DiscountCode.new(discount_code_params)
 
     if @discount_code.save
@@ -41,17 +42,17 @@ class DiscountCodesController < ApplicationController
 
   # DELETE /discount_codes/1
   def destroy
-    @discount_code.destroy
+    DiscountCode.find(params[:id]).destroy
   end
 
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_discount_code
-  #     @discount_code = DiscountCode.find(params[:id])
-  #   end
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_discount_code
+      @discount_code = DiscountCode.find(params[:id])
+    end
 
-  #   # Only allow a trusted parameter "white list" through.
-  #   def discount_code_params
-  #     params.require(:discount_code).permit(:code, :amount)
-  #   end
+    # Only allow a trusted parameter "white list" through.
+    def discount_code_params
+      params.require(:discount_code).permit(:code, :amount, :value_in_cash, :value_in_percent, :value_in_shipping, :required_value)
+    end
 end
