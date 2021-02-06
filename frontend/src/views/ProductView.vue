@@ -39,7 +39,7 @@
 
         <v-row>
           <v-col class="">
-            <p>{{ product.cat_name }} - {{ product.brands_name }} - {{ product.quality_name }}</p>
+            <p>Size: {{ product.size }} - {{ product.brands_name }} - {{ product.quality_name }}</p>
           </v-col>
         </v-row>
 

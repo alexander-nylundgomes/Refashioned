@@ -8,7 +8,7 @@
                 <v-select outlined :rules="[v => !!v || 'Item is required']" required dense @change="changeValueSuffix()" label="Select type" v-model="type" :items="types"></v-select>
                 <v-text-field outlined :rules="mustBeNumbers" v-model="discount_amount" dense label="Select amount" suffix="st"></v-text-field>
                 <v-text-field outlined :rules="mustBeNumbers" dense v-model="discount_required" label="Select required value" suffix="kr"></v-text-field>
-                <v-text-field outlined v-model="discount_value" :rules="percentLimitRules" dense :disabled="selectedShipping" label="Select discount value" :suffix="value_suffix" :value="selectedShipping && '1' || null"></v-text-field>
+                <v-text-field outlined v-model="discount_value" :rules="type == 1 && percentLimitRules.concat(percentLimit) || percentLimitRules" dense :disabled="selectedShipping" label="Select discount value" :suffix="value_suffix" :value="selectedShipping && '1' || null"></v-text-field>
                 <v-text-field outlined :rules="notEmptyRule" v-model="discount_code" dense label="Select discount code"></v-text-field>
               </v-form>
           </v-card-text>
@@ -63,6 +63,9 @@ export default {
             percentLimitRules: [
                 v => !!v || "Item is required",
                 v => /^[0-9]*$/.test(v) || "Only numbers accepted",
+            ],
+
+            percentLimit: [
                 v => parseInt(v) < 100 && parseInt(v) > 0 || "Must be between 0 and 100"
             ]
 
@@ -119,8 +122,8 @@ export default {
             }
         },
 
-        removeDiscount(e){
-            let x = this.discounts.find(e => e.id == e)
+        removeDiscount(target){
+            let x = this.discounts.find(e => e.id == target)
             let index = this.discounts.indexOf(x);
             this.discounts.splice(index, 1);
         },

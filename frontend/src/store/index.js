@@ -9,6 +9,7 @@ export default new Vuex.Store({
     products: [],
     colors: [],
     brands: [],
+    qualities: [],
     likes: JSON.parse(localStorage.getItem("likes")),
     cart: JSON.parse(localStorage.getItem("cart")),
     categories: [],
@@ -20,6 +21,10 @@ export default new Vuex.Store({
   mutations: {
     setProducts(state, payload) {
       state.products = payload;
+    },
+
+    setQualities(state, payload){
+      state.qualities = payload;
     },
 
     updateProductPrice(state, payload){
@@ -172,6 +177,17 @@ export default new Vuex.Store({
       })
     },
 
+    async getQualities(state){
+      axios.get(`${process.env.VUE_APP_BACKEND}/qualities`)
+      .then(function(resp){
+        console.log(resp.data)
+        state.commit('setQualities', resp.data)
+      })
+      .catch(function(error){
+        alert(error)
+      })
+    },
+
     likeAction(state, payload) {
       let isLiked = false;
 
@@ -259,7 +275,12 @@ export default new Vuex.Store({
     },
     
     colors(state){
-      return state.colors
+      return state.colors;
+    },
+
+    qualities(state){
+
+      return state.qualities;
     }
   }
 });

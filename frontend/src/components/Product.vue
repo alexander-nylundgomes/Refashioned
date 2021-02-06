@@ -30,7 +30,7 @@
                   {{ product.old_price }} kr
                 </p>
                 <p class="ma-0 price" :class="{ 'changed-product-title': $vuetify.breakpoint.xs}">
-                  {{ product.price }} kr
+                  {{ product.price }} kr - Size: {{ product.size }}
                 </p>
               </div>
             </v-col>
@@ -44,31 +44,12 @@
       >
         {{ product.brand }}
       </v-card-subtitle>
-      <!-- <v-card-text
-        class="pt-1 pl-2 pr-2"
-        :class="{ 'changed-product-text': $vuetify.breakpoint.xs }"
-        >{{ refactor(product.desc, 70) }}
-      </v-card-text> -->
       <v-card-text
       class="pl-2 pr-2 pt-1"
       :class="{ 'changed-product-text': $vuetify.breakpoint.xs }"
       >
       {{product.brands_name}} - {{ product.cat_name }}
       </v-card-text>
-      <!-- <v-divider></v-divider> -->
-      <!-- <v-card-actions class="pb-1">
-        <router-link class="link product-btn" :to="'/product/' + product.id">
-          <v-btn
-            depressed
-            color="primary"
-            small
-            block
-            class="pl-3 pr-3"
-            :class="{ 'changed-buttons-alert': $vuetify.breakpoint.xs }"
-            >See more</v-btn
-          >
-        </router-link>
-      </v-card-actions> -->
 
       <v-snackbar v-model="snackbar">
         {{ snackbarText }}

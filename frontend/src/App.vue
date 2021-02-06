@@ -27,6 +27,8 @@ export default {
       this.$store.dispatch("getShippingData");
       this.$store.dispatch("getColors");
       this.$store.dispatch("getBrands");
+      this.$store.dispatch("getQualities");
+
     },
 
     localStorageInit() {

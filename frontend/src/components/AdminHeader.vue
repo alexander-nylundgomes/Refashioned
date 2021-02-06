@@ -46,6 +46,7 @@ export default {
                 {title: "View orders", link: "/admin/orders", icon: "mdi-cart"},
                 {title: "View sell requests", link: "/admin/sell_requests", icon: "mdi-cash-multiple"},
                 {title: "View discounts", link: "/admin/discounts", icon: "mdi-cash"},
+                {title: "View products", link: "/admin/products", icon: "mdi-tshirt-crew"},
                 {title: "Customer page", link: "/", icon: "mdi-backburger"},
             ],
             colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]
