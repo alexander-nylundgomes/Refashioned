@@ -2,7 +2,7 @@
   <main class="searchresult">
     <div class="text pa-3">
       <h1 class="title">Showing results for {{ tag }}</h1>
-      <p >{{ this.results.length }} results</p>
+      <p>{{ this.results.length }} results</p>
     </div>
 
     <section class="products">

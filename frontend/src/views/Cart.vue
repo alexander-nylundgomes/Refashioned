@@ -5,7 +5,7 @@
       :amount="products.length"
       :all="products.length"
     />
-    <ProductContainer :products="products" :moreProducts="false"/>
+    <ProductContainer :products="products" :moreProducts="false" />
 
     <v-container>
       <v-row justify="center" align="center">
@@ -27,14 +27,14 @@
 
       <v-row>
         <v-col>
-          <v-btn 
-          :disabled="disabledShipping"
-          @click="showShippingInfo = true" 
-          color="primary" 
-          dense 
-          class="white--text"
-          block
-          elevation="0"
+          <v-btn
+            :disabled="disabledShipping"
+            @click="showShippingInfo = true"
+            color="primary"
+            dense
+            class="white--text"
+            block
+            elevation="0"
           >
             Shipping: {{ shipping_cost.value }} kr
           </v-btn>
@@ -43,7 +43,7 @@
 
       <v-row v-if="discount">
         <v-col>
-          <v-alert  type="success" dense>
+          <v-alert type="success" dense>
             Discount: {{ refactorDiscountValue }}
           </v-alert>
         </v-col>
@@ -110,16 +110,18 @@
       </template>
     </v-snackbar>
 
-    <Dialog 
+    <Dialog
       :title="'Shipping info'"
       :success="'primary'"
       :dialog="showShippingInfo"
       :buttonText="'Ok, I understand'"
       @closingDialog="showShippingInfo = false"
-      :text="`Shipping costs ${shipping_cost.value} kr when your order is below ${shipping_bar.value} kr unless you have a discount for free shipping.`"
+      :text="
+        `Shipping costs ${shipping_cost.value} kr when your order is below ${shipping_bar.value} kr unless you have a discount for free shipping.`
+      "
     />
 
-    <Dialog 
+    <Dialog
       :title="'New prices'"
       :success="'primary'"
       :dialog="newPrices"
@@ -144,7 +146,7 @@ export default {
       showShippingInfo: false,
       dialog: false,
       missingItems: [],
-      
+
       discount_code: "",
       discount: false,
       discount_value: {},
@@ -154,7 +156,7 @@ export default {
       snackbar: false,
 
       newPrices: false,
-      newPricesText: "",
+      newPricesText: ""
     };
   },
 
@@ -166,7 +168,7 @@ export default {
 
       let inStock = await axios
         .get(`${process.env.VUE_APP_BACKEND}/validate_stock`, {
-          params: { products_id: arrayOfIds, products_name: arrayOfNames}
+          params: { products_id: arrayOfIds, products_name: arrayOfNames }
         })
         .then(function(resp) {
           return resp.data;
@@ -176,22 +178,20 @@ export default {
           console.log(error.text);
         });
 
-
-
       if (inStock.length == this.products.length) {
-        if(this.validatePrices(inStock)){
+        if (this.validatePrices(inStock)) {
           return;
         }
 
         this.$store.commit("finalCartInsertion", {
           discount: this.discount_value,
           products: arrayOfIds,
-          price_without_discount: this.collectedPrice,
-        }); 
+          price_without_discount: this.collectedPrice
+        });
         this.$router.push("cart/info");
       } else {
         let stockIds = inStock.map(p => p.id);
-        console.log(inStock)
+        console.log(inStock);
         var difference = arrayOfIds.filter(x => stockIds.indexOf(x) === -1);
         let soldItems = [];
 
@@ -212,34 +212,37 @@ export default {
       }
     },
 
-
-    validatePrices(stock){
+    validatePrices(stock) {
       let text = "";
       let wrongs = false;
-      
-      for(let stockP of stock){
-        let cartP = this.products.find(p => p.id == stockP.id)
 
-        if(cartP.price != stockP.price){
-          this.$store.commit("updateProductPrice", {product: cartP, newPrice: stockP.price})
-          wrongs = true
-          text += `${cartP.name}: ${stockP.price} kr \n`
+      for (let stockP of stock) {
+        let cartP = this.products.find(p => p.id == stockP.id);
+
+        if (cartP.price != stockP.price) {
+          this.$store.commit("updateProductPrice", {
+            product: cartP,
+            newPrice: stockP.price
+          });
+          wrongs = true;
+          text += `${cartP.name}: ${stockP.price} kr \n`;
         }
       }
-      
-      if(wrongs){
 
-        this.newPricesText = "The following items have not the correct price. While you were browsing, their prices were updated. Their new prices are as follows: \r\n" + text
+      if (wrongs) {
+        this.newPricesText =
+          "The following items have not the correct price. While you were browsing, their prices were updated. Their new prices are as follows: \r\n" +
+          text;
         this.newPrices = true;
       }
 
       return wrongs;
     },
 
-    resetDiscountData(){
-      this.discount = false
-      this.discount_value = {}
-      this.discount_sum = 0
+    resetDiscountData() {
+      this.discount = false;
+      this.discount_value = {};
+      this.discount_sum = 0;
     },
 
     async getDiscount() {
@@ -255,10 +258,10 @@ export default {
           console.log(resp.data);
           if (resp.data.length == 0) {
             snackbarText = "No discount found. Have you spelled it correctly?";
-            vue.resetDiscountData()
+            vue.resetDiscountData();
           } else if (resp.data[0].required_value > collectedPrice) {
             snackbarText = `We're very sorry but the discount is only for purchases larger or equal to ${resp.data[0].required_value} kr.`;
-            vue.resetDiscountData()
+            vue.resetDiscountData();
           } else if (
             resp.data != [] &&
             resp.data[0].required_value <= collectedPrice
@@ -287,10 +290,10 @@ export default {
               vue.discount_value = {
                 code: vue.discount_code,
                 type: "shipping",
-                value: vue.shipping_cost.value,
+                value: vue.shipping_cost.value
               };
 
-              vue.discount_sum = vue.shipping_cost.value
+              vue.discount_sum = vue.shipping_cost.value;
             }
 
             vue.discount = true;
@@ -311,19 +314,26 @@ export default {
       return this.$store.getters.cart;
     },
 
-    disabledShipping(){
-      return this.discount_value.type == 'shipping' || this.collectedPrice > this.shipping_bar.value
+    disabledShipping() {
+      return (
+        this.discount_value.type == "shipping" ||
+        this.collectedPrice > this.shipping_bar.value
+      );
     },
 
-    shipping_cost(){
-      let cost = this.$store.getters.shippingData.find(x => x.name == 'shippingCost');
-      console.log(cost)
+    shipping_cost() {
+      let cost = this.$store.getters.shippingData.find(
+        x => x.name == "shippingCost"
+      );
+      console.log(cost);
       return cost;
     },
 
-    shipping_bar(){
-      let bar = this.$store.getters.shippingData.find(x => x.name == 'shippingBar');
-      console.log(bar)
+    shipping_bar() {
+      let bar = this.$store.getters.shippingData.find(
+        x => x.name == "shippingBar"
+      );
+      console.log(bar);
       return bar;
     },
 
@@ -349,19 +359,22 @@ export default {
       return text;
     },
 
-    buttonText(){
-      if(this.products.length == 0){
-        return "No products in cart"
-      }else{
-        if(this.collectedPrice >= this.shipping_bar.value){
-          return `Begin payment - ${this.collectedPrice - this.discount_sum } kr`
-        }else{
-          return `Begin payment - ${this.collectedPrice - this.discount_sum + this.shipping_cost.value} kr`
+    buttonText() {
+      if (this.products.length == 0) {
+        return "No products in cart";
+      } else {
+        if (this.collectedPrice >= this.shipping_bar.value) {
+          return `Begin payment - ${this.collectedPrice -
+            this.discount_sum} kr`;
+        } else {
+          return `Begin payment - ${this.collectedPrice -
+            this.discount_sum +
+            this.shipping_cost.value} kr`;
         }
       }
     },
 
-    isDisabled(){
+    isDisabled() {
       return this.products.length == 0;
     }
   },

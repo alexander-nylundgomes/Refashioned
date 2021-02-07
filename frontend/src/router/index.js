@@ -23,8 +23,8 @@ const routes = [
     path: "/categories/:id",
     name: "ShowCategory",
     props: {
-      itemTypeSing: 'category',
-      itemTypePlur: 'categories',
+      itemTypeSing: "category",
+      itemTypePlur: "categories"
     },
     component: () => import("@/views/TypesProducts.vue")
   },
@@ -37,8 +37,8 @@ const routes = [
     path: "/colors/:id",
     name: "ShowColors",
     props: {
-      itemTypeSing: 'color',
-      itemTypePlur: 'colors',
+      itemTypeSing: "color",
+      itemTypePlur: "colors"
     },
     component: () => import("@/views/TypesProducts.vue")
   },
@@ -46,8 +46,8 @@ const routes = [
     path: "/brands/:id",
     name: "ShowBrand",
     props: {
-      itemTypeSing: 'brand',
-      itemTypePlur: 'brands',
+      itemTypeSing: "brand",
+      itemTypePlur: "brands"
     },
     component: () => import("@/views/TypesProducts.vue")
   },
@@ -92,7 +92,7 @@ const routes = [
     path: "/colors",
     name: "Colors",
     props: {
-      itemType: 'colors'
+      itemType: "colors"
     },
     component: () => import("@/views/Types.vue")
   },
@@ -100,7 +100,7 @@ const routes = [
     path: "/brands",
     name: "Brands",
     props: {
-      itemType: 'brands',
+      itemType: "brands"
     },
     component: () => import("@/views/Types.vue")
   },
@@ -108,7 +108,7 @@ const routes = [
     path: "/categories",
     name: "Categories",
     props: {
-      itemType: 'categories'
+      itemType: "categories"
     },
     component: () => import("@/views/Types.vue")
   },
@@ -157,6 +157,11 @@ const routes = [
     path: "/admin/discounts",
     name: "AdminDiscounts",
     component: () => import("@/views/AdminDiscounts.vue")
+  },
+  {
+    path: "/admin/products",
+    name: "AdminProducts",
+    component: () => import("@/views/AdminProducts.vue")
   }
 ];
 

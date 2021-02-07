@@ -3,7 +3,14 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).order('products.category_id').where(bought: 0)
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade', 'colors.name AS color_name').joins(:category, :brand, :quality, :color).order('products.category_id').where(bought: false)
+    
+    render json: @products
+  end
+
+  # GET /all_products
+  def all
+    @products = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade', 'colors.name AS color_name').joins(:category, :brand, :quality, :color).order('products.category_id')
     
     render json: @products
   end
@@ -81,6 +88,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:size, :desc, :color, :price, :name)
+      params.require(:product).permit(:size, :desc, :color_id, :price, :name, :brand_id, :category_id, :bought, :old_price, :quality_id, :order_id)
     end
 end

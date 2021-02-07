@@ -1,7 +1,12 @@
 <template>
   <section class="products">
     <Product v-for="item of products" :key="item.id" :product="item" />
-    <v-card v-if="moreProducts == true || moreProducts == undefined" width="200" color="primary" class="last-card  ml-2 mr-2">
+    <v-card
+      v-if="moreProducts == true || moreProducts == undefined"
+      width="200"
+      color="primary"
+      class="last-card  ml-2 mr-2"
+    >
       <router-link class="to_all" :to="'/filter'">
         See more!
       </router-link>
@@ -32,12 +37,12 @@ section.products {
   height: fit-content;
 }
 
-.last-card{
+.last-card {
   overflow: hidden;
   display: inline-block;
   height: 100%;
-  
-  .to_all{
+
+  .to_all {
     width: 100%;
     height: 100%;
     display: flex;

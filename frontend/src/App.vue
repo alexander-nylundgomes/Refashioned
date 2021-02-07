@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <AdminHeader v-if="isInAdmin"/>
-    <Header v-if="!isInAdmin"/>
+    <AdminHeader v-if="isInAdmin" />
+    <Header v-if="!isInAdmin" />
     <router-view :key="$route.fullPath"></router-view>
     <Footer />
   </v-app>
@@ -14,10 +14,10 @@ import AdminHeader from "@/components/AdminHeader.vue";
 export default {
   name: "App",
 
-  data(){
-    return{
-      isInAdmin: window.location.hash.startsWith("#/admin"),
-    }
+  data() {
+    return {
+      isInAdmin: window.location.hash.startsWith("#/admin")
+    };
   },
 
   methods: {
@@ -27,6 +27,7 @@ export default {
       this.$store.dispatch("getShippingData");
       this.$store.dispatch("getColors");
       this.$store.dispatch("getBrands");
+      this.$store.dispatch("getQualities");
     },
 
     localStorageInit() {
@@ -45,8 +46,8 @@ export default {
   },
 
   watch: {
-    '$route': function(to){
-      this.isInAdmin = to.path.startsWith('/admin')
+    $route: function(to) {
+      this.isInAdmin = to.path.startsWith("/admin");
     }
   },
 
@@ -95,42 +96,38 @@ main {
   font-size: 0.75em !important;
 }
 
-.main-text{
+.main-text {
+  h2 {
+    text-align: center;
+    margin: 1em 0 0.25em 0;
+    padding: 0 1.25em;
+    font-size: 2em;
+    line-height: 1.3;
+  }
 
-    h2{
-        text-align: center;
-        margin: 1em 0 0.25em 0;
-        padding: 0 1.25em;
-        font-size: 2em;
-        line-height: 1.3;
-    }
-
-    p{
-        text-align: center;
-        padding: 0 1.25rem;
-        margin: 0 0 2em 0;
-    }
+  p {
+    text-align: center;
+    padding: 0 1.25rem;
+    margin: 0 0 2em 0;
+  }
 }
 
-.label{
-  font-size: 0.80em;
+.label {
+  font-size: 0.8em;
 }
 
-.link-inside{
+.link-inside {
   text-decoration: underline;
-
 }
 
-.products-wrapper{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 1em 0;
-    >*{
-        margin: 1em 0;
-    }
+.products-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1em 0;
+  > * {
+    margin: 1em 0;
+  }
 }
-
-
 </style>
