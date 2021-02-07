@@ -5,6 +5,8 @@
     
     <AdminAddProduct :colors="colors" :qualities="qualities" :categories="categories" :brands="brands"/>
     
+    <v-divider class="mb-5 mr-2 ml-2 mt-5"></v-divider>
+
     <v-data-iterator
       :items="showProducts"
       item-key="id"
@@ -14,7 +16,7 @@
       <!-- <template v-slot:default="{ items, isExpanded, expand }"> -->
       <template v-slot:default="{ items }">
         <v-row class="max-width ma-0">
-          <v-col cols="12" class="pt-10 pr-0 pl-0" >
+          <v-col cols="12" class="pt-0 pr-0 pl-0" >
             <AdminProduct
               v-for="item of items"
               :key="item.id"
@@ -109,6 +111,18 @@ export default {
 
 .max-width{
   max-width: 100%;
+}
+
+main.admin-products{
+  .v-data-footer{
+    padding: 0 !important;
+  }
+
+  // .v-data-footer__icons-before, .v-data-footer__icons-after{
+  //   *{
+  //     font-size: 1em !important;
+  //   }
+  // }
 }
 
 </style>
