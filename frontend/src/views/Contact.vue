@@ -43,6 +43,7 @@
         :items="subjects"
         v-model="subject"
         dense
+        :rules="notEmptyRule"
         outlined
         label="Subject"
       ></v-select>
@@ -99,7 +100,7 @@ export default {
       email: "",
       phone: "",
       msg: "",
-      subject: "",
+      subject: null,
       agreed: false,
       subjects: [
         "Order",

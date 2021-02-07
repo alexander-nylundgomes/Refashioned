@@ -3,7 +3,7 @@
     <v-select class="mr-2 ml-2 mt-5" @change="filter()" outlined dense label="Show..." :items="shows" item-value="id" v-model="show"></v-select>
     <v-select class="mr-2 ml-2" @change="filter()" outlined dense label="Sort by..." :items="sorts" item-value="id" v-model="sortType"></v-select>
     
-    <AdminAddProduct :colors="colors" :qualities="qualities" />
+    <AdminAddProduct :colors="colors" :qualities="qualities" :categories="categories" :brands="brands"/>
     
     <v-data-iterator
       :items="showProducts"
@@ -13,14 +13,16 @@
     >
       <!-- <template v-slot:default="{ items, isExpanded, expand }"> -->
       <template v-slot:default="{ items }">
-        <v-row>
-          <v-col cols="12" class="pt-10">
+        <v-row class="max-width ma-0">
+          <v-col cols="12" class="pt-10 pr-0 pl-0" >
             <AdminProduct
               v-for="item of items"
               :key="item.id"
               :product="item"
               :qualities="qualities"
               :colors="colors"
+              :categories="categories"
+              :brands="brands"
             />
           </v-col>
         </v-row>
@@ -43,6 +45,8 @@ export default {
       loaded: false,
       qualities: this.$store.getters.qualities,
       colors: this.$store.getters.colors,
+      brands: this.$store.getters.brands,
+      categories: this.$store.getters.categories,
 
       shows: [
         {text: 'Available', id: 1},
@@ -101,4 +105,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+.max-width{
+  max-width: 100%;
+}
+
+</style>

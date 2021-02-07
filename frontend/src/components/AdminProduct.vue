@@ -133,7 +133,7 @@ const axios = require("axios");
 import Snackbar from "@/components/Snackbar.vue";
 export default {
   name: "AdminProduct",
-  props: ["product", "qualities", "colors"],
+  props: ["product", "qualities", "colors", 'categories', 'brands'],
 
   data() {
     return {
@@ -141,10 +141,8 @@ export default {
       sizes: ["XSS", "XS", "S", "M", "L", "XL", "XLL"],
       size: this.product.size,
       available: this.product.bought == 0,
-      brands: this.$store.getters.brands,
       brand: this.product.brands_name,
       quality: this.product.quality_name,
-      categories: this.$store.getters.categories,
       category: this.product.cat_name,
       color: this.product.color_name,
       price: this.product.price,
