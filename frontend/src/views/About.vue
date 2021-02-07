@@ -79,12 +79,18 @@
 
     <h4>Buying from us</h4>
     <p class="policy">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, iusto error? Exercitationem corrupti doloremque, in non animi, alias recusandae maxime veritatis, itaque quos vitae nihil. Perferendis nesciunt unde animi pariatur!
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, iusto
+      error? Exercitationem corrupti doloremque, in non animi, alias recusandae
+      maxime veritatis, itaque quos vitae nihil. Perferendis nesciunt unde animi
+      pariatur!
     </p>
 
     <h4>Selling to us</h4>
     <p class="policy">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque necessitatibus unde omnis! Laudantium quo, quia sequi consequuntur atque accusantium ut. A corrupti ad id quibusdam debitis mollitia autem esse labore!
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque
+      necessitatibus unde omnis! Laudantium quo, quia sequi consequuntur atque
+      accusantium ut. A corrupti ad id quibusdam debitis mollitia autem esse
+      labore!
     </p>
   </main>
 </template>

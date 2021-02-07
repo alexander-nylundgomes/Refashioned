@@ -111,26 +111,35 @@
           <v-card elevation="0" class="mb-6 stepper">
             <h4>Amount: {{ valueFromBackend }} kr</h4>
             <form id="payment-form">
-              <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+              <div id="card-element">
+                <!--Stripe.js injects the Card Element-->
+              </div>
               <button id="submit">
                 <div class="spinner hidden" id="spinner"></div>
               </button>
               <p id="card-error" role="alert"></p>
             </form>
             <v-container class="pa-0" fluid>
-              <v-checkbox class="ma-0" :ripple="false"  v-model="checkbox" >
+              <v-checkbox class="ma-0" :ripple="false" v-model="checkbox">
                 <template v-slot:label>
-                  <p class="ma-0 label">I have read and understood <a class="link-inside" @click="$router.push('/about')">Refashioneds policies</a>  and agreements regarding purchasing.</p>
+                  <p class="ma-0 label">
+                    I have read and understood
+                    <a class="link-inside" @click="$router.push('/about')"
+                      >Refashioneds policies</a
+                    >
+                    and agreements regarding purchasing.
+                  </p>
                 </template>
               </v-checkbox>
             </v-container>
           </v-card>
 
-          <v-btn 
-            :disabled="!checkbox" 
-            color="primary" 
-            id="button-text" 
-            @click="payWithCard()">
+          <v-btn
+            :disabled="!checkbox"
+            color="primary"
+            id="button-text"
+            @click="payWithCard()"
+          >
             Pay
           </v-btn>
 
@@ -141,7 +150,7 @@
       </v-stepper-items>
     </v-stepper>
 
-    <Loading :loading="loading"/>
+    <Loading :loading="loading" />
 
     <Dialog
       :title="dialog_title"
@@ -153,7 +162,6 @@
     />
   </main>
 </template>
-
 
 <script>
 const axios = require("axios");
@@ -176,8 +184,12 @@ export default {
       dialog_button: "",
       valueFromBackend: "",
 
-      shipping_cost: this.$store.getters.shippingData.find(x => x.name == "shippingCost"),
-      shipping_bar: this.$store.getters.shippingData.find(x => x.name == "shippingBar"),
+      shipping_cost: this.$store.getters.shippingData.find(
+        x => x.name == "shippingCost"
+      ),
+      shipping_bar: this.$store.getters.shippingData.find(
+        x => x.name == "shippingBar"
+      ),
 
       checkbox: false,
 
@@ -205,7 +217,7 @@ export default {
         { text: "Address", model: "address" },
         { text: "Postal", model: "postal" },
         { text: "City", model: "city" },
-        { text: "Phone Number", model: "phone" , prefix: "+46"},
+        { text: "Phone Number", model: "phone", prefix: "+46" }
       ],
 
       client_secret: "",
@@ -255,8 +267,16 @@ export default {
       );
     },
 
-    checkInputs(){
-      console.log(this.firstname, this.lastname, this.email, this.city, this.phone, this.address, this.postal)
+    checkInputs() {
+      console.log(
+        this.firstname,
+        this.lastname,
+        this.email,
+        this.city,
+        this.phone,
+        this.address,
+        this.postal
+      );
     },
 
     returnToCart() {
@@ -336,7 +356,6 @@ export default {
           ? event.error.message
           : "";
       });
-
     },
 
     payWithCard() {
@@ -369,33 +388,33 @@ export default {
             vue.dialog_success = false;
             vue.dialog_button = "I understand";
           } else {
-
-            axios.post(`${process.env.VUE_APP_BACKEND}/orders`, {
-              products: vue.$store.getters.cart,
-              order: {
-                city: vue.city,
-                address: vue.address,
-                email: vue.email,
-                phone: vue.phone,
-                firstname: vue.firstname,
-                lastname: vue.lastname,
-                postal: vue.postal,
-                tracking: "",
-              },
-              discount_code: vue.finalCart.discount['code'],
-            })
-            .then(function(){
-              // The payment succeeded!
-              vue.dialog_text = "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
-              vue.dialog_title = "Purchase completed!";
-              vue.dialog_success = true;
-              vue.dialog_button = "Great!";
-              vue.removeItemsFromStore();
-            })
-            .catch(function(error){
-              console.log(error)
-            })
-
+            axios
+              .post(`${process.env.VUE_APP_BACKEND}/orders`, {
+                products: vue.$store.getters.cart,
+                order: {
+                  city: vue.city,
+                  address: vue.address,
+                  email: vue.email,
+                  phone: vue.phone,
+                  firstname: vue.firstname,
+                  lastname: vue.lastname,
+                  postal: vue.postal,
+                  tracking: ""
+                },
+                discount_code: vue.finalCart.discount["code"]
+              })
+              .then(function() {
+                // The payment succeeded!
+                vue.dialog_text =
+                  "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
+                vue.dialog_title = "Purchase completed!";
+                vue.dialog_success = true;
+                vue.dialog_button = "Great!";
+                vue.removeItemsFromStore();
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
           }
 
           vue.loading = false;
@@ -405,11 +424,11 @@ export default {
         });
     },
 
-    removeItemsFromStore(){
+    removeItemsFromStore() {
       let product_ids = this.finalCart.products;
-      console.log("asdasd", this.finalCart.products)
-      for(let p of product_ids){
-        this.$store.commit('disableProduct', p)
+      console.log("asdasd", this.finalCart.products);
+      for (let p of product_ids) {
+        this.$store.commit("disableProduct", p);
       }
     },
 
@@ -419,31 +438,44 @@ export default {
       }
     },
 
-    resetCart(){
-      this.$store.commit("resetCart")
+    resetCart() {
+      this.$store.commit("resetCart");
     }
   },
 
   computed: {
-    dicounted_value(){
+    dicounted_value() {
       let value;
 
-      console.log(this.finalCart.discount.type)
+      console.log(this.finalCart.discount.type);
 
-      switch(this.finalCart.discount.type){
-        case "percent": value = (this.finalCart.price_without_discount * (1.0 - (this.finalCart.discount.value / 100.0)));break;
-        case "cash": value = this.finalCart.price_without_discount - this.finalCart.discount.value;break;
-        case "shipping": value = this.finalCart.price_without_discount - this.shipping_cost.value;break;
-        default : value = this.finalCart.price_without_discount;break;
+      switch (this.finalCart.discount.type) {
+        case "percent":
+          value =
+            this.finalCart.price_without_discount *
+            (1.0 - this.finalCart.discount.value / 100.0);
+          break;
+        case "cash":
+          value =
+            this.finalCart.price_without_discount -
+            this.finalCart.discount.value;
+          break;
+        case "shipping":
+          value =
+            this.finalCart.price_without_discount - this.shipping_cost.value;
+          break;
+        default:
+          value = this.finalCart.price_without_discount;
+          break;
       }
 
-      return value + this.shipping_cost.value
+      return value + this.shipping_cost.value;
     }
   },
 
-  created(){
-    if(this.$store.getters.finalCart.length == 0){
-      this.$router.go(-1)
+  created() {
+    if (this.$store.getters.finalCart.length == 0) {
+      this.$router.go(-1);
     }
   },
 
@@ -461,7 +493,7 @@ export default {
 }
 
 #card-element {
-  border-radius: 4px 4px 0 0 ;
+  border-radius: 4px 4px 0 0;
   padding: 12px;
   border: 1px solid rgba(50, 50, 93, 0.1);
   height: 44px;

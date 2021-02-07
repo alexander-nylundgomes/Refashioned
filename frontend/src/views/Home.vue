@@ -63,11 +63,11 @@
     <TitleCardProducts
       :name="'Popular brands'"
       :category="3"
-      :amount="products.slice(0,10).length"
+      :amount="products.slice(0, 10).length"
       :all="products.length"
     />
 
-    <ProductContainer :products="products.slice(0,10)" />
+    <ProductContainer :products="products.slice(0, 10)" />
 
     <BulkComponent
       v-for="section of second_sections"
@@ -90,7 +90,7 @@
 import ProductContainer from "@/components/ProductContainer.vue";
 import TitleCardProducts from "@/components/TitleCardProducts.vue";
 import BulkComponent from "@/components/BulkComponent.vue";
-const clone = require('rfdc')() // Returns the deep copy function
+const clone = require("rfdc")(); // Returns the deep copy function
 
 export default {
   name: "Home",

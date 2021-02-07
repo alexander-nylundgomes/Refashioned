@@ -33,13 +33,18 @@
         </v-row>
 
         <v-row class="pl-3">
-            <h3 v-if="product.old_price" class="old-price">{{ product.old_price }} kr</h3>
-            <h3 class="pl-2">{{ product.price }} kr</h3>
+          <h3 v-if="product.old_price" class="old-price">
+            {{ product.old_price }} kr
+          </h3>
+          <h3 class="pl-2">{{ product.price }} kr</h3>
         </v-row>
 
         <v-row>
           <v-col class="">
-            <p>Size: {{ product.size }} - {{ product.brands_name }} - {{ product.quality_name }}</p>
+            <p>
+              Size: {{ product.size }} - {{ product.brands_name }} -
+              {{ product.quality_name }}
+            </p>
           </v-col>
         </v-row>
 
@@ -189,7 +194,7 @@ export default {
 
   created() {
     this.setup();
-    console.log(this.product)
+    console.log(this.product);
   }
 };
 </script>
@@ -199,7 +204,7 @@ section.padded {
   padding: 5%;
 }
 
-.old-price{
+.old-price {
   text-decoration: line-through;
   color: red;
 }

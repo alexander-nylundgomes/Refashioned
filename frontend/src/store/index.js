@@ -23,46 +23,46 @@ export default new Vuex.Store({
       state.products = payload;
     },
 
-    setQualities(state, payload){
+    setQualities(state, payload) {
       state.qualities = payload;
     },
 
-    updateProductPrice(state, payload){
+    updateProductPrice(state, payload) {
       let index = state.products.indexOf(payload.product);
-      
-      if(index != -1){
-        state.products[index].price = payload.newPrice
+
+      if (index != -1) {
+        state.products[index].price = payload.newPrice;
       }
 
-      index = state.cart.indexOf(payload.product)
-      if(index != -1){
-        state.cart[index].price = payload.newPrice
+      index = state.cart.indexOf(payload.product);
+      if (index != -1) {
+        state.cart[index].price = payload.newPrice;
       }
 
       let lCart = JSON.parse(localStorage.getItem("cart"));
-      index = lCart.findIndex(p => p.id == payload.product.id)
+      index = lCart.findIndex(p => p.id == payload.product.id);
 
       lCart[index].price = payload.newPrice;
 
-      localStorage.setItem("cart", JSON.stringify(lCart))
+      localStorage.setItem("cart", JSON.stringify(lCart));
     },
 
-    setBrands(state, payload){
+    setBrands(state, payload) {
       state.brands = payload;
     },
 
-    setColors(state, payload){
+    setColors(state, payload) {
       state.colors = payload;
     },
 
-    disableProduct(state, payload){
+    disableProduct(state, payload) {
       let product = state.products.find(p => p.id == payload);
       let index = state.products.indexOf(product);
 
       state.products.splice(index, 1);
     },
 
-    resetCart(state){
+    resetCart(state) {
       state.finalCart = [];
       state.cart = [];
       localStorage.removeItem("cart");
@@ -105,7 +105,7 @@ export default new Vuex.Store({
       state.categories = payload;
     },
 
-    setShippingData(state, payload){
+    setShippingData(state, payload) {
       state.shippingData = payload;
     },
 
@@ -115,7 +115,7 @@ export default new Vuex.Store({
     },
 
     removeFromCart(state, payload) {
-      let product = state.cart.find(p => p.id == payload.id)
+      let product = state.cart.find(p => p.id == payload.id);
       let index = state.cart.indexOf(product);
       state.cart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(state.cart));
@@ -134,7 +134,7 @@ export default new Vuex.Store({
         });
     },
 
-    async getBrands(state){
+    async getBrands(state) {
       axios
         .get(`${process.env.VUE_APP_BACKEND}/brands`)
         .then(function(resp) {
@@ -145,14 +145,15 @@ export default new Vuex.Store({
         });
     },
 
-    async getColors(state){
-      axios.get(`${process.env.VUE_APP_BACKEND}/colors`)
-      .then(function(resp){
-        state.commit("setColors", resp.data)
-      })
-      .catch(function(error){
-        alert(error)
-      })
+    async getColors(state) {
+      axios
+        .get(`${process.env.VUE_APP_BACKEND}/colors`)
+        .then(function(resp) {
+          state.commit("setColors", resp.data);
+        })
+        .catch(function(error) {
+          alert(error);
+        });
     },
 
     async getCategories(state) {
@@ -166,26 +167,28 @@ export default new Vuex.Store({
         });
     },
 
-    async getShippingData(state){
-      axios.get(`${process.env.VUE_APP_BACKEND}/shipping_data`)
-      .then(function(resp){
-        console.log(resp.data)
-        state.commit("setShippingData", resp.data)
-      })
-      .catch(function(error){
-        alert(error)
-      })
+    async getShippingData(state) {
+      axios
+        .get(`${process.env.VUE_APP_BACKEND}/shipping_data`)
+        .then(function(resp) {
+          console.log(resp.data);
+          state.commit("setShippingData", resp.data);
+        })
+        .catch(function(error) {
+          alert(error);
+        });
     },
 
-    async getQualities(state){
-      axios.get(`${process.env.VUE_APP_BACKEND}/qualities`)
-      .then(function(resp){
-        console.log(resp.data)
-        state.commit('setQualities', resp.data)
-      })
-      .catch(function(error){
-        alert(error)
-      })
+    async getQualities(state) {
+      axios
+        .get(`${process.env.VUE_APP_BACKEND}/qualities`)
+        .then(function(resp) {
+          console.log(resp.data);
+          state.commit("setQualities", resp.data);
+        })
+        .catch(function(error) {
+          alert(error);
+        });
     },
 
     likeAction(state, payload) {
@@ -266,20 +269,19 @@ export default new Vuex.Store({
       return state.finalCart;
     },
 
-    shippingData(state){
+    shippingData(state) {
       return state.shippingData;
     },
 
-    brands(state){
+    brands(state) {
       return state.brands;
     },
-    
-    colors(state){
+
+    colors(state) {
       return state.colors;
     },
 
-    qualities(state){
-
+    qualities(state) {
       return state.qualities;
     }
   }
