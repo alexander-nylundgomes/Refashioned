@@ -405,12 +405,8 @@ export default {
               })
               .then(function() {
                 // The payment succeeded!
-                vue.dialog_text =
-                  "Yay! The purchase went through! You will recieve an email shortly with the reciept. When the order leaves our warehouse, you will recieve an email about the tracking information!";
-                vue.dialog_title = "Purchase completed!";
-                vue.dialog_success = true;
-                vue.dialog_button = "Great!";
                 vue.removeItemsFromStore();
+                vue.$router.push('/payment-success')
               })
               .catch(function(error) {
                 console.log(error);
@@ -418,7 +414,6 @@ export default {
           }
 
           vue.loading = false;
-          vue.dialog = true;
           vue.resetCart();
           // vue.$router.push("/")
         });
