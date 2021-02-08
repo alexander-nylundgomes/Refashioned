@@ -54,6 +54,7 @@ export default {
           link: "/admin/sell_requests",
           icon: "mdi-cash-multiple"
         },
+        { title: "View qualities", link: "/admin/qualities", icon: "mdi-tag"},
         { title: "View discounts", link: "/admin/discounts", icon: "mdi-cash" },
         {
           title: "View products",

@@ -46,6 +46,6 @@ class QualitiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quality_params
-      params.require(:quality).permit(:name, :description)
+      params.require(:quality).permit(:name, :description, :grade)
     end
 end
