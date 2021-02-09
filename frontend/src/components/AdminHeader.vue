@@ -56,6 +56,7 @@ export default {
         },
         { title: "View qualities", link: "/admin/qualities", icon: "mdi-tag"},
         { title: "View discounts", link: "/admin/discounts", icon: "mdi-cash" },
+        { title: "View colors", link: "/admin/colors", icon: "mdi-palette" },
         {
           title: "View products",
           link: "/admin/products",
