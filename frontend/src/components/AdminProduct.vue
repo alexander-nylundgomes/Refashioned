@@ -117,7 +117,7 @@
         @click="deleteProduct()"
 
       >Delete</v-btn>
-      <v-img lazy :src="product.main_image"></v-img>
+      <v-img :src="product.main_image"></v-img>
       <p class="center-text"><b>Created at:</b> {{ product.created_at }}</p>
       <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
       <!-- <v-text-field dense outlined label="Available" :value="product.name"></v-text-field> -->
@@ -177,25 +177,37 @@ export default {
         this.available,
         this.qualities.find(q => q.name == this.quality),
         this.old_price,
-        this.description
+        this.description,
+        this.main_img
       );
 
       let vue = this;
+
+      let headers = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+
+      let formData = new FormData();
+      let product = {
+        category_id: vue.categories.find(q => q.name == vue.category).id,
+        brand_id: vue.brands.find(b => b.name == vue.brand).id,
+        color_id: vue.colors.find(c => c.name == vue.color).id,
+        order_id: vue.order_id,
+        size: vue.size,
+        price: vue.price,
+        bought: !vue.available,
+        quality_id: vue.qualities.find(q => q.name == vue.quality).id,
+        old_price: vue.old_price,
+        desc: vue.description,
+      }
+
+      formData.append("main_img", this.main_img)
+      formData.append("product", JSON.stringify(product))
+
       axios
-        .patch(`${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`, {
-          product: {
-            category_id: vue.categories.find(q => q.name == vue.category).id,
-            brand_id: vue.brands.find(b => b.name == vue.brand).id,
-            color_id: vue.colors.find(c => c.name == vue.color).id,
-            order_id: vue.order_id,
-            size: vue.size,
-            price: vue.price,
-            bought: !vue.available,
-            quality_id: vue.qualities.find(q => q.name == vue.quality).id,
-            old_price: vue.old_price,
-            desc: vue.description
-          }
-        })
+        .patch(`${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`, formData, headers)
         .then(function(resp) {
           console.log(resp);
           vue.snackbarText = `Product with ID ${vue.product.id} was successfully updated!`
