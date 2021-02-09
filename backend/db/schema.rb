@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_204045) do
+ActiveRecord::Schema.define(version: 2021_02_09_155153) do
 
   create_table "brands", force: :cascade do |t|
     t.string "name"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_204045) do
     t.integer "old_price"
     t.integer "quality_id"
     t.integer "order_id"
+    t.string "main_image"
   end
 
   create_table "qualities", force: :cascade do |t|

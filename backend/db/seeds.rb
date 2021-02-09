@@ -72,18 +72,23 @@ end
         old = nil
     end
 
+    path = "https://res.cloudinary.com/symetrcl/products/"
+
+    brand = [1,2,3,4,5].sample
+
     Product.create!({
         name: Faker::Commerce.product_name,
         size: ['M', 'S', 'XL', 'L', 'XS'].sample,
         desc: Faker::Lorem.paragraph(sentence_count: 7),
         color_id: [1,2,3,4,5].sample,
         price: price,
-        brand_id: [1,2,3,4,5].sample,
+        brand_id: brand,
         category_id: [1,2,3,4].sample,
         bought: false,
         old_price: old,
         quality_id: rand(1..10),
         order_id: nil,
+        main_image: "#{path}/#{brand}/#{rand(1..5)}",
     })
 end
 

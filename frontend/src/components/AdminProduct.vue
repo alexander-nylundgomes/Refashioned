@@ -85,6 +85,14 @@
         label="Order ID"
         v-model="order_id"
       ></v-text-field>
+      <v-file-input
+        dense
+        outlined
+        label="New main image"
+        @change="updatePending = true"
+        prepend-icon=""
+        v-model="main_img"
+      ></v-file-input>
       <v-textarea
         outlined
         dense
@@ -109,7 +117,7 @@
         @click="deleteProduct()"
 
       >Delete</v-btn>
-      <div class="img-replace" v-if="seeMore"></div>
+      <v-img lazy :src="product.main_image"></v-img>
       <p class="center-text"><b>Created at:</b> {{ product.created_at }}</p>
       <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
       <!-- <v-text-field dense outlined label="Available" :value="product.name"></v-text-field> -->
@@ -149,6 +157,7 @@ export default {
       updatePending: false,
       old_price: this.product.old_price,
       description: this.product.description,
+      main_img: null,
 
       order_id: this.product.order_id,
 

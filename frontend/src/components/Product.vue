@@ -1,12 +1,18 @@
 <template>
   <v-lazy width="200" class="product-card  ml-1 mr-1">
     <v-card elevation="0" lazy @click="$router.push('/product/' + product.id)">
-      <div class="img-replace">
+      <!-- <div class="img-replace">
         <v-btn @click="likeAction()" icon class="mt-1 mr-1">
           <v-icon v-if="!isLiked" color="#EF6B6F">mdi-heart-outline</v-icon>
           <v-icon v-if="isLiked" color="#EF6B6F">mdi-heart</v-icon>
         </v-btn>
-      </div>
+      </div> -->
+      <v-img class="main-img d-flex" align="end" :src="product.main_image">
+        <v-btn @click="likeAction()" icon class="mt-1 mr-1">
+          <v-icon v-if="!isLiked" color="#EF6B6F">mdi-heart-outline</v-icon>
+          <v-icon v-if="isLiked" color="#EF6B6F">mdi-heart</v-icon>
+        </v-btn>
+      </v-img>
       <v-card-title
         class="pa-1 pl-2 pr-2"
         :class="{ 'changed-product-title': $vuetify.breakpoint.xs }"
@@ -125,13 +131,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img-replace {
-  background-color: lightgray;
+.main-img{
   width: 100%;
   height: 10.5rem;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
 }
 
 .limited-p {
