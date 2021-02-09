@@ -5,6 +5,9 @@
 # pusher_secret: abdc3b896a0ffb85d373
 stripe_secret: sk_test_51IDqTwIir311Zc3MIEhJHVRU3DFFWlX2pMnEwOGKoCg7dpEiQPNGBIhGI014c65fwIXK9tDMyDFXuJj9t0G8365C00id1F0zr8
 stripe_publish: pk_test_51IDqTwIir311Zc3MDkeNmbjNDbpmH4OFjhtXftnhMOqwWVq7E09nhUx3ymDJR4i8o2lqAguOvEk7AvnQJsCOywtZ008eLgfpYH
+cloud_name: symetrcl
+cloud_api_key: 243322356937354
+cloud_api_secret: DVyb_F_Tkt75gELEexu-Nu9sKHE
 
 production:
   stripe_api_key: 

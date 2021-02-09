@@ -63,7 +63,14 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    if @product.update(product_params)
+    file = params['main_img']
+
+    if file
+      Cloudinary::Uploader.upload(file, :public_id => '1',  :unique_filename => false, :folder => "products/#{@product.id}/", :invalidate => true)
+    end
+
+    parsed_params = ActionController::Parameters.new({product: JSON.parse(params['product'])})
+    if @product.update(product_params(parsed_params))
       render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
@@ -87,7 +94,7 @@ class ProductsController < ApplicationController
     end
 
     # Only allow a trusted parameter "white list" through.
-    def product_params
-      params.require(:product).permit(:size, :desc, :color_id, :price, :name, :brand_id, :category_id, :bought, :old_price, :quality_id, :order_id)
+    def product_params(items = params)
+      items.require(:product).permit(:size, :desc, :color_id, :price, :name, :brand_id, :category_id, :bought, :old_price, :quality_id, :order_id)
     end
 end

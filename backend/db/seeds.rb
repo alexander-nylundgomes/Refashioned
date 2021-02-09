@@ -64,7 +64,9 @@ end
     })
 end
 
-100.times do 
+i = 1
+
+while i <= 100 do 
     price = Faker::Commerce.price
     if rand(4) == 0
         old = price * 1.25
@@ -74,7 +76,20 @@ end
 
     path = "https://res.cloudinary.com/symetrcl/products/"
 
-    brand = [1,2,3,4,5].sample
+    # brand = [1,2,3,4,5].sample
+
+    case i
+    when 1..20
+        brand = 1
+    when 21..40
+        brand = 2
+    when 41..60
+        brand = 3
+    when 61..80
+        brand = 4
+    when 81..1000
+        brand = 5
+    end
 
     Product.create!({
         name: Faker::Commerce.product_name,
@@ -88,8 +103,10 @@ end
         old_price: old,
         quality_id: rand(1..10),
         order_id: nil,
-        main_image: "#{path}/#{brand}/#{rand(1..5)}",
+        main_image: "#{path}/#{i}/1",
     })
+
+    i += 1
 end
 
 
