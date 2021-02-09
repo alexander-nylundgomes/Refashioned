@@ -35,6 +35,8 @@ class ColorsController < ApplicationController
 
   # DELETE /colors/1
   def destroy
+    newId = params[:newId]
+    Product.where(color_id: @color.id).update_all(color_id: newId)
     @color.destroy
   end
 
@@ -46,6 +48,6 @@ class ColorsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def color_params
-      params.require(:color).permit(:name, :color)
+      params.require(:color).permit(:name, :color, :description)
     end
 end
