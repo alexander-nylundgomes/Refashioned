@@ -27,6 +27,20 @@ export default new Vuex.Store({
       state.qualities = payload;
     },
 
+    updateCategory(state, payload){
+      let q = state.categories.find(c => c.id == payload.id);
+      let index = state.categories.indexOf(q);
+
+      state.categories[index] = payload;
+    },
+
+    deleteCategory(state, payload){
+      let q = state.categories.find(c => c.id == payload.id);
+      let index = state.categories.indexOf(q);
+
+      state.categories.splice(index, 1)
+    },
+
     updateProductPrice(state, payload) {
       let index = state.products.indexOf(payload.product);
 
@@ -61,6 +75,16 @@ export default new Vuex.Store({
 
     setColors(state, payload) {
       state.colors = payload;
+    },
+
+    deleteColor(state, payload){
+      console.log(payload, 'is being deleted')
+      let c = state.colors.find(c => c.id == payload.id);
+      console.log(c)
+      let index = state.colors.indexOf(c);
+      console.log(index)
+
+      state.colors.splice(index, 1)
     },
 
     disableProduct(state, payload) {

@@ -35,6 +35,7 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1
   def destroy
+    Product.where(category_id: @category.id).update_all(category_id: params[:newId])
     @category.destroy
   end
 
@@ -46,6 +47,6 @@ class CategoriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def category_params
-      params.require(:category).permit(:display_text, :tag)
+      params.require(:category).permit(:name, :description)
     end
 end
