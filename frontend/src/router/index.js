@@ -174,6 +174,11 @@ const routes = [
     component: () => import("@/views/AdminMiscs.vue")
   },
   {
+    path: "/admin/colors",
+    name: "AdminColors",
+    component: () => import("@/views/AdminColors.vue")
+  },
+  {
     path: "/payment-success",
     name: "PaymentSuccess",
     component: () => import("@/views/PaymentSuccess.vue")
