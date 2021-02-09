@@ -61,6 +61,7 @@ export default {
           link: "/admin/products",
           icon: "mdi-tshirt-crew"
         },
+        { title: "View miscellaneous", link: "/admin/miscs", icon: "mdi-dots-horizontal" },
         { title: "Customer page", link: "/", icon: "mdi-backburger" }
       ],
       colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]
