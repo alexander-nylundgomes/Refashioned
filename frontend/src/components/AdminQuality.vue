@@ -16,13 +16,11 @@
           <v-btn depressed color="primary" :outlined="seeMore" block @click="seeMore = !seeMore">{{ !seeMore && 'See more' || 'See less'}}</v-btn>
       </v-card-actions>
 
-    <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
   </v-card>
 </template>
 
 <script>
 const axios = require('axios');
-import Snackbar from "@/components/Snackbar.vue"
 
 export default {
     name: "AdminQuality",
@@ -52,37 +50,26 @@ export default {
                 }
             })
             .then(function(resp){
-                console.log(resp)
-                vue.snackbarText = "Quality was successfully updated!"
                 vue.updatePending = false;
+                vue.$emit('update', resp.data)
             })
             .catch(function(error){
                 console.log(error)
-                vue.snackbarText = "Something went wrong. Check console for details."
             })
-
-            this.snackbar = true;
         },
 
         async destroy(){
             let vue = this;
             axios.delete(`${process.env.VUE_APP_BACKEND}/qualities/${vue.quality.id}`)
-            .then(function(resp){
-                console.log(resp)
-                vue.snackbarText = "Quality was successfully deleted!"
+            .then(function(){
+                vue.$emit('destroy', vue.quality.id)
             })
             .catch(function(error){
                 console.log(error)
                 vue.snackbarText = "Something went wrong. Check console for details."
             })
-
-            this.snackbar = true;
         }
     },
-
-    components: {
-        Snackbar
-    }
 }
 </script>
 

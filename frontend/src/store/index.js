@@ -47,6 +47,14 @@ export default new Vuex.Store({
       localStorage.setItem("cart", JSON.stringify(lCart));
     },
 
+    updateQualities(state, payload){
+      let q = state.qualities.find(x => x.id == payload.id);
+      let index = state.qualities.indexOf(q);
+
+      state.qualities[index] = payload;
+      console.log(state.qualities[index])
+    },
+
     setBrands(state, payload) {
       state.brands = payload;
     },
