@@ -35,6 +35,7 @@ class BrandsController < ApplicationController
 
   # DELETE /brands/1
   def destroy
+    Product.where(brand_id: @brand.id).update_all(brand_id: params[:newId])
     @brand.destroy
   end
 
@@ -46,6 +47,6 @@ class BrandsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def brand_params
-      params.require(:brand).permit(:name, :product_id)
+      params.require(:brand).permit(:name, :product_id, :description)
     end
 end

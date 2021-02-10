@@ -73,6 +73,18 @@ export default new Vuex.Store({
       state.brands = payload;
     },
 
+    deleteBrand(state, payload){
+      let c = state.brands.find(b => b.id == payload.id)
+      let index = state.brands.indexOf(c)
+      state.brands.splice(index, 1)
+    },
+
+    updateBrand(state, payload){
+      let c = state.brands.find(b => b.id == payload.id)
+      let index = state.brands.indexOf(c)
+      state.brands[index] = payload;
+    },
+
     setColors(state, payload) {
       state.colors = payload;
     },

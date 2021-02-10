@@ -50,6 +50,7 @@ export default {
         { title: "View messages", link: "/admin/msgs", icon: "mdi-message" },
         { title: "View orders", link: "/admin/orders", icon: "mdi-cart" },
         { title: "View categories", link: "/admin/categories", icon: "mdi-apps" },
+        { title: "View brands", link: "/admin/brands", icon: "mdi-currency-usd" },
         {
           title: "View sell requests",
           link: "/admin/sell_requests",

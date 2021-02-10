@@ -19,7 +19,7 @@
         <v-card>
             <v-card-title class="primary white--text">Alert</v-card-title>
             <v-card-text>
-                <p>You are trying to delete a color. Multiple products will therefore have no color assigned to them. Please select a color to replace them with.</p>
+                <p>You are trying to delete a category. Multiple products will therefore have no category assigned to them. Please select a category to replace them with.</p>
                 <v-select dense outlined label="Category" v-model="selectedReplaceCat" :items="$store.getters.categories" item-text="name" item-value="id"></v-select>
                 <v-btn color="primary" :disabled="selectedReplaceCat == null" class="mb-2" block depressed @click="destroy()">Delete</v-btn>
                 <v-btn color="primary" block outlined depressed @click="deleteAlert = false">Cancel</v-btn>
