@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
 
@@ -65,11 +67,23 @@ class ProductsController < ApplicationController
   def update
     file = params['main_img']
 
+    # Creating a new name in order to force cache to reload updated image
+    newName = SecureRandom.hex(20)
+
     if file
-      Cloudinary::Uploader.upload(file, :public_id => '1',  :unique_filename => false, :folder => "products/#{@product.id}/", :invalidate => true)
+      path = URI.parse(@product.main_image).path
+      path.slice!("/#{ENV['cloud_name']}")
+      path = File.join(File.dirname(path), File.basename(path, '.*'))
+      puts path, "#########"
+      result = Cloudinary::Uploader.destroy(path)
+      puts result, "#####33333"
+      Cloudinary::Uploader.upload(file, :public_id => newName,  :unique_filename => false, :folder => "products/#{@product.id}/", :invalidate => true)
     end
 
     parsed_params = ActionController::Parameters.new({product: JSON.parse(params['product'])})
+    parsed_params['product']['main_image'] = "#{ENV['cloud_link']}#{@product.id}/#{newName}#{File.extname(file)}"
+    puts parsed_params, "parsed"
+
     if @product.update(product_params(parsed_params))
       render json: @product
     else
@@ -95,6 +109,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params(items = params)
-      items.require(:product).permit(:size, :desc, :color_id, :price, :name, :brand_id, :category_id, :bought, :old_price, :quality_id, :order_id)
+      items.require(:product).permit(:size, :desc, :color_id, :price, :name, :brand_id, :category_id, :bought, :old_price, :quality_id, :order_id, :main_image)
     end
 end
