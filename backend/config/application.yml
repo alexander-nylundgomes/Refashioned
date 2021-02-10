@@ -9,6 +9,7 @@ cloud_name: symetrcl
 cloud_api_key: '243322356937354'
 cloud_api_secret: DVyb_F_Tkt75gELEexu-Nu9sKHE
 cloud_link: https://res.cloudinary.com/symetrcl/products/
+cloud_link_no_products: https://res.cloudinary.com/symetrcl/
 
 production:
   stripe_api_key: 

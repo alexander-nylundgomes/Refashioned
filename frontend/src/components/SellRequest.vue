@@ -11,7 +11,7 @@
         <p><b>Sent in: </b> {{ sr.created_at }} kr</p>
         <p><b>Asking price:</b> {{ sr.asking_price }} kr</p>
         <p><b>Status:</b> {{ sr.status }}</p>
-        <div class="pretend-image"></div>
+        <v-img lazy :src="sr.file_path" class="image"></v-img>
         <v-select
           dense
           outlined
@@ -105,10 +105,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pretend-image {
+
+.image{
   width: 100%;
-  margin: 0 auto;
-  height: 15em;
-  background-color: lightgray;
 }
+
 </style>

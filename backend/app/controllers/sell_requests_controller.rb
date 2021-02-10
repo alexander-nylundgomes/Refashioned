@@ -17,14 +17,17 @@ class SellRequestsController < ApplicationController
   def create
 
     file = params['image']
-    #### saves file somewhere and saves path to file_path ####
-
-    parsed_params = ActionController::Parameters.new({sell_request: JSON.parse(params['sell_request'])})
+    name1 = SecureRandom.hex(20)
+    name2 = SecureRandom.hex(20)
     validate_inputs()
-
+    
+    parsed_params = ActionController::Parameters.new({sell_request: JSON.parse(params['sell_request'])})
+    parsed_params['sell_request']['file_path'] = "#{ENV['cloud_link_no_products']}sell_requests/#{name1}/#{name2}"
+    
     @sell_request = SellRequest.new(sell_request_params(parsed_params))
-
+    
     if @sell_request.save
+      Cloudinary::Uploader.upload(file, :public_id => name2,  :unique_filename => false, :folder => "sell_requests/#{name1}/", :invalidate => true)
       render json: @sell_request, status: :created, location: @sell_request
     else
       render json: @sell_request.errors, status: :unprocessable_entity

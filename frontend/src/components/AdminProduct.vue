@@ -127,7 +127,6 @@
       <v-img :src="product.main_image"></v-img>
       <p class="center-text"><b>Created at:</b> {{ product.created_at }}</p>
       <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
-      <!-- <v-text-field dense outlined label="Available" :value="product.name"></v-text-field> -->
     </v-card-text>
     <v-card-actions>
       <v-btn
@@ -215,19 +214,6 @@ export default {
 
   methods: {
     async updateProduct() {
-      console.log(
-        this.categories.find(q => q.name == this.category),
-        this.brands.find(b => b.name == this.brand),
-        this.colors.find(c => c.name == this.color),
-        this.size,
-        this.price,
-        this.available,
-        this.qualities.find(q => q.name == this.quality),
-        this.old_price,
-        this.description,
-        this.main_img
-      );
-
       let vue = this;
 
       let headers = {
