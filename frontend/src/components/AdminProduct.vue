@@ -121,7 +121,7 @@
         color="primary"
         depressed
         class="mb-2"
-        @click="deleteProduct()"
+        @click="deleteAlert = true"
 
       >Delete</v-btn>
       <v-img :src="product.main_image"></v-img>
@@ -140,7 +140,7 @@
       >
     </v-card-actions>
     <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
-    <v-dialog v-model="showTags" width="600">
+    <v-dialog v-model="showTags" width="500">
       <v-card>
         <v-card-title>Tags</v-card-title>
         <v-card-subtitle>Showing tags for {{ product.name }}</v-card-subtitle>
@@ -150,6 +150,27 @@
         </v-card-text>
         <v-card-actions>
           <v-btn depressed block color="primary" @click="sendUpdatedTagData()" :disabled="!updateTagData">Update</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="deleteAlert" width="500">
+      <v-card>
+        <v-card-title class="primary white--text">Are you sure?</v-card-title>
+        <v-card-text class="pa-5">You are about to delete product <b>{{ product.name }}</b>, (id: <b>{{ product.id }}</b>). Doing this will remove it from the database. If you want to remove it from customer page instead, set availability to false and update it instead.</v-card-text>
+        <v-card-actions >
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-btn depressed color="primary" block @click="deleteAlert = false">No, cancel it</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-btn depressed outlined color="primary" block @click="deleteProduct()">Yes, delete it</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -179,6 +200,8 @@ export default {
       old_price: this.product.old_price,
       description: this.product.description,
       main_img: null,
+
+      deleteAlert: false,
 
       tagData: null,
       updateTagData: false,
