@@ -19,6 +19,11 @@ Rails.application.routes.draw do
   get 'shipping_data', :to=> 'miscs#shipping_data'
   get 'cr', :to=> 'orders#create_reciept'
   get 'all_products', :to=> 'products#all'
+
+  get 'product_tags/:id', :to=> 'tags#product_tags'
+  patch 'product_tags/:id', :to=> 'tags#update_product_tags'
+
+
   get 'admin/orders/get_products/:id', :to=> 'orders#get_products'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -105,6 +105,13 @@
         color="primary"
         depressed
         class="mb-2"
+        @click="getTags()"
+      >Product tags</v-btn>
+      <v-btn
+        block
+        color="primary"
+        depressed
+        class="mb-2"
         v-if="updatePending"
         @click="updateProduct()"
         >Update</v-btn
@@ -133,6 +140,19 @@
       >
     </v-card-actions>
     <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
+    <v-dialog v-model="showTags" width="600">
+      <v-card>
+        <v-card-title>Tags</v-card-title>
+        <v-card-subtitle>Showing tags for {{ product.name }}</v-card-subtitle>
+        <v-card-text>
+          <v-text-field v-for="tag of tagData" v-model="tagData[tagData.indexOf(tag)].name" @input="updateTagData = true" label="Tag" :key="tag.id" outlined dense  clearable></v-text-field>
+          <v-btn block color="primary" outlined depressed @click="moreTags()"> + </v-btn>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn depressed block color="primary" @click="sendUpdatedTagData()" :disabled="!updateTagData">Update</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -147,6 +167,7 @@ export default {
     return {
       seeMore: false,
       sizes: ["XSS", "XS", "S", "M", "L", "XL", "XLL"],
+      showTags: false,
       size: this.product.size,
       available: this.product.bought == 0,
       brand: this.product.brands_name,
@@ -158,6 +179,9 @@ export default {
       old_price: this.product.old_price,
       description: this.product.description,
       main_img: null,
+
+      tagData: null,
+      updateTagData: false,
 
       order_id: this.product.order_id,
 
@@ -219,6 +243,42 @@ export default {
         });
 
         vue.snackbar = true; 
+    },
+
+    getTags(){
+      if(this.tagData == null){
+        console.log('fetching')
+        let vue = this;
+        axios.get(`${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`)
+        .then(function(resp){
+          vue.tagData = resp.data
+          vue.showTags = true;
+        })
+        .catch(function(error){
+          console.log(error)
+        })
+      }else{
+        console.log('not fetching')
+        this.showTags = true;
+      }
+    },
+
+    moreTags(){
+      this.tagData.push({name: ''});
+    },
+
+    sendUpdatedTagData(){
+      console.log(this.tagData)
+      let vue = this;
+      axios.patch(`${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`, {
+        tags: vue.tagData
+      })
+      .then(function(resp){
+        console.log(resp)
+      })
+      .catch(function(error){
+        console.log(error)
+      })
     },
 
     async deleteProduct(){

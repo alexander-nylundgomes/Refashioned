@@ -24,6 +24,27 @@ class TagsController < ApplicationController
     end
   end
 
+  def update_product_tags
+    Tag.where(product_id: params['id']).delete_all
+    
+    saves = []
+
+    params['tags'].each do |t|
+      saves << Tag.new({name: t['name'], product_id: params['id']})
+    end
+
+    Tag.transaction do
+      saves.each do |x|
+        x.save!
+      end
+    end
+  end
+
+  def product_tags
+
+    render json: Tag.where(product_id: params['id'])
+  end
+
   # PATCH/PUT /tags/1
   def update
     if @tag.update(tag_params)
