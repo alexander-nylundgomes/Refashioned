@@ -9,6 +9,17 @@
       label="Show..."
       :items="shows"
     ></v-select>
+    <v-select
+      class="pl-3 pr-3 pb-0"
+      @change="filter()"
+      v-model="sortBy"
+      dense
+      outlined
+      label="Sort by"
+      :items="sorts"
+      item-text="text"
+      item-value="id"
+    ></v-select>
     <div class="sell-requests" v-if="loaded">
       <SellRequest
         @updated="filter()"
@@ -31,7 +42,12 @@ export default {
       sellRequests: [],
       showingRequests: [],
       isShowing: "All requests",
-      shows: ["All requests", "Accepted", "Bought", "Rejected"]
+      shows: ["All requests", "Accepted", "Bought", "Rejected"],
+      sorts: [
+        { text: "New first", id: 1 },
+        { text: "Old first", id: 2 },
+      ],
+      sortBy: null,
     };
   },
   methods: {
@@ -59,6 +75,11 @@ export default {
         this.showingRequests = this.sellRequests.filter(
           s => s.status == this.isShowing
         );
+      }
+
+      switch(this.sortBy){
+        case 2: this.showingRequests.sort(function(a,b){return a.id - b.id});break;
+        case 1: this.showingRequests.sort(function(a,b){return b.id - a.id});break;
       }
     }
   },

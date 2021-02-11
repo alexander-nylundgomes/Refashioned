@@ -10,7 +10,7 @@
         <p><b>Phone number: </b> {{ sr.phone }} kr</p>
         <p><b>Sent in: </b> {{ sr.created_at }} kr</p>
         <p><b>Asking price:</b> {{ sr.asking_price }} kr</p>
-        <p><b>Status:</b> {{ sr.status }}</p>
+        <p><b>Status:</b> {{ sr.status || 'No status' }}</p>
         <v-img lazy :src="sr.file_path" class="image"></v-img>
         <v-select
           dense
@@ -19,6 +19,7 @@
           @change="pendingUpdates = true"
           v-model="currentStatus"
           class="mt-4 mb-2"
+          label="Status"
           :items="statuses"
         ></v-select>
         <v-btn
