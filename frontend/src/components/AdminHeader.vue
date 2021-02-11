@@ -47,6 +47,7 @@ export default {
     return {
       menu: false,
       items: [
+        { title: "Home", link: "/admin", icon: "mdi-home" },
         { title: "View messages", link: "/admin/msgs", icon: "mdi-message" },
         { title: "View orders", link: "/admin/orders", icon: "mdi-cart" },
         {

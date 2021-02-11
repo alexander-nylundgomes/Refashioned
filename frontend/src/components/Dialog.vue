@@ -1,27 +1,23 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" width="275">
       <v-card>
         <v-card-title
-          :class="{
-            green: success,
-            red: !success,
-            primary: success == 'primary'
-          }"
-          class="headline white--text"
+          :style="`color: ${color};`"
+          class="headline"
         >
           {{ title }}
         </v-card-title>
 
-        <v-card-text class="pt-4">
-          {{ text }}
+        <v-card-text >
+          <v-icon class="success-icon" :style="`color: ${color};`">{{ success && 'mdi-thumb-up-outline' || 'mdi-thumb-down-outline'}}</v-icon>
+          <p class="pt-4 text-center">{{ text }}</p>
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider class="ml-4 mr-4"></v-divider>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn :color="color" block class="white--text" @click="action()">
+          <v-btn :color="color" class="ma-auto" text @click="action()">
             {{ buttonText }}
           </v-btn>
         </v-card-actions>
@@ -37,10 +33,10 @@ export default {
 
   computed: {
     color() {
-      if (this.success == true) {
-        return "green";
-      } else if (this.success == false) {
-        return "red";
+      if (this.success) {
+        return "#8cbd54";
+      } else if (!this.success) {
+        return "#e65643";
       } else {
         return "primary";
       }
@@ -59,4 +55,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+  .success-icon{
+    font-size: 8em;
+    width: 100%;
+    text-align: center;
+  }
+
+  .headline{
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    font-size: 1.75em !important;
+  }
+
+</style>
