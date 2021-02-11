@@ -19,9 +19,9 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
-    @product = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).where(bought: 0, id: params['id'])
-
-    render json: @product
+    product = Product.select('products.*', 'products.id AS product_id', 'categories.name AS cat_name', 'categories.description', 'brands.id AS brand_id', 'brands.name AS brands_name', 'qualities.description AS qualities_description', 'qualities.name AS quality_name', 'qualities.grade').joins(:category, :brand, :quality).where(bought: 0, id: params['id'])
+    product_images = ProductImage.where(product_id: params['id'])
+    render json: {product: product, product_imgs: product_images}
   end
 
   def search

@@ -10,19 +10,13 @@
         show-arrows-on-hover
         v-model="current"
       >
-        <v-carousel-item v-for="(slide, i) in 3" :key="i">
-          <v-sheet color="primary" height="100%">
-            <v-row class="fill-height" align="center" justify="center">
-              <div class="display-3">
-                {{ slide }}
-              </div>
-            </v-row>
-          </v-sheet>
+        <v-carousel-item v-for="img of product_imgs" :key="img.id">
+          <v-img height="400" :src="img.path"></v-img>
         </v-carousel-item>
       </v-carousel>
       <v-progress-linear
-        class="progress"
-        :value="(current + 1) * 33.33"
+        class="progress mt-2"
+        :value="(current + 1) * (100 / product_imgs.length )"
       ></v-progress-linear>
 
       <v-container>
@@ -36,7 +30,7 @@
           <h3 v-if="product.old_price" class="old-price">
             {{ product.old_price }} kr
           </h3>
-          <h3 class="pl-2">{{ product.price }} kr</h3>
+          <h3 :class="{'pl-2' : product.old_price}">{{ product.price }} kr</h3>
         </v-row>
 
         <v-row>
@@ -127,7 +121,8 @@ export default {
       ],
       relatedProducts: [],
       snackbar: false,
-      snackbarText: ""
+      snackbarText: "",
+      product_imgs: []
     };
   },
 
@@ -137,19 +132,24 @@ export default {
 
   methods: {
     async setup() {
-      this.product = await axios
+      let vue = this;
+      axios
         .get(`${process.env.VUE_APP_BACKEND}/products/${this.id}`)
         .then(function(resp) {
-          console.log(resp.data);
-          return resp.data[0];
+          console.log(resp.data)
+          // Sets product
+          vue.product = resp.data.product[0];
+
+          // Sets product images
+          vue.product_imgs = resp.data.product_imgs
+
+          // Sets related products
+          let products = vue.$store.getters.products;
+          vue.relatedProducts = products.filter(p => p.category_id == vue.product.category_id);
         })
         .catch(function(error) {
           console.log(error);
         });
-
-      let products = this.$store.getters.products;
-      const category_id = this.product.category_id;
-      this.relatedProducts = products.filter(p => p.category_id == category_id);
     },
 
     likeAction() {
@@ -165,7 +165,7 @@ export default {
 
     cartAction() {
       this.$store.dispatch("cartAction", this.product);
-    }
+    },
   },
 
   computed: {
@@ -177,6 +177,7 @@ export default {
           break;
         }
       }
+
       return isLiked;
     },
 
@@ -194,7 +195,6 @@ export default {
 
   created() {
     this.setup();
-    console.log(this.product);
   }
 };
 </script>

@@ -66,7 +66,7 @@
       />
     </v-card>
     <section class="discounts" v-if="loaded">
-      <Discount
+      <AdminDiscount
         :discount="discount"
         v-for="discount of discounts"
         :key="discount.id"
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import Discount from "@/components/Discount.vue";
+import AdminDiscount from "@/components/AdminDiscount.vue";
 import Snackbar from "@/components/Snackbar.vue";
 const axios = require("axios");
 export default {
@@ -185,6 +185,9 @@ export default {
       let x = this.discounts.find(e => e.id == target);
       let index = this.discounts.indexOf(x);
       this.discounts.splice(index, 1);
+
+      this.snackbarText = `Discount with id: ${target} was successfully deleted!`
+      this.snackbar = true
     },
 
     changeValueSuffix() {
@@ -210,7 +213,7 @@ export default {
   },
 
   components: {
-    Discount,
+    AdminDiscount,
     Snackbar
   }
 };

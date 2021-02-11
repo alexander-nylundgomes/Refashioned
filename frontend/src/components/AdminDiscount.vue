@@ -15,7 +15,8 @@
               (discount.value_in_percent && discount.value_in_percent + "%")
           }}
         </p>
-        <v-btn block depressed color="primary" @click="sendDelete()"
+        <v-checkbox v-model="deleteAccept" label="I want to delete this discount and understand in doing so, it cannot be reversed"></v-checkbox>
+        <v-btn block depressed color="primary" :disabled="!deleteAccept" @click="sendDelete()"
           >Delete</v-btn
         >
       </v-card-text>
@@ -50,7 +51,8 @@ export default {
     return {
       seeMore: false,
       snackbar: false,
-      snackbarText: ""
+      snackbarText: "",
+      deleteAccept: false,
     };
   },
 
@@ -61,9 +63,7 @@ export default {
         .delete(
           `${process.env.VUE_APP_BACKEND}/discount_codes/${vue.discount.id}`
         )
-        .then(function(resp) {
-          console.log(resp);
-          vue.snackbarText = `Discount ${vue.discount.id} was successfully deleted!`;
+        .then(function() {
           vue.$emit("deletedDiscount", vue.discount.id);
         })
         .catch(function(error) {

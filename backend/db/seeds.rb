@@ -238,4 +238,18 @@ order = Order.first
     })
 end
 
+i = 1
+while i <= 101 do 
+    x = 1
+    while x <= 3 do
+        ProductImage.create({
+            path: "https://picsum.photos/200/250",
+            product_id: i,
+            order: x
+        })
 
+        x += 1
+    end
+
+    i += 1
+end

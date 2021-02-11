@@ -66,6 +66,7 @@
         :prepend-icon="''"
         v-model="file"
         label="Select a image"
+        @change="test()"
         outlined
         clearable
         dense
@@ -115,6 +116,13 @@
 
 <script>
 const axios = require("axios");
+
+// For reading the type of the image
+// Found at: https://github.com/sindresorhus/image-type
+
+// const readChunk = require('read-chunk');
+// const imageType = require('image-type');
+
 import Dialog from "@/components/Dialog.vue";
 import Loading from "@/components/Loading.vue";
 
@@ -169,11 +177,9 @@ export default {
       brand: "",
       asking_price: "",
       fileRules: [
-        file =>
-          !file ||
-          file.size < 1024 * 1024 * 0.5 ||
-          "Image must be smaller than 0.5 MB"
-      ]
+        file => !file || file.size < 1024 * 1024 * 0.5 || "Image must be smaller than 0.5 MB",
+        file => !file || file.type == 'image/jpeg' || 'Image must be a JPG file'
+      ],
     };
   },
 
@@ -223,6 +229,11 @@ export default {
         });
       vue.loading = false;
       vue.dialog = true;
+    }, 
+
+
+    test(){
+      console.log(this.file)
     }
   },
 

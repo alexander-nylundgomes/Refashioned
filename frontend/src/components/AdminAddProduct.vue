@@ -86,7 +86,7 @@
           outlined
           label="Select main image"
           prepend-icon=""
-          :rules="req"
+          :rules="fileRule"
           v-model="main_img"
         ></v-file-input>
         <v-textarea
@@ -146,6 +146,11 @@ export default {
       main_img: null,
 
       req: [v => !!v || "Item is required"],
+      fileRule: [
+          file => !!file || 'Image is required',
+          file => !file || file.size < 1024 * 1024 * 0.5 || "Image must be smaller than 0.5 MB",
+          file => !file || file.type == 'image/jpeg' || 'Image must be a JPG file',
+      ],
 
       snackbar: false,
       snackbarText: ""
@@ -154,59 +159,48 @@ export default {
 
   methods: {
     async createProduct() {
-      this.$refs.form.validate();
-      console.log(
-        this.size,
-        this.available,
-        this.brand,
-        this.quality,
-        this.color,
-        this.category,
-        this.name,
-        this.price,
-        this.old_price,
-        this.description
-      );
-
-      let vue = this;
-
-      let headers = {
-          headers: {
-              'Content-type' : 'multipart/form-data'
+      if(this.$refs.form.validate()){
+          let vue = this;
+    
+          let headers = {
+              headers: {
+                  'Content-type' : 'multipart/form-data'
+              }
           }
+    
+          let product = {
+                size: vue.size,
+                bought: !vue.available,
+                brand_id: vue.brand,
+                quality_id: vue.quality,
+                color_id: vue.color,
+                category_id: vue.category,
+                name: vue.name,
+                price: vue.price,
+                old_price: vue.old_price,
+                desc: vue.description
+          }
+    
+          let formData = new FormData();
+          formData.append("main_img", this.main_img);
+          formData.append("product", JSON.stringify(product));
+    
+          axios
+            .post(`${process.env.VUE_APP_BACKEND}/products`, formData, headers)
+            .then(function(resp) {
+              console.log(resp);
+              vue.$refs.form.reset();
+              vue.$store.commit('addProduct', resp.data)
+              vue.snackbarText = "Prodcut was successfully created!"
+            })
+            .catch(function(error) {
+              vue.snackbarText = "Something went wrong. Check console for details."
+              console.log(error);
+            });
+    
+            vue.snackbar = true;
       }
 
-      let product = {
-            size: vue.size,
-            bought: !vue.available,
-            brand_id: vue.brand,
-            quality_id: vue.quality,
-            color_id: vue.color,
-            category_id: vue.category,
-            name: vue.name,
-            price: vue.price,
-            old_price: vue.old_price,
-            desc: vue.description
-      }
-
-      let formData = new FormData();
-      formData.append("main_img", this.main_img);
-      formData.append("product", JSON.stringify(product));
-
-      axios
-        .post(`${process.env.VUE_APP_BACKEND}/products`, formData, headers)
-        .then(function(resp) {
-          console.log(resp);
-          vue.$refs.form.reset();
-          vue.$store.commit('addProduct', resp.data)
-          vue.snackbarText = "Prodcut was successfully created!"
-        })
-        .catch(function(error) {
-          vue.snackbarText = "Something went wrong. Check console for details."
-          console.log(error);
-        });
-
-        vue.snackbar = true;
     }
   },
 

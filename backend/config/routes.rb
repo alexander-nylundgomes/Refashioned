@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :product_images
   resources :qualities
   resources :sell_requests
   resources :miscs
