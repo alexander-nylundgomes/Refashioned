@@ -32,3 +32,4 @@
 /backend/config/master.key
 /frontend/.env
 /backend/.env
+/backend/config/application.yml
