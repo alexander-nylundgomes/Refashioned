@@ -103,6 +103,8 @@
       <v-btn block color="primary" depressed class="mb-2" @click="getTags()"
         >Product tags</v-btn
       >
+
+      <v-btn block color="primary" depressed class="mb-2" @click="getImages();">Product images</v-btn>
       <v-btn
         block
         color="primary"
@@ -112,17 +114,17 @@
         @click="updateProduct()"
         >Update</v-btn
       >
+      <v-img :src="product.main_image"></v-img>
+      <p class="center-text mt-5"><b>Created at:</b> {{ product.created_at }}</p>
+      <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
       <v-btn
         block
         color="primary"
         depressed
-        class="mb-2"
+        class="mb-2 mt-2"
         @click="deleteAlert = true"
-        >Delete</v-btn
+        >Delete product</v-btn
       >
-      <v-img :src="product.main_image"></v-img>
-      <p class="center-text"><b>Created at:</b> {{ product.created_at }}</p>
-      <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
     </v-card-text>
     <v-card-actions>
       <v-btn
@@ -210,6 +212,23 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="showProductImages" width="500">
+      <v-card>
+        <v-card-title class="primary white--text">Product Images</v-card-title>
+        <v-card-text>
+          <div v-for="img of productImages" :key="img.id" class="mt-6" >
+            <v-img v-if="img.path" :src="img.path" ></v-img>
+            <div class="img-replacement" v-if="!img.path"></div>
+            <v-file-input outlined dense label="Select new image" prepend-icon="" v-model="sendImages[img.id].newImage" hide-details class="mt-2 mb-4"></v-file-input>
+            <v-text-field outlined dense label="Order" hide-details class="mb-4" v-model="sendImages[img.id].order"></v-text-field>
+            <v-btn color="primary" block depressed  @click="updateImage(sendImages[img.id])">Update</v-btn>
+            <v-btn color="primary" block outlined depressed class="mt-2" @click="deleteImage(sendImages[img.id])">Delete</v-btn>
+          </div>
+          <v-btn color="primary" block large depressed class="mt-15" @click="addPotentialImage()">+</v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -223,7 +242,7 @@ export default {
   data() {
     return {
       seeMore: false,
-      sizes: ["XSS", "XS", "S", "M", "L", "XL", "XLL"],
+      sizes: ["XXS", "XS", "S", "M", "L", "XL", "XXL"],
       showTags: false,
       size: this.product.size,
       available: this.product.bought == 0,
@@ -236,6 +255,10 @@ export default {
       old_price: this.product.old_price,
       description: this.product.desc,
       main_img: null,
+      showProductImages: false,
+
+      productImages: [],
+      sendImages: [],
 
       deleteAlert: false,
 
@@ -314,12 +337,95 @@ export default {
       }
     },
 
+    deleteImage(img){
+      let vue = this;
+
+      axios.delete(`${process.env.VUE_APP_BACKEND}/product_images/${img.id}`)
+      .then(function(){
+        vue.snackbarText = "Product image was successfully deleted!"
+      })
+      .catch(function(error){
+        vue.snackbarText = "Something went wrong. Check console for details."
+        console.log(error)
+      })
+
+      vue.snackbar = true;
+    },
+
+    updateImage(img){
+      let headers = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+
+      let formData = new FormData();
+      let image = {
+        order: img.order,
+        product_id: this.product.id
+      };
+
+      formData.append("file", img.newImage);
+      formData.append("product_image", JSON.stringify(image));
+
+      let vue = this;
+      if(img.exists){
+        // Image should be updated
+        axios.patch(`${process.env.VUE_APP_BACKEND}/product_images/${img.id}`, formData, headers)
+        .then(function(resp){
+          console.log(resp)
+          vue.snackbarText = "Product image was successfully updated!"
+        })
+        .catch(function(error){
+          vue.snackbarText = "Something went wrong. Check console for details."
+          console.log(error)
+        })
+      }else{
+        // Image should be created
+        axios.post(`${process.env.VUE_APP_BACKEND}/product_images`, formData, headers)
+        .then(function(resp){
+          vue.snackbarText = "Product image was successfully created!"
+          console.log(resp)
+        })
+        .catch(function(error){
+          vue.snackbarText = "Something went wrong. Check console for details."
+          console.log(error)
+        })
+      }
+
+      this.snackbar = true;
+    },
+
+    getImages(){
+      this.showProductImages = true;
+      let vue = this;
+      axios.get(`${process.env.VUE_APP_BACKEND}/product_images/${vue.product.id}`)
+      .then(function(resp){
+        console.log(resp.data)
+        vue.productImages = resp.data
+        let sendImages = {};
+        for(let x of resp.data){
+          sendImages[x.id] = {order: x.order, newImage: null, id: x.id, exists: true}
+        }
+
+        vue.sendImages = sendImages;
+      })
+      .catch(function(error){
+        alert(error)
+      })
+    },
+
+    addPotentialImage(){
+      let h = Math.max.apply(Math, this.productImages.map(function(o) { return o.id; }))
+      this.sendImages[h + 1] = {order: null, newImage: null, id: h + 1, exists: false}
+      this.productImages.push({order: null, path: null, id: parseInt(h) + 1, product_id: this.product.id})
+    },
+
     moreTags() {
       this.tagData.push({ name: "" });
     },
 
     sendUpdatedTagData() {
-      console.log(this.tagData);
       let vue = this;
       axios
         .patch(
@@ -362,10 +468,10 @@ export default {
   text-align: center;
 }
 
-.img-replace {
+.img-replacement {
   width: 100%;
   margin: 0 auto;
-  height: 15em;
+  height: 25em;
   margin-bottom: 1em;
   background-color: lightgray;
 }

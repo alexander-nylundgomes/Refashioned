@@ -3,9 +3,9 @@
     <Product v-for="item of products" :key="item.id" :product="item" />
     <v-card
       v-if="moreProducts == true || moreProducts == undefined"
-      width="200"
-      color="primary"
+      width="175"
       class="last-card  ml-2 mr-2"
+      elevation="0"
     >
       <router-link class="to_all" :to="'/filter'">
         See more!
@@ -41,8 +41,10 @@ section.products {
   overflow: hidden;
   display: inline-block;
   height: 100%;
+  background: linear-gradient(45deg, rgba(190,190,190,0.25), rgba(230,230,230,0.4));
 
   .to_all {
+  // filter: blur(2px);
     width: 100%;
     height: 100%;
     display: flex;
@@ -50,8 +52,8 @@ section.products {
     align-items: center;
     font-size: 1.25em;
     font-weight: 700;
-    color: whitesmoke;
-    text-decoration: underline;
+    color: rgba(20,20,20,0.75);
+    text-decoration: none;
   }
 }
 </style>
