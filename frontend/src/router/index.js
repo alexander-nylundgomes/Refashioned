@@ -186,7 +186,7 @@ const routes = [
   {
     path: "/admin/brands",
     name: "AdminBrands",
-    component: ()  => import("@/views/AdminBrands.vue")
+    component: () => import("@/views/AdminBrands.vue")
   },
   {
     path: "/payment-success",

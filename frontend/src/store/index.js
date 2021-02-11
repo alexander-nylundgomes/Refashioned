@@ -23,22 +23,26 @@ export default new Vuex.Store({
       state.products = payload;
     },
 
+    addProduct(state, payload){
+      state.products.push(payload)
+    },
+
     setQualities(state, payload) {
       state.qualities = payload;
     },
 
-    updateCategory(state, payload){
+    updateCategory(state, payload) {
       let q = state.categories.find(c => c.id == payload.id);
       let index = state.categories.indexOf(q);
 
       state.categories[index] = payload;
     },
 
-    deleteCategory(state, payload){
+    deleteCategory(state, payload) {
       let q = state.categories.find(c => c.id == payload.id);
       let index = state.categories.indexOf(q);
 
-      state.categories.splice(index, 1)
+      state.categories.splice(index, 1);
     },
 
     updateProductPrice(state, payload) {
@@ -61,27 +65,27 @@ export default new Vuex.Store({
       localStorage.setItem("cart", JSON.stringify(lCart));
     },
 
-    updateQualities(state, payload){
+    updateQualities(state, payload) {
       let q = state.qualities.find(x => x.id == payload.id);
       let index = state.qualities.indexOf(q);
 
       state.qualities[index] = payload;
-      console.log(state.qualities[index])
+      console.log(state.qualities[index]);
     },
 
     setBrands(state, payload) {
       state.brands = payload;
     },
 
-    deleteBrand(state, payload){
-      let c = state.brands.find(b => b.id == payload.id)
-      let index = state.brands.indexOf(c)
-      state.brands.splice(index, 1)
+    deleteBrand(state, payload) {
+      let c = state.brands.find(b => b.id == payload.id);
+      let index = state.brands.indexOf(c);
+      state.brands.splice(index, 1);
     },
 
-    updateBrand(state, payload){
-      let c = state.brands.find(b => b.id == payload.id)
-      let index = state.brands.indexOf(c)
+    updateBrand(state, payload) {
+      let c = state.brands.find(b => b.id == payload.id);
+      let index = state.brands.indexOf(c);
       state.brands[index] = payload;
     },
 
@@ -89,14 +93,14 @@ export default new Vuex.Store({
       state.colors = payload;
     },
 
-    deleteColor(state, payload){
-      console.log(payload, 'is being deleted')
+    deleteColor(state, payload) {
+      console.log(payload, "is being deleted");
       let c = state.colors.find(c => c.id == payload.id);
-      console.log(c)
+      console.log(c);
       let index = state.colors.indexOf(c);
-      console.log(index)
+      console.log(index);
 
-      state.colors.splice(index, 1)
+      state.colors.splice(index, 1);
     },
 
     disableProduct(state, payload) {

@@ -10,7 +10,7 @@
         <p><b>Phone number: </b> {{ sr.phone }} kr</p>
         <p><b>Sent in: </b> {{ sr.created_at }} kr</p>
         <p><b>Asking price:</b> {{ sr.asking_price }} kr</p>
-        <p><b>Status:</b> {{ sr.status || 'No status' }}</p>
+        <p><b>Status:</b> {{ sr.status || "No status" }}</p>
         <v-img lazy :src="sr.file_path" class="image"></v-img>
         <v-select
           dense
@@ -106,9 +106,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.image{
+.image {
   width: 100%;
 }
-
 </style>

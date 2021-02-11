@@ -100,13 +100,9 @@
         label="Description"
         v-model="description"
       ></v-textarea>
-      <v-btn
-        block
-        color="primary"
-        depressed
-        class="mb-2"
-        @click="getTags()"
-      >Product tags</v-btn>
+      <v-btn block color="primary" depressed class="mb-2" @click="getTags()"
+        >Product tags</v-btn
+      >
       <v-btn
         block
         color="primary"
@@ -122,8 +118,8 @@
         depressed
         class="mb-2"
         @click="deleteAlert = true"
-
-      >Delete</v-btn>
+        >Delete</v-btn
+      >
       <v-img :src="product.main_image"></v-img>
       <p class="center-text"><b>Created at:</b> {{ product.created_at }}</p>
       <p class="center-text"><b>Updated at:</b> {{ product.updated_at }}</p>
@@ -138,17 +134,39 @@
         >{{ (seeMore && "See less") || "See more" }}</v-btn
       >
     </v-card-actions>
-    <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
+    <Snackbar
+      :snackbar="snackbar"
+      :snackbarText="snackbarText"
+      @closeSnackbar="snackbar = false"
+    />
     <v-dialog v-model="showTags" width="500">
       <v-card>
         <v-card-title>Tags</v-card-title>
         <v-card-subtitle>Showing tags for {{ product.name }}</v-card-subtitle>
         <v-card-text>
-          <v-text-field v-for="tag of tagData" v-model="tagData[tagData.indexOf(tag)].name" @input="updateTagData = true" label="Tag" :key="tag.id" outlined dense  clearable></v-text-field>
-          <v-btn block color="primary" outlined depressed @click="moreTags()"> + </v-btn>
+          <v-text-field
+            v-for="tag of tagData"
+            v-model="tagData[tagData.indexOf(tag)].name"
+            @input="updateTagData = true"
+            label="Tag"
+            :key="tag.id"
+            outlined
+            dense
+            clearable
+          ></v-text-field>
+          <v-btn block color="primary" outlined depressed @click="moreTags()">
+            +
+          </v-btn>
         </v-card-text>
         <v-card-actions>
-          <v-btn depressed block color="primary" @click="sendUpdatedTagData()" :disabled="!updateTagData">Update</v-btn>
+          <v-btn
+            depressed
+            block
+            color="primary"
+            @click="sendUpdatedTagData()"
+            :disabled="!updateTagData"
+            >Update</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -156,17 +174,36 @@
     <v-dialog v-model="deleteAlert" width="500">
       <v-card>
         <v-card-title class="primary white--text">Are you sure?</v-card-title>
-        <v-card-text class="pa-5">You are about to delete product <b>{{ product.name }}</b>, (id: <b>{{ product.id }}</b>). Doing this will remove it from the database. If you want to remove it from customer page instead, set availability to false and update it instead.</v-card-text>
-        <v-card-actions >
+        <v-card-text class="pa-5"
+          >You are about to delete product <b>{{ product.name }}</b
+          >, (id: <b>{{ product.id }}</b
+          >). Doing this will remove it from the database. If you want to remove
+          it from customer page instead, set availability to false and update it
+          instead.</v-card-text
+        >
+        <v-card-actions>
           <v-container>
             <v-row>
               <v-col>
-                <v-btn depressed color="primary" block @click="deleteAlert = false">No, cancel it</v-btn>
+                <v-btn
+                  depressed
+                  color="primary"
+                  block
+                  @click="deleteAlert = false"
+                  >No, cancel it</v-btn
+                >
               </v-col>
             </v-row>
             <v-row>
               <v-col>
-                <v-btn depressed outlined color="primary" block @click="deleteProduct()">Yes, delete it</v-btn>
+                <v-btn
+                  depressed
+                  outlined
+                  color="primary"
+                  block
+                  @click="deleteProduct()"
+                  >Yes, delete it</v-btn
+                >
               </v-col>
             </v-row>
           </v-container>
@@ -181,7 +218,7 @@ const axios = require("axios");
 import Snackbar from "@/components/Snackbar.vue";
 export default {
   name: "AdminProduct",
-  props: ["product", "qualities", "colors", 'categories', 'brands'],
+  props: ["product", "qualities", "colors", "categories", "brands"],
 
   data() {
     return {
@@ -197,7 +234,7 @@ export default {
       price: this.product.price,
       updatePending: false,
       old_price: this.product.old_price,
-      description: this.product.description,
+      description: this.product.desc,
       main_img: null,
 
       deleteAlert: false,
@@ -208,7 +245,7 @@ export default {
       order_id: this.product.order_id,
 
       snackbar: false,
-      snackbarText: "",
+      snackbarText: ""
     };
   },
 
@@ -218,9 +255,9 @@ export default {
 
       let headers = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         }
-      }
+      };
 
       let formData = new FormData();
       let product = {
@@ -233,81 +270,90 @@ export default {
         bought: !vue.available,
         quality_id: vue.qualities.find(q => q.name == vue.quality).id,
         old_price: vue.old_price,
-        desc: vue.description,
-      }
+        desc: vue.description
+      };
 
-      formData.append("main_img", this.main_img)
-      formData.append("product", JSON.stringify(product))
+      formData.append("main_img", this.main_img);
+      formData.append("product", JSON.stringify(product));
 
       axios
-        .patch(`${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`, formData, headers)
+        .patch(
+          `${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`,
+          formData,
+          headers
+        )
         .then(function(resp) {
           console.log(resp);
-          vue.snackbarText = `Product with ID ${vue.product.id} was successfully updated!`
-          vue.updatePending = false
+          vue.snackbarText = `Product with ID ${vue.product.id} was successfully updated!`;
+          vue.updatePending = false;
         })
         .catch(function(error) {
-            console.log(error);
-            vue.snackbarText = `Something went wrong. Check console for details.`
+          console.log(error);
+          vue.snackbarText = `Something went wrong. Check console for details.`;
         });
 
-        vue.snackbar = true; 
+      vue.snackbar = true;
     },
 
-    getTags(){
-      if(this.tagData == null){
-        console.log('fetching')
+    getTags() {
+      if (this.tagData == null) {
+        console.log("fetching");
         let vue = this;
-        axios.get(`${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`)
-        .then(function(resp){
-          vue.tagData = resp.data
-          vue.showTags = true;
-        })
-        .catch(function(error){
-          console.log(error)
-        })
-      }else{
-        console.log('not fetching')
+        axios
+          .get(`${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`)
+          .then(function(resp) {
+            vue.tagData = resp.data;
+            vue.showTags = true;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        console.log("not fetching");
         this.showTags = true;
       }
     },
 
-    moreTags(){
-      this.tagData.push({name: ''});
+    moreTags() {
+      this.tagData.push({ name: "" });
     },
 
-    sendUpdatedTagData(){
-      console.log(this.tagData)
+    sendUpdatedTagData() {
+      console.log(this.tagData);
       let vue = this;
-      axios.patch(`${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`, {
-        tags: vue.tagData
-      })
-      .then(function(resp){
-        console.log(resp)
-      })
-      .catch(function(error){
-        console.log(error)
-      })
+      axios
+        .patch(
+          `${process.env.VUE_APP_BACKEND}/product_tags/${vue.product.id}`,
+          {
+            tags: vue.tagData
+          }
+        )
+        .then(function(resp) {
+          console.log(resp);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
 
-    async deleteProduct(){
+    async deleteProduct() {
       let vue = this;
-      axios.delete(`${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`)
-      .then(function(){
-        vue.snackbarText = "Product was successfully deleted!"
-      })
-      .catch(function(error){
-        console.log(error)
-        vue.snackbarText = "Something went wrong, check console for details"
-      })
+      axios
+        .delete(`${process.env.VUE_APP_BACKEND}/products/${vue.product.id}`)
+        .then(function() {
+          vue.snackbarText = "Product was successfully deleted!";
+        })
+        .catch(function(error) {
+          console.log(error);
+          vue.snackbarText = "Something went wrong, check console for details";
+        });
 
       this.snackbar = true;
     }
-
   },
-components: {
+  components: {
     Snackbar
-}
+  }
 };
 </script>
 
@@ -316,11 +362,11 @@ components: {
   text-align: center;
 }
 
-.img-replace{
-    width: 100%;
-    margin: 0 auto;
-    height: 15em;
-    margin-bottom: 1em;
-    background-color: lightgray;
+.img-replace {
+  width: 100%;
+  margin: 0 auto;
+  height: 15em;
+  margin-bottom: 1em;
+  background-color: lightgray;
 }
 </style>

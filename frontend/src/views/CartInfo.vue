@@ -406,7 +406,7 @@ export default {
               .then(function() {
                 // The payment succeeded!
                 vue.removeItemsFromStore();
-                vue.$router.push('/payment-success')
+                vue.$router.push("/payment-success");
               })
               .catch(function(error) {
                 console.log(error);

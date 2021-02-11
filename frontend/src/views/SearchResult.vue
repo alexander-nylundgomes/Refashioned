@@ -35,7 +35,7 @@ export default {
 
   methods: {
     async getResults() {
-      console.log(this.tag)
+      console.log(this.tag);
       let results = await axios
         .get(`${process.env.VUE_APP_BACKEND}/search/${this.tag}`)
         .then(function(resp) {

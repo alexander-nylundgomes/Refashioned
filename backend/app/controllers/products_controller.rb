@@ -54,7 +54,14 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    file = params['main_img']
+    name = SecureRandom.hex(20)
+    parsed_params = ActionController::Parameters.new({product: JSON.parse(params['product'])})
+    puts parsed_params, "asdasd"
+    @product = Product.new(product_params(parsed_params))
+    path = "#{ ENV['cloud_link'] }#{ @product.id }/#{ name }.jpg"
+    Cloudinary::Uploader.upload(file, :public_id => name,  :unique_filename => false, :folder => "products/#{@product.id}/", :invalidate => true)
+    @product.update(main_image: path)
 
     if @product.save
       render json: @product, status: :created, location: @product
@@ -74,9 +81,7 @@ class ProductsController < ApplicationController
       path = URI.parse(@product.main_image).path
       path.slice!("/#{ENV['cloud_name']}")
       path = File.join(File.dirname(path), File.basename(path, '.*'))
-      puts path, "#########"
       result = Cloudinary::Uploader.destroy(path)
-      puts result, "#####33333"
       Cloudinary::Uploader.upload(file, :public_id => newName,  :unique_filename => false, :folder => "products/#{@product.id}/", :invalidate => true)
     end
 

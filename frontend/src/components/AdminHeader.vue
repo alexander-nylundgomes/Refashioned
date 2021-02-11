@@ -49,14 +49,22 @@ export default {
       items: [
         { title: "View messages", link: "/admin/msgs", icon: "mdi-message" },
         { title: "View orders", link: "/admin/orders", icon: "mdi-cart" },
-        { title: "View categories", link: "/admin/categories", icon: "mdi-apps" },
-        { title: "View brands", link: "/admin/brands", icon: "mdi-currency-usd" },
+        {
+          title: "View categories",
+          link: "/admin/categories",
+          icon: "mdi-apps"
+        },
+        {
+          title: "View brands",
+          link: "/admin/brands",
+          icon: "mdi-currency-usd"
+        },
         {
           title: "View sell requests",
           link: "/admin/sell_requests",
           icon: "mdi-cash-multiple"
         },
-        { title: "View qualities", link: "/admin/qualities", icon: "mdi-tag"},
+        { title: "View qualities", link: "/admin/qualities", icon: "mdi-tag" },
         { title: "View discounts", link: "/admin/discounts", icon: "mdi-cash" },
         { title: "View colors", link: "/admin/colors", icon: "mdi-palette" },
         {
@@ -64,7 +72,11 @@ export default {
           link: "/admin/products",
           icon: "mdi-tshirt-crew"
         },
-        { title: "View miscellaneous", link: "/admin/miscs", icon: "mdi-dots-horizontal" },
+        {
+          title: "View miscellaneous",
+          link: "/admin/miscs",
+          icon: "mdi-dots-horizontal"
+        },
         { title: "Customer page", link: "/", icon: "mdi-backburger" }
       ],
       colors: ["blue", "yellow", "green", "orange", "purple", "white", "red"]

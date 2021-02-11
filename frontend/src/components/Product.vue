@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main-img{
+.main-img {
   width: 100%;
   height: 10.5rem;
 }

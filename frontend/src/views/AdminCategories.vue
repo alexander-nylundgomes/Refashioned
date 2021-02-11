@@ -1,9 +1,19 @@
 <template>
   <main class="categories">
-      <section class="categories">
-          <AdminCategory @update="update($event)" @destroy="destroy($event)" :category="category" v-for="category of categories" :key="category.id"/>
-      </section>
-    <Snackbar :snackbar="snackbar" :snackbarText="snackbarText" @closeSnackbar="snackbar = false" />
+    <section class="categories">
+      <AdminCategory
+        @update="update($event)"
+        @destroy="destroy($event)"
+        :category="category"
+        v-for="category of categories"
+        :key="category.id"
+      />
+    </section>
+    <Snackbar
+      :snackbar="snackbar"
+      :snackbarText="snackbarText"
+      @closeSnackbar="snackbar = false"
+    />
   </main>
 </template>
 
@@ -11,44 +21,42 @@
 import AdminCategory from "@/components/AdminCategory.vue";
 import Snackbar from "@/components/Snackbar.vue";
 export default {
-    name: "AdminCategories",
+  name: "AdminCategories",
 
-    data(){
-        return{
-            snackbar: false,
-            snackbarText: "",
-        }
+  data() {
+    return {
+      snackbar: false,
+      snackbarText: ""
+    };
+  },
+
+  methods: {
+    update(e) {
+      this.snackbarText = "Category was updated successfully!";
+      this.snackbar = true;
+
+      this.$store.commit("updateCategory", e);
     },
 
-    methods: {
-        update(e){
-            this.snackbarText = "Category was updated successfully!"
-            this.snackbar = true;
+    destroy(e) {
+      this.snackbarText = "Category was deleted successfully!";
+      this.snackbar = true;
 
-            this.$store.commit('updateCategory', e)
-        },
+      this.$store.commit("deleteCategory", e);
+    }
+  },
 
-        destroy(e){
-            this.snackbarText = "Category was deleted successfully!"
-            this.snackbar = true;
+  computed: {
+    categories() {
+      return this.$store.getters.categories;
+    }
+  },
 
-            this.$store.commit('deleteCategory', e)
-        }
-    },
-
-    computed: {
-        categories(){
-            return this.$store.getters.categories;
-        }
-    },
-
-    components: {
-        AdminCategory,
-        Snackbar
-    },
-}
+  components: {
+    AdminCategory,
+    Snackbar
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

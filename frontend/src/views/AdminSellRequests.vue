@@ -45,9 +45,9 @@ export default {
       shows: ["All requests", "Accepted", "Bought", "Rejected"],
       sorts: [
         { text: "New first", id: 1 },
-        { text: "Old first", id: 2 },
+        { text: "Old first", id: 2 }
       ],
-      sortBy: null,
+      sortBy: null
     };
   },
   methods: {
@@ -77,9 +77,17 @@ export default {
         );
       }
 
-      switch(this.sortBy){
-        case 2: this.showingRequests.sort(function(a,b){return a.id - b.id});break;
-        case 1: this.showingRequests.sort(function(a,b){return b.id - a.id});break;
+      switch (this.sortBy) {
+        case 2:
+          this.showingRequests.sort(function(a, b) {
+            return a.id - b.id;
+          });
+          break;
+        case 1:
+          this.showingRequests.sort(function(a, b) {
+            return b.id - a.id;
+          });
+          break;
       }
     }
   },
